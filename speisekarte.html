@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speisekarte – Zatar Darmstadt</title>
+  <meta name="description" content="Speisekarte von Zatar in Darmstadt: Manakish, Fatayer, Pizzen und Getränke – frisch aus dem Steinofen. Mit Preisen.">
+  <meta name="theme-color" content="#1f2a1c">
+  <!-- TESTVERSION: vor dem offiziellen Livegang diese Zeile entfernen -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/speisekarte.css">
+</head>
+<body class="page-menu">
+
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav is-scrolled" id="top">
+    <div class="container nav__inner">
+      <a href="index.html" class="brand" aria-label="Zatar Startseite">
+        <span class="brand__ar" lang="ar">زعتر</span>
+        <span class="brand__lat">ZATAR</span>
+      </a>
+      <nav class="nav__links" aria-label="Hauptnavigation">
+        <a href="index.html">Startseite</a>
+        <a href="speisekarte.html" aria-current="page">Speisekarte</a>
+        <a href="index.html#bewertungen">Bewertungen</a>
+        <a href="index.html#catering">Catering</a>
+        <a href="index.html#besuch">Besuch</a>
+      </nav>
+      <a href="index.html#bestellen" class="btn btn--sm btn--gold nav__cta">Jetzt bestellen</a>
+      <button class="nav__toggle" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ KOPF ============ -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow eyebrow--light"><span class="status" id="openStatus">Darmstadt · Rheinstraße 46</span></p>
+        <h1>Speisekarte</h1>
+        <p class="page-hero__sub">Frisch aus dem Steinofen – jeden Tag.</p>
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="menuSearch" placeholder="Gericht suchen, z. B. Käse, Spinat …" autocomplete="off" aria-label="Speisekarte durchsuchen">
+        </label>
+        <button class="chip chip--toggle" id="vegToggle" type="button" aria-pressed="false">
+          <span class="chip__dot"></span> Nur vegetarisch
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ KATEGORIEN (klebt oben) ============ -->
+    <div class="chips" id="chips">
+      <div class="container chips__inner">
+        <nav class="chips__list" id="chipList" aria-label="Kategorien"></nav>
+      </div>
+    </div>
+
+    <!-- ============ GERICHTE ============ -->
+    <div class="container menu-page" id="menuPage" aria-live="polite"><!-- wird per JS aus js/menu.js gefüllt --></div>
+
+    <div class="container">
+      <p class="menu-empty" id="menuEmpty" hidden>Keine Treffer. Versuchen Sie einen anderen Suchbegriff.</p>
+      <p class="menu__note">
+        <span class="menu__badge">V</span> vegetarisch · <span class="menu__star">★</span> Empfehlung des Hauses ·
+        Alle Preise in Euro inkl. MwSt. Informationen zu Allergenen erhalten Sie gerne bei unserem Team.
+      </p>
+    </div>
+
+    <!-- ============ BESTELLEN ============ -->
+    <section class="section section--olive">
+      <div class="container order">
+        <p class="eyebrow eyebrow--light">Hunger bekommen?</p>
+        <h2>Bestellen oder vorbeikommen</h2>
+        <div class="order__buttons">
+          <a class="order__btn" href="https://wolt.com/de/deu/darmstadt/restaurant/zatar-arabische-kchedarmstadt" target="_blank" rel="noopener">
+            <strong>Wolt</strong><span>Jetzt bestellen →</span>
+          </a>
+          <a class="order__btn" href="https://www.ubereats.com/de/store/zatar-arabische-kuche/ykQxKYyoU3-AmatqnmtpwA" target="_blank" rel="noopener">
+            <strong>Uber Eats</strong><span>Jetzt bestellen →</span>
+          </a>
+          <a class="order__btn" href="tel:+4961519679790">
+            <strong>Abholung</strong><span>Telefonisch vorbestellen →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ AKTIONSLEISTE (nur Handy) ============ -->
+  <nav class="action-bar" aria-label="Schnellzugriff">
+    <a href="tel:+4961519679790">
+      <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+      Anrufen
+    </a>
+    <a href="https://www.google.com/maps/dir/?api=1&destination=Zatar+Rheinstra%C3%9Fe+46+64283+Darmstadt" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      Route
+    </a>
+    <a href="index.html#bestellen" class="is-primary">
+      <svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7Zm3 0V5a3 3 0 0 1 6 0v2"/></svg>
+      Bestellen
+    </a>
+  </nav>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <a href="index.html" class="brand brand--footer">
+          <span class="brand__ar" lang="ar">زعتر</span>
+          <span class="brand__lat">ZATAR</span>
+        </a>
+        <p>Arabische Bäckerei & Küche<br>Rheinstraße 46 · 64283 Darmstadt</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <a href="index.html">Startseite</a>
+        <a href="index.html#geschichte">Geschichte</a>
+        <a href="index.html#catering">Catering</a>
+        <a href="index.html#besuch">Anfahrt</a>
+      </div>
+      <div>
+        <h4>Rechtliches</h4>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <span>© <span id="year"></span> Zatar Darmstadt</span>
+      <span lang="ar">أهلاً وسهلاً</span>
+    </div>
+  </footer>
+
+  <script src="js/menu.js"></script>
+  <script src="js/menu-page.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

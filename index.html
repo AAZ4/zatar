@@ -61,7 +61,7 @@
         <span class="brand__lat">ZATAR</span>
       </a>
       <nav class="nav__links" aria-label="Hauptnavigation">
-        <a href="#speisekarte">Speisekarte</a>
+        <a href="speisekarte.html">Speisekarte</a>
         <a href="#bewertungen">Bewertungen</a>
         <a href="#geschichte">Geschichte</a>
         <a href="#zaatar">Was ist Za'atar?</a>
@@ -85,7 +85,7 @@
           <h1 class="split">Orientalischer Geschmack.<br><em>Frisch aus dem Steinofen.</em></h1>
           <p class="lead">Manakish, Fatayer, Pizza, Falafel, Hummus &amp; Foul –<br>täglich frisch zubereitet bei ZATAR.</p>
           <div class="hero__actions">
-            <a href="#speisekarte" class="btn btn--gold">Speisekarte ansehen</a>
+            <a href="speisekarte.html" class="btn btn--gold">Speisekarte ansehen</a>
             <a href="#bestellen" class="btn btn--ghost">Liefern lassen</a>
           </div>
           <ul class="hero__facts">
@@ -120,6 +120,46 @@
             <span lang="ar">مناقيش</span>
             <small>Signature<br>Manakish Zaatar</small>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============ 3D-GESCHICHTE: WAS STECKT IN EINER MANAKISH? ============ -->
+    <section class="story3d" id="zaatar" aria-label="Was ist Za'atar?">
+      <div class="story3d__sticky">
+        <div class="story3d__stage" aria-hidden="true"></div>
+        <div class="story3d__text">
+          <p class="eyebrow eyebrow--light story3d__eyebrow">Was steckt drin?</p>
+          <div class="story3d__steps">
+            <article class="story3d__step" data-step="0">
+              <span class="story3d__num">01</span>
+              <h2>Frischer Teig</h2>
+              <p>Jeden Morgen von Hand angesetzt und im Steinofen gebacken – außen knusprig, innen weich.</p>
+            </article>
+            <article class="story3d__step" data-step="1">
+              <span class="story3d__num">02</span>
+              <h2>Wilder Thymian &amp; Olivenöl</h2>
+              <p>Das Herz von Za'atar (زعتر): getrocknete Kräuter, mit bestem Olivenöl zu einer würzigen Paste verrührt.</p>
+            </article>
+            <article class="story3d__step" data-step="2">
+              <span class="story3d__num">03</span>
+              <h2>Gerösteter Sesam</h2>
+              <p>Sorgt für Biss und ein nussiges Aroma, das im heißen Ofen erst richtig aufgeht.</p>
+            </article>
+            <article class="story3d__step" data-step="3">
+              <span class="story3d__num">04</span>
+              <h2>Sumach</h2>
+              <p>Die tiefrote Beere bringt eine feine, zitronige Säure – ganz ohne Zitrone.</p>
+            </article>
+            <article class="story3d__step" data-step="4">
+              <span class="story3d__num">05</span>
+              <h2>Manakish Zaatar</h2>
+              <p>Alles zusammen, frisch aus dem Ofen. Das Original der Levante – für <strong>4,00 €</strong>.</p>
+              <a href="speisekarte.html" class="btn btn--gold">Zur Speisekarte</a>
+            </article>
+          </div>
+          <div class="story3d__progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
         </div>
       </div>
     </section>
@@ -248,27 +288,31 @@
       </div>
     </section>
 
-    <!-- ============ SPEISEKARTE ============ -->
+    <!-- ============ SPEISEKARTE (Vorschau) ============ -->
     <section class="section" id="speisekarte">
       <div class="container">
         <header class="section__head reveal">
           <p class="eyebrow">Speisekarte</p>
           <h2 class="split">Alles, was unser Ofen hergibt</h2>
+          <p class="section__sub">Manakish, Fatayer, Pizzen und mehr – täglich frisch aus dem Steinofen.</p>
         </header>
-
-        <div class="tabs reveal" role="tablist" aria-label="Kategorien">
-          <button class="tab is-active" role="tab" aria-selected="true" data-tab="manakish">Manakish</button>
-          <button class="tab" role="tab" aria-selected="false" data-tab="fatayer">Fatayer</button>
-          <button class="tab" role="tab" aria-selected="false" data-tab="pizza">Pizzen</button>
-          <button class="tab" role="tab" aria-selected="false" data-tab="drinks">Getränke</button>
+        <div class="menu-teaser reveal">
+          <a class="menu-teaser__item" href="speisekarte.html#manakish">
+            <span lang="ar">مناقيش</span><strong>Manakish</strong><small>ab 4,00 €</small>
+          </a>
+          <a class="menu-teaser__item" href="speisekarte.html#fatayer">
+            <span lang="ar">فطاير</span><strong>Fatayer</strong><small>ab 4,00 €</small>
+          </a>
+          <a class="menu-teaser__item" href="speisekarte.html#pizza">
+            <span lang="ar">بيتزا</span><strong>Pizzen</strong><small>ab 9,00 €</small>
+          </a>
+          <a class="menu-teaser__item" href="speisekarte.html#drinks">
+            <span lang="ar">مشروبات</span><strong>Getränke</strong><small>ab 2,00 €</small>
+          </a>
         </div>
-
-        <div class="menu" id="menu" aria-live="polite"><!-- wird per JS aus js/menu.js gefüllt --></div>
-
-        <p class="menu__note">
-          <span class="tag tag--veg">V</span> vegetarisch · ★ Empfehlung des Hauses ·
-          Alle Preise in Euro inkl. MwSt. Informationen zu Allergenen erhalten Sie gerne bei unserem Team.
-        </p>
+        <div class="menu-teaser__cta reveal">
+          <a href="speisekarte.html" class="btn btn--gold">Komplette Speisekarte ansehen →</a>
+        </div>
       </div>
     </section>
 
@@ -294,39 +338,6 @@
             <span class="signature__name">Kotaibeh Al Mhamid</span>
             <span class="signature__role">Inhaber</span>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ WAS IST ZA'ATAR ============ -->
-    <section class="section section--cream" id="zaatar">
-      <div class="container">
-        <header class="section__head reveal">
-          <p class="eyebrow">Gut zu wissen</p>
-          <h2 class="split">Was ist eigentlich Za'atar?</h2>
-          <p class="section__sub">Unser Name ist Programm: Za'atar (زعتر) ist die berühmteste Gewürzmischung der Levante – und die Seele unserer Manakish.</p>
-        </header>
-        <div class="spice__grid">
-          <article class="spice reveal">
-            <div class="spice__dot" style="--c:#5b6b2e"></div>
-            <h3>Wilder Thymian & Oregano</h3>
-            <p>Das getrocknete Kraut gibt der Mischung ihre grüne Farbe und das kräftige, erdige Aroma.</p>
-          </article>
-          <article class="spice reveal">
-            <div class="spice__dot" style="--c:#e9d6a8"></div>
-            <h3>Gerösteter Sesam</h3>
-            <p>Sorgt für Biss und ein nussiges Aroma, das beim Backen besonders schön zur Geltung kommt.</p>
-          </article>
-          <article class="spice reveal">
-            <div class="spice__dot" style="--c:#9b2d20"></div>
-            <h3>Sumach</h3>
-            <p>Die tiefrote Beere bringt eine feine, zitronige Säure – ganz ohne Zitrone.</p>
-          </article>
-          <article class="spice reveal">
-            <div class="spice__dot" style="--c:#c9a227"></div>
-            <h3>Olivenöl</h3>
-            <p>Verbindet alles zu einer aromatischen Paste, die großzügig auf den Teig gestrichen wird.</p>
-          </article>
         </div>
       </div>
     </section>

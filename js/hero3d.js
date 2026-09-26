@@ -1,15 +1,23 @@
 /*
- * 3D-Manakish im Hero-Bereich (Three.js)
- * - dreht sich beim Scrollen und folgt leicht der Maus
- * - schwebende Sesamkörner und Thymianblättchen
- * - fällt auf die SVG-Grafik zurück, wenn WebGL nicht verfügbar ist
+ * 3D-Manakish (Three.js) – begleitet den Besucher vom Hero in die Scroll-Geschichte
+ *
+ * 1. Hero: fertige Manakish dreht sich, Sesam schwebt drumherum
+ * 2. Beim Scrollen wandert sie in die Bildschirmmitte (.story3d__stage)
+ * 3. Scroll-Geschichte: die Schichten heben sich ab (Teig, Za'atar, Sesam, Sumach),
+ *    jede Schicht wird der Reihe nach hervorgehoben – am Ende setzt sie sich wieder zusammen
+ *
+ * Ohne WebGL bleibt die SVG-Grafik im Hero und die Geschichte wird als normale Liste gezeigt.
  */
 import * as THREE from "./vendor/three.module.min.js";
 
 const hero = document.querySelector(".hero");
 const anchor = document.querySelector(".hero__visual");
+const story = document.querySelector(".story3d");
+const stage = document.querySelector(".story3d__stage");
+const steps = [...document.querySelectorAll(".story3d__step")];
+const bars = [...document.querySelectorAll(".story3d__progress span")];
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const isSmall = window.matchMedia("(max-width: 860px)").matches;
+const mqSmall = window.matchMedia("(max-width: 860px)");
 
 function webglAvailable() {
   try {
@@ -21,13 +29,20 @@ function webglAvailable() {
 if (hero && anchor && webglAvailable()) init();
 
 function init() {
-  const canvas = document.createElement("canvas");
-  canvas.className = "hero__canvas";
-  canvas.setAttribute("aria-hidden", "true");
-  hero.prepend(canvas);
+  const small = () => mqSmall.matches;
+  const lowPower = small();
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isSmall, alpha: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isSmall ? 1.5 : 2));
+  // Erst das 3D-Layout aktivieren, dann messen
+  document.documentElement.classList.add("has-3d");
+  hero.classList.add("has-3d");
+
+  const canvas = document.createElement("canvas");
+  canvas.className = "scene3d";
+  canvas.setAttribute("aria-hidden", "true");
+  document.body.prepend(canvas);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !lowPower, alpha: true, powerPreference: "high-performance" });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1.6 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -37,223 +52,269 @@ function init() {
   camera.position.set(0, 0, 9);
 
   /* ---------- Licht ---------- */
-  scene.add(new THREE.HemisphereLight(0xfff1d6, 0x2b3a26, 1.1));
-  const key = new THREE.DirectionalLight(0xffe2b0, 2.4);
+  scene.add(new THREE.HemisphereLight(0xfff1d6, 0x2b3a26, 1.15));
+  const key = new THREE.DirectionalLight(0xffe2b0, 2.5);
   key.position.set(-4, 6, 5);
   scene.add(key);
-  const rim = new THREE.DirectionalLight(0xe2c46a, 1.4);
+  const rim = new THREE.DirectionalLight(0xe2c46a, 1.5);
   rim.position.set(5, -2, -4);
   scene.add(rim);
 
-  /* ---------- Manakish ---------- */
-  const bread = new THREE.Group();
   const R = 1.5;
+  const wobble = a => 1 + 0.02 * Math.sin(a * 5) + 0.012 * Math.sin(a * 11 + 1.3);
 
-  // Teig mit erhöhtem Rand (Rotationskörper)
+  /* ---------- Schicht 1: Teig ---------- */
   const profile = [
     [0, -0.06], [1.1, -0.06], [1.42, -0.03], [1.52, 0.05], [1.5, 0.15],
     [1.42, 0.2], [1.32, 0.17], [1.24, 0.1], [0, 0.1]
   ].map(([x, y]) => new THREE.Vector2(x, y));
-  const doughGeo = new THREE.LatheGeometry(profile, isSmall ? 72 : 128);
-  // leichte Unregelmäßigkeit + geröstete Stellen über Vertex-Farben
-  const pos = doughGeo.attributes.position;
-  const colors = [];
-  const golden = new THREE.Color("#e2ae67"), toasted = new THREE.Color("#9a5a24");
-  for (let i = 0; i < pos.count; i++) {
-    const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
-    const a = Math.atan2(z, x);
-    const wobble = 1 + 0.025 * Math.sin(a * 5) + 0.015 * Math.sin(a * 11 + 1.3);
-    pos.setX(i, x * wobble);
-    pos.setZ(i, z * wobble);
-    const t = Math.min(1, Math.max(0, (y - 0.05) * 5)) * (0.5 + 0.5 * Math.sin(a * 7 + 0.7) * Math.sin(a * 3));
-    const c = golden.clone().lerp(toasted, 0.15 + Math.abs(t) * 0.7);
-    colors.push(c.r, c.g, c.b);
+  const doughGeo = new THREE.LatheGeometry(profile, lowPower ? 72 : 128);
+  {
+    const pos = doughGeo.attributes.position, colors = [];
+    const golden = new THREE.Color("#e2ae67"), toasted = new THREE.Color("#9a5a24");
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i), a = Math.atan2(z, x);
+      pos.setX(i, x * wobble(a)); pos.setZ(i, z * wobble(a));
+      const t = Math.min(1, Math.max(0, (y - 0.05) * 5)) * (0.5 + 0.5 * Math.sin(a * 7 + 0.7) * Math.sin(a * 3));
+      const c = golden.clone().lerp(toasted, 0.15 + Math.abs(t) * 0.7);
+      colors.push(c.r, c.g, c.b);
+    }
+    doughGeo.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+    doughGeo.computeVertexNormals();
   }
-  doughGeo.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
-  doughGeo.computeVertexNormals();
-  bread.add(new THREE.Mesh(doughGeo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.85 })));
+  const doughMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.85, transparent: true });
+  const dough = new THREE.Mesh(doughGeo, doughMat);
 
-  // Za'atar-Belag als prozedurale Textur
-  const topTex = makeToppingTexture(isSmall ? 768 : 1024);
-  const topGeo = new THREE.CircleGeometry(1.3, isSmall ? 72 : 128);
+  /* ---------- Schicht 2: Za'atar-Paste ---------- */
+  const topTex = makeToppingTexture(lowPower ? 768 : 1024);
+  const topGeo = new THREE.CircleGeometry(1.3, lowPower ? 72 : 128);
   topGeo.rotateX(-Math.PI / 2);
-  const tp = topGeo.attributes.position;
-  for (let i = 0; i < tp.count; i++) {
-    const x = tp.getX(i), z = tp.getZ(i), a = Math.atan2(z, x);
-    const w = 1 + 0.025 * Math.sin(a * 5) + 0.015 * Math.sin(a * 11 + 1.3);
-    tp.setX(i, x * w); tp.setZ(i, z * w);
+  {
+    const tp = topGeo.attributes.position;
+    for (let i = 0; i < tp.count; i++) {
+      const x = tp.getX(i), z = tp.getZ(i), a = Math.atan2(z, x);
+      tp.setX(i, x * wobble(a)); tp.setZ(i, z * wobble(a));
+    }
   }
-  const topping = new THREE.Mesh(topGeo, new THREE.MeshStandardMaterial({
-    map: topTex, bumpMap: topTex, bumpScale: 2.2, roughness: 0.55, metalness: 0.05
-  }));
-  topping.position.y = 0.105;
-  bread.add(topping);
+  const toppingMat = new THREE.MeshStandardMaterial({
+    map: topTex, bumpMap: topTex, bumpScale: 2.2, roughness: 0.5, metalness: 0.05,
+    transparent: true, side: THREE.DoubleSide
+  });
+  const topping = new THREE.Mesh(topGeo, toppingMat);
 
-  // weicher Schatten
+  /* ---------- Schicht 3 & 4: Sesam und Sumach als echte 3D-Körner ---------- */
+  const seedCount = lowPower ? 190 : 320;
+  const sumacCount = lowPower ? 120 : 200;
+  const seedMat = new THREE.MeshStandardMaterial({ color: "#f3e4bf", roughness: 0.45, transparent: true });
+  const sumacMat = new THREE.MeshStandardMaterial({ color: "#c0392b", emissive: "#5a120a", roughness: 0.6, transparent: true });
+  const seeds = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 8, 6), seedMat, seedCount);
+  const sumac = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), sumacMat, sumacCount);
+  const onTop = (count, size) => Array.from({ length: count }, () => {
+    const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * 1.22;
+    return {
+      x: Math.cos(a) * r, z: Math.sin(a) * r, lift: Math.random(),
+      rot: new THREE.Euler((Math.random() - 0.5) * 0.4, Math.random() * Math.PI, (Math.random() - 0.5) * 0.4),
+      size: size * (0.8 + Math.random() * 0.4)
+    };
+  });
+  const seedData = onTop(seedCount, 0.03);
+  const sumacData = onTop(sumacCount, 0.03);
+
   const shadow = new THREE.Mesh(
     new THREE.PlaneGeometry(4.4, 4.4),
     new THREE.MeshBasicMaterial({ map: makeShadowTexture(), transparent: true, depthWrite: false })
   );
   shadow.rotation.x = -Math.PI / 2;
   shadow.position.y = -0.35;
-  bread.add(shadow);
 
-  const tilt = new THREE.Group();   // Neigung (Scroll/Maus)
+  const bread = new THREE.Group();   // Drehung um die eigene Achse
+  bread.add(dough, topping, seeds, sumac, shadow);
+  const tilt = new THREE.Group();    // Neigung
   tilt.add(bread);
-  const holder = new THREE.Group(); // Position/Skalierung (Layout)
+  const holder = new THREE.Group();  // Position & Größe auf dem Bildschirm
   holder.add(tilt);
   scene.add(holder);
 
-  /* ---------- Schwebende Sesamkörner & Thymian ---------- */
-  const seedCount = isSmall ? 70 : 160;
-  const flakeCount = isSmall ? 30 : 70;
-  const seeds = new THREE.InstancedMesh(
+  /* ---------- Schwebende Körner rund um den Hero ---------- */
+  const ambCount = lowPower ? 60 : 140;
+  const amb = new THREE.InstancedMesh(
     new THREE.SphereGeometry(1, 8, 6),
     new THREE.MeshStandardMaterial({ color: "#f1e2bd", roughness: 0.5 }),
-    seedCount
+    ambCount
   );
-  const flakes = new THREE.InstancedMesh(
-    new THREE.PlaneGeometry(1, 0.55),
-    new THREE.MeshStandardMaterial({ color: "#5b6b2e", roughness: 0.8, side: THREE.DoubleSide }),
-    flakeCount
-  );
-  const particles = [];
-  const mkParticle = (i, mesh, size) => {
-    const a = Math.random() * Math.PI * 2;
-    const r = 1.9 + Math.random() * 1.8;
-    particles.push({
-      mesh, i, size,
+  const ambData = Array.from({ length: ambCount }, () => {
+    const a = Math.random() * Math.PI * 2, r = 1.9 + Math.random() * 1.8;
+    return {
       base: new THREE.Vector3(Math.cos(a) * r, (Math.random() - 0.5) * 2.6, Math.sin(a) * r * 0.6),
       rot: new THREE.Euler(Math.random() * 6, Math.random() * 6, Math.random() * 6),
-      spin: (Math.random() - 0.5) * 1.2,
-      speed: 0.3 + Math.random() * 0.6,
-      phase: Math.random() * Math.PI * 2
-    });
-  };
-  for (let i = 0; i < seedCount; i++) mkParticle(i, seeds, 0.03 + Math.random() * 0.02);
-  for (let i = 0; i < flakeCount; i++) mkParticle(i, flakes, 0.05 + Math.random() * 0.05);
-  holder.add(seeds, flakes);
+      spin: (Math.random() - 0.5) * 1.2, speed: 0.3 + Math.random() * 0.6,
+      phase: Math.random() * Math.PI * 2, size: 0.03 + Math.random() * 0.02
+    };
+  });
+  holder.add(amb);
 
-  /* ---------- Layout: Manakish in den Bereich .hero__visual setzen ---------- */
-  let viewW = 1, viewH = 1, baseScale = 1;
-  const baseCenter = new THREE.Vector3();
-  function layout() {
-    const w = hero.clientWidth, h = hero.clientHeight;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
+  /* ---------- Hilfsfunktionen ---------- */
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+  let viewW = 1, viewH = 1, W = 1, H = 1;
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    renderer.setSize(W, H, false);
+    camera.aspect = W / H;
     camera.updateProjectionMatrix();
-
-    const dist = camera.position.z;
-    viewH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * dist;
+    viewH = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
     viewW = viewH * camera.aspect;
-
-    const hr = hero.getBoundingClientRect();
-    const ar = anchor.getBoundingClientRect();
-    const cx = ar.left - hr.left + ar.width / 2;
-    const cy = ar.top - hr.top + ar.height / 2;
-    baseCenter.set((cx / w - 0.5) * viewW, -(cy / h - 0.5) * viewH, 0);
-    small = mqSmall.matches;
-    // Handy: Manakish füllt den Bereich fast ganz aus
-    const px = Math.min(ar.width, ar.height) * (small ? 1.02 : 0.92);
-    baseScale = (px / w) * viewW / (R * 2);
   }
-  const mqSmall = window.matchMedia("(max-width: 860px)");
-  let small = mqSmall.matches;
+  resize();
+  window.addEventListener("resize", resize);
 
-  // Wichtig: erst das 3D-Layout aktivieren, DANN messen –
-  // sonst wird die Position des alten (2D-)Layouts verwendet.
-  hero.classList.add("has-3d");
-  layout();
-  window.addEventListener("resize", layout);
-  window.addEventListener("load", layout);
-  if (document.fonts) document.fonts.ready.then(layout);
-  if ("ResizeObserver" in window) {
-    const ro = new ResizeObserver(layout);
-    ro.observe(hero);
-    ro.observe(anchor);
-  }
+  // Bildschirm-Rechteck -> Position & Skalierung in der 3D-Welt
+  const place = (rect, fill) => ({
+    x: ((rect.left + rect.width / 2) / W - 0.5) * viewW,
+    y: -((rect.top + rect.height / 2) / H - 0.5) * viewH,
+    s: (Math.min(rect.width, rect.height) * fill / W) * viewW / (R * 2)
+  });
 
   /* ---------- Interaktion ---------- */
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   if (window.matchMedia("(pointer: fine)").matches) {
     window.addEventListener("pointermove", e => {
-      pointer.tx = (e.clientX / window.innerWidth - 0.5) * 2;
-      pointer.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+      pointer.tx = (e.clientX / W - 0.5) * 2;
+      pointer.ty = (e.clientY / H - 0.5) * 2;
     }, { passive: true });
   }
 
-  let visible = true;
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) loop(); }).observe(hero);
-
   /* ---------- Animation ---------- */
   const clock = new THREE.Clock();
-  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new THREE.Vector3(), p = new THREE.Vector3();
-  let intro = reduceMotion ? 1 : 0;
-  let spin = 0;
-  let running = false;
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), sc = new THREE.Vector3(), p = new THREE.Vector3();
+  let intro = reduceMotion ? 1 : 0, spin = 0, activeStep = -1;
+  const layerOpacity = [1, 1, 1, 1];
+  const mats = [doughMat, toppingMat, seedMat, sumacMat];
 
   function frame() {
     const dt = Math.min(clock.getDelta(), 0.05);
     const t = clock.elapsedTime;
-    const progress = Math.min(1, Math.max(0, window.scrollY / hero.offsetHeight));
+    const sm = small();
 
-    if (intro < 1) intro = Math.min(1, intro + dt / (small ? 1.1 : 1.6));
-    const e = 1 - Math.pow(1 - intro, 4); // easeOutQuart
+    const heroRect = hero.getBoundingClientRect();
+    const a = place(anchor.getBoundingClientRect(), sm ? 1.02 : 0.92);
+    let target = a, move = 0, prog = 0, fadeOut = 0;
+
+    if (story && stage) {
+      const sr = story.getBoundingClientRect();
+      const b = place(stage.getBoundingClientRect(), sm ? 0.9 : 0.8);
+      move = smooth(0, 1, 1 - sr.top / H);                       // Hero -> Bühne
+      prog = clamp(-sr.top / Math.max(1, sr.height - H));        // Fortschritt der Geschichte
+      fadeOut = smooth(H * 0.9, H * 0.35, sr.bottom);            // am Ende ausblenden
+      target = { x: lerp(a.x, b.x, move), y: lerp(a.y, b.y, move), s: lerp(a.s, b.s, move) };
+
+      // Texte & Fortschritt
+      const step = Math.min(4, Math.floor(prog * 5));
+      if (step !== activeStep && move > 0.6) {
+        activeStep = step;
+        steps.forEach((el, i) => el.classList.toggle("is-active", i === step));
+        bars.forEach((el, i) => el.classList.toggle("is-done", i <= step));
+      }
+      if (move <= 0.6 && activeStep !== -1) {
+        activeStep = -1;
+        steps.forEach(el => el.classList.remove("is-active"));
+        bars.forEach(el => el.classList.remove("is-done"));
+      }
+    }
+
+    if (intro < 1) intro = Math.min(1, intro + dt / (sm ? 1.1 : 1.6));
+    const e = 1 - Math.pow(1 - intro, 4);
 
     pointer.x += (pointer.tx - pointer.x) * 0.06;
     pointer.y += (pointer.ty - pointer.y) * 0.06;
+    if (!reduceMotion) spin += dt * (0.2 + move * 0.15);
 
-    if (!reduceMotion) spin += dt * (0.18 + progress * 0.9);
+    // Explosionsansicht: Schichten heben sich ab und setzen sich am Ende wieder zusammen
+    const explode = smooth(0.03, 0.16, prog) * (1 - smooth(0.8, 0.93, prog)) * move;
 
-    // Position & Größe
-    holder.position.set(
-      baseCenter.x,
-      baseCenter.y + progress * viewH * (small ? 0.12 : 0.35) + (reduceMotion ? 0 : Math.sin(t * 0.8) * 0.06),
-      0
-    );
-    // Handy: sofort volle Größe, kein Wachsen beim Scrollen
-    holder.scale.setScalar(small
-      ? baseScale * (0.85 + 0.15 * e)
-      : baseScale * (0.6 + 0.4 * e) * (1 + progress * 0.25));
+    holder.position.set(target.x, target.y + (reduceMotion ? 0 : Math.sin(t * 0.8) * 0.05 * (1 - explode)), 0);
+    holder.scale.setScalar(target.s * (0.85 + 0.15 * e));
 
-    // Neigung: Handy fast Draufsicht (wirkt größer), Desktop schräger
-    const baseTilt = small ? 0.5 : 0.95;
-    tilt.rotation.x = baseTilt - progress * (small ? 0.35 : 0.75) + pointer.y * 0.18 + (1 - e) * 0.9;
-    tilt.rotation.z = -0.12 + pointer.x * -0.15;
+    const heroTilt = sm ? 0.5 : 0.95;
+    const storyTilt = lerp(heroTilt, 0.9, move);
+    tilt.rotation.x = lerp(storyTilt, 0.38, explode) + pointer.y * 0.15 * (1 - explode) + (1 - e) * 0.9;
+    tilt.rotation.z = -0.12 * (1 - explode) + pointer.x * -0.12;
     bread.rotation.y = spin + (1 - e) * -2.2;
+    bread.position.y = -0.95 * explode;
 
-    // Partikel
-    const spread = 1 + progress * 0.9;
-    for (const pt of particles) {
-      const bob = reduceMotion ? 0 : Math.sin(t * pt.speed + pt.phase) * 0.15;
-      const ang = reduceMotion ? 0 : t * 0.05 * pt.speed;
-      const x = pt.base.x * Math.cos(ang) - pt.base.z * Math.sin(ang);
-      const z = pt.base.x * Math.sin(ang) + pt.base.z * Math.cos(ang);
-      p.set(x * spread * e, (pt.base.y + bob) * spread * e, z * spread);
-      pt.rot.x += dt * pt.spin; pt.rot.y += dt * pt.spin * 0.7;
-      q.setFromEuler(pt.rot);
-      if (pt.mesh === seeds) s.set(pt.size, pt.size * 0.45, pt.size * 0.7); else s.setScalar(pt.size);
-      s.multiplyScalar(e);
-      m4.compose(p, q, s);
-      pt.mesh.setMatrixAt(pt.i, m4);
+    // Schichten auseinanderziehen
+    const gap = 0.62;
+    topping.position.y = 0.105 + gap * explode;
+    const seedY = 0.13 + gap * 2 * explode;
+    const sumacY = 0.125 + gap * 3 * explode;
+
+    for (let i = 0; i < seedCount; i++) {
+      const d = seedData[i];
+      p.set(d.x, seedY + d.lift * 0.18 * explode, d.z);
+      q.setFromEuler(d.rot);
+      sc.set(d.size, d.size * 0.42, d.size * 0.62).multiplyScalar(e);
+      seeds.setMatrixAt(i, m4.compose(p, q, sc));
+    }
+    for (let i = 0; i < sumacCount; i++) {
+      const d = sumacData[i];
+      p.set(d.x, sumacY + d.lift * 0.14 * explode, d.z);
+      q.setFromEuler(d.rot);
+      sc.set(d.size, d.size * 0.35, d.size * 0.8).multiplyScalar(e);
+      sumac.setMatrixAt(i, m4.compose(p, q, sc));
     }
     seeds.instanceMatrix.needsUpdate = true;
-    flakes.instanceMatrix.needsUpdate = true;
+    sumac.instanceMatrix.needsUpdate = true;
+    shadow.material.opacity = 1 - explode * 0.7;
 
+    // Aktive Schicht hervorheben, andere abdunkeln
+    for (let i = 0; i < 4; i++) {
+      const want = explode > 0.2 && activeStep >= 0 && activeStep < 4 && activeStep !== i ? 0.22 : 1;
+      layerOpacity[i] += (want - layerOpacity[i]) * 0.12;
+      mats[i].opacity = layerOpacity[i];
+      mats[i].depthWrite = layerOpacity[i] > 0.9;
+    }
+
+    // Schwebende Körner nur im Hero
+    const ambVis = e * (1 - move);
+    for (let i = 0; i < ambCount; i++) {
+      const d = ambData[i];
+      const bob = reduceMotion ? 0 : Math.sin(t * d.speed + d.phase) * 0.15;
+      const ang = reduceMotion ? 0 : t * 0.05 * d.speed;
+      const x = d.base.x * Math.cos(ang) - d.base.z * Math.sin(ang);
+      const z = d.base.x * Math.sin(ang) + d.base.z * Math.cos(ang);
+      p.set(x * ambVis, (d.base.y + bob) * ambVis, z);
+      d.rot.x += dt * d.spin; d.rot.y += dt * d.spin * 0.7;
+      q.setFromEuler(d.rot);
+      sc.set(d.size, d.size * 0.45, d.size * 0.7).multiplyScalar(ambVis);
+      amb.setMatrixAt(i, m4.compose(p, q, sc));
+    }
+    amb.instanceMatrix.needsUpdate = true;
+
+    canvas.style.opacity = String(1 - fadeOut);
     renderer.render(scene, camera);
+    return heroRect.bottom > 0 || fadeOut < 1;
   }
 
+  // Nur rendern, solange Hero oder Geschichte sichtbar sind
+  let running = false;
   function loop() {
     if (running) return;
     running = true;
     const tick = () => {
-      if (!visible || document.hidden) { running = false; return; }
-      frame();
+      if (document.hidden) { running = false; return; }
+      const visible = frame();
+      canvas.style.visibility = visible ? "visible" : "hidden";
+      if (!visible) { running = false; return; }
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
   }
-  document.addEventListener("visibilitychange", () => { if (!document.hidden) loop(); });
+  const wake = () => loop();
+  window.addEventListener("scroll", wake, { passive: true });
+  document.addEventListener("visibilitychange", wake);
+  window.addEventListener("resize", wake);
   loop();
 }
 
@@ -287,15 +348,14 @@ function makeToppingTexture(size) {
       g.restore();
     }
   };
-  speck(9000, ["#3a4519", "#2d3713", "#6f7f35", "#55632a"], 2.5, 1.2); // Thymian
-  speck(1400, ["#8c2a1d", "#a33a24", "#6f2016"], 1.6, 1.4);            // Sumach
-  speck(900, ["#f3e5c2", "#e7d3a3", "#fff3d6"], 4, 2.2);              // Sesam
+  speck(10000, ["#3a4519", "#2d3713", "#6f7f35", "#55632a"], 2.5, 1.2); // Thymian
+  speck(250, ["#e7d3a3", "#f3e5c2"], 3, 1.6);                          // feiner Sesam in der Paste
 
   // Olivenöl-Glanz
   for (let i = 0; i < 26; i++) {
     const x = r + (Math.random() - 0.5) * r * 1.4, y = r + (Math.random() - 0.5) * r * 1.4;
     const rg = g.createRadialGradient(x, y, 0, x, y, (40 + Math.random() * 60) * k);
-    rg.addColorStop(0, "rgba(214,190,80,0.22)");
+    rg.addColorStop(0, "rgba(214,190,80,0.24)");
     rg.addColorStop(1, "rgba(214,190,80,0)");
     g.fillStyle = rg;
     g.fillRect(0, 0, size, size);

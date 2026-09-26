@@ -42,8 +42,8 @@
   const fmt = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" });
 
   function renderMenu(key) {
-    const cat = window.ZATAR_MENU[key];
-    if (!cat) return;
+    const cat = window.ZATAR_MENU && window.ZATAR_MENU[key];
+    if (!cat || !menuEl) return;
     const items = cat.items.map(i => `
       <div class="menu__item">
         <div class="menu__line">
@@ -81,7 +81,7 @@
   const day = now.getDay();
   const mins = now.getHours() * 60 + now.getMinutes();
   const [open, close] = HOURS[day];
-  const status = document.getElementById("openStatus");
+  const status = document.getElementById("openStatus") || document.createElement("span");
   const hhmm = m => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
 
   if (mins >= open && mins < close) {
@@ -185,7 +185,7 @@
     });
     gsap.from(".hero__badge", { scale: 0.6, opacity: 0, rotate: -8, duration: 1, ease: "back.out(1.7)", delay: 1.2 });
     // Hero-Text verschwindet beim Scrollen leicht nach oben (Parallax)
-    gsap.to(".hero__text", {
+    if (document.querySelector(".hero")) gsap.to(".hero__text", {
       yPercent: -18, opacity: 0.2, ease: "none",
       scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
     });
@@ -240,11 +240,11 @@
     }
 
     // Parallax in der Geschichte
-    gsap.fromTo(".story__frame", { y: 80, rotate: -3 }, {
+    if (document.querySelector(".story")) gsap.fromTo(".story__frame", { y: 80, rotate: -3 }, {
       y: -80, rotate: 2, ease: "none",
       scrollTrigger: { trigger: ".story", start: "top bottom", end: "bottom top", scrub: true }
     });
-    gsap.fromTo(".story__frame span", { y: 40 }, {
+    if (document.querySelector(".story")) gsap.fromTo(".story__frame span", { y: 40 }, {
       y: -40, ease: "none",
       scrollTrigger: { trigger: ".story", start: "top bottom", end: "bottom top", scrub: true }
     });
@@ -258,7 +258,7 @@
     });
 
     // Bestell-Kacheln
-    gsap.from(".order__btn", {
+    if (document.querySelector(".order__buttons")) gsap.from(".order__btn", {
       y: 50, opacity: 0, rotateX: -25, transformPerspective: 900, stagger: 0.12, duration: 1, ease: "power3.out",
       scrollTrigger: { trigger: ".order__buttons", start: "top 90%" }
     });
@@ -324,11 +324,13 @@
 
   /* ---------- Aktionsleiste (Handy): erscheint nach dem Startbereich ---------- */
   const bar = document.querySelector(".action-bar");
-  const heroEl = document.querySelector(".hero");
+  const heroEl = document.querySelector(".hero, .page-hero");
   if (bar && heroEl) {
     const footer = document.querySelector(".footer");
-    let pastHero = false, atFooter = false;
-    const sync = () => bar.classList.toggle("is-visible", pastHero && !atFooter);
+    const story3d = document.querySelector(".story3d");
+    let pastHero = false, atFooter = false, inStory = false;
+    const sync = () => bar.classList.toggle("is-visible", pastHero && !atFooter && !inStory);
+    if (story3d) new IntersectionObserver(([e]) => { inStory = e.isIntersecting && document.documentElement.classList.contains("has-3d"); sync(); }, { threshold: 0.02 }).observe(story3d);
     new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }, { threshold: 0.15 }).observe(heroEl);
     if (footer) new IntersectionObserver(([e]) => { atFooter = e.isIntersecting; sync(); }).observe(footer);
   }

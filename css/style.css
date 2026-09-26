@@ -143,6 +143,61 @@ p { margin: 0 0 1em; }
 .hero.has-3d .hero__visual::before { content: none; }
 .hero__grid { z-index: 1; }
 
+/* 3D-Szene: liegt fest über Hero + Geschichte, Texte liegen darüber */
+.scene3d { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; transition: opacity .2s linear; }
+.hero__grid, .story3d__text { position: relative; z-index: 2; }
+
+/* ---------- 3D-Scroll-Geschichte ---------- */
+.story3d { position: relative; background: var(--olive-900); color: var(--cream); }
+.story3d::before {
+  content: ""; position: absolute; inset: 0; opacity: .05; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23e2c46a' stroke-width='1.2'%3E%3Cpath d='M40 4 50 30 76 40 50 50 40 76 30 50 4 40 30 30Z'/%3E%3Ccircle cx='40' cy='40' r='9'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 80px;
+}
+.story3d__num { font-family: var(--font-display); font-size: .95rem; color: var(--gold); letter-spacing: .2em; }
+.story3d__step h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); margin: .3rem 0 .8rem; color: var(--white); }
+.story3d__step p { color: rgba(247,241,229,.78); font-size: 1.08rem; max-width: 28em; }
+.story3d__step .btn { margin-top: .6rem; }
+.story3d__stage { display: none; }
+.story3d__progress { display: none; }
+
+/* Nur mit 3D: klebende Bühne, Schritte wechseln beim Scrollen */
+.has-3d .story3d { height: 520vh; }
+.has-3d .story3d__sticky {
+  position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  width: min(1180px, 100% - 40px); margin-inline: auto;
+}
+.has-3d .story3d__stage { display: block; grid-column: 2; grid-row: 1; aspect-ratio: 1; width: min(44vw, 80vh, 580px); justify-self: center; }
+.has-3d .story3d__text { grid-column: 1; grid-row: 1; }
+.has-3d .story3d__steps { position: relative; min-height: 17rem; }
+.has-3d .story3d__step {
+  position: absolute; inset: 0 0 auto 0; opacity: 0; transform: translateY(28px);
+  transition: opacity .5s var(--ease), transform .6s var(--ease); pointer-events: none;
+}
+.has-3d .story3d__step.is-active { opacity: 1; transform: none; pointer-events: auto; }
+.has-3d .story3d__progress { display: flex; gap: 6px; margin-top: 1.5rem; }
+.story3d__progress span { width: 34px; height: 3px; border-radius: 3px; background: rgba(247,241,229,.2); transition: background .4s; }
+.story3d__progress span.is-done { background: var(--gold); }
+
+/* Ohne 3D: normale Liste */
+html:not(.has-3d) .story3d { padding: 90px 0; }
+html:not(.has-3d) .story3d__sticky { width: min(1180px, 100% - 40px); margin-inline: auto; }
+html:not(.has-3d) .story3d__step { margin-bottom: 2.2rem; }
+
+/* ---------- Speisekarten-Vorschau (Startseite) ---------- */
+.menu-teaser { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.menu-teaser__item {
+  display: flex; flex-direction: column; gap: .2rem; padding: 1.6rem 1.4rem; border-radius: var(--radius);
+  background: var(--cream); text-decoration: none; border: 1px solid var(--cream-dark);
+  transition: transform .3s var(--ease), background .3s, box-shadow .3s;
+}
+.menu-teaser__item span { font-family: var(--font-ar); font-size: 1.8rem; color: var(--gold); line-height: 1.2; }
+.menu-teaser__item strong { font-family: var(--font-display); font-size: 1.35rem; color: var(--olive-800); }
+.menu-teaser__item small { color: var(--sumac); font-weight: 600; }
+.menu-teaser__item:hover { transform: translateY(-4px); background: var(--white); box-shadow: var(--shadow); }
+.menu-teaser__cta { text-align: center; margin-top: 2.2rem; }
+
 /* Wort-für-Wort-Animation der Überschriften */
 .split .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
 .split .w > span { display: inline-block; will-change: transform; }
@@ -415,6 +470,21 @@ address { font-style: normal; font-size: 1.15rem; line-height: 1.7; margin-botto
   .hero { padding-top: 84px; }
   .hero__grid { gap: 1rem; }
   .hero__visual { order: -1; width: min(78vw, 340px); }
+
+  /* 3D-Geschichte am Handy: Manakish oben, Text unten */
+  .has-3d .story3d__sticky {
+    grid-template-columns: 1fr; grid-template-rows: 1fr auto; align-items: stretch;
+    width: calc(100% - 32px); padding: 70px 0 28px;
+  }
+  .has-3d .story3d__stage { grid-column: 1; grid-row: 1; align-self: center; width: min(86vw, 46svh); }
+  .has-3d .story3d__text { grid-column: 1; grid-row: 2; }
+  .has-3d .story3d__steps { min-height: 15.5rem; }
+  .story3d__step h2 { font-size: 2rem; }
+  .story3d__step p { font-size: 1rem; }
+  .story3d__eyebrow { margin-bottom: .3rem; }
+  .has-3d .story3d__progress { margin-top: .6rem; }
+  .menu-teaser { grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .menu-teaser__item { padding: 1.2rem 1.1rem; }
   .hero.has-3d .hero__visual { width: min(90vw, 420px); margin-top: -.5rem; }
   .hero.has-3d .hero__badge { left: auto; right: -6px; bottom: 4%; padding: .6rem .9rem; }
   .hero.has-3d .hero__badge span { font-size: 1.4rem; }
