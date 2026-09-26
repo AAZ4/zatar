@@ -3,6 +3,7 @@
    ========================================================= */
 html { scroll-behavior: smooth; }
 .page-menu { background: var(--cream); }
+[hidden] { display: none !important; }
 
 /* ---------- Kopf ---------- */
 .page-hero {
@@ -84,6 +85,10 @@ html { scroll-behavior: smooth; }
   background: #fbf1e6; padding: .3rem .7rem; border-radius: 10px;
 }
 .menu-empty { text-align: center; color: var(--muted); padding: 2rem 0; }
+.menu-count {
+  display: inline-block; margin: 1.6rem 0 0; padding: .45rem 1rem; border-radius: 999px;
+  background: #e3ebd2; color: var(--olive-800); font-weight: 600; font-size: .9rem;
+}
 .page-menu .menu__note { text-align: center; color: var(--muted); font-size: .85rem; margin: 0 0 3rem; }
 
 /* ---------- Handy ---------- */

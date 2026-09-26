@@ -12,6 +12,7 @@
   const vegToggle = document.getElementById("vegToggle");
   const empty = document.getElementById("menuEmpty");
   const chipsBar = document.getElementById("chips");
+  const count = document.getElementById("menuCount");
   if (!page) return;
 
   const fmt = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" });
@@ -107,6 +108,13 @@
       total += visible;
     });
     empty.hidden = total > 0;
+    if (count) {
+      const active = q || vegOnly;
+      count.hidden = !active || total === 0;
+      count.textContent = vegOnly && !q
+        ? `🌿 ${total} vegetarische Gerichte`
+        : `${total} ${total === 1 ? "Treffer" : "Treffer"}${vegOnly ? " (nur vegetarisch)" : ""}`;
+    }
     lastActive = "";
     spy();
   }
@@ -116,6 +124,9 @@
     vegToggle.setAttribute("aria-pressed", String(vegOnly));
     vegToggle.classList.toggle("is-active", vegOnly);
     filter();
+    // zum Anfang der Speisekarte springen, damit man das Ergebnis sieht
+    const first = sections.find(s => !s.hidden);
+    if (first && window.scrollY > first.offsetTop) scrollToSection(first);
   });
 
   // Direktlink auf eine Kategorie (z. B. speisekarte.html#fatayer)
