@@ -378,6 +378,18 @@ address { font-style: normal; font-size: 1.15rem; line-height: 1.7; margin-botto
 .legal h2 { font-size: 1.4rem; margin-top: 2rem; }
 .page-legal .nav { background: var(--olive-900); }
 
+/* ---------- Karussell-Punkte ---------- */
+.carousel-dots { display: none; justify-content: center; gap: 8px; margin-top: -4px; }
+.carousel-dots button {
+  width: 8px; height: 8px; padding: 0; border: 0; border-radius: 99px; background: #d4c7a8; cursor: pointer;
+  transition: width .3s var(--ease), background .3s;
+}
+.carousel-dots button.is-active { width: 24px; background: var(--olive-800); }
+.swipe-hint { display: none; text-align: center; font-size: .8rem; color: var(--muted); margin: -1.8rem 0 1rem; letter-spacing: .04em; }
+
+/* ---------- Aktionsleiste unten (Handy) ---------- */
+.action-bar { display: none; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px) {
   .signature__grid, .spice__grid { grid-template-columns: repeat(2, 1fr); }
@@ -402,20 +414,60 @@ address { font-style: normal; font-size: 1.15rem; line-height: 1.7; margin-botto
   /* Handy: 3D-Manakish zuerst, direkt sichtbar */
   .hero { padding-top: 84px; }
   .hero__grid { gap: 1rem; }
-  .hero.has-3d .hero__visual { order: -1; width: min(78vw, 330px); }
+  .hero__visual { order: -1; width: min(78vw, 340px); }
+  .hero.has-3d .hero__visual { width: min(90vw, 420px); margin-top: -.5rem; }
   .hero.has-3d .hero__badge { left: auto; right: -6px; bottom: 4%; padding: .6rem .9rem; }
   .hero.has-3d .hero__badge span { font-size: 1.4rem; }
-  .features__grid, .order__buttons, .reviews__grid { grid-template-columns: 1fr; }
+  .features__grid, .order__buttons { grid-template-columns: 1fr; }
+
+  /* Handy: Klassiker & Bewertungen als Wisch-Karussell (wie in Liefer-Apps) */
+  .carousel {
+    display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: 16px;
+    margin-inline: calc(50% - 50vw); padding: 6px 16px 22px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch; perspective: none;
+  }
+  .carousel::-webkit-scrollbar { display: none; }
+  .carousel > * { flex: 0 0 min(80vw, 340px); scroll-snap-align: start; }
+  .carousel .dish__img { aspect-ratio: 16 / 11; }
+  .carousel .dish__img span { font-size: 2rem; }
+  .carousel .dish__img::before { width: 58%; }
+  .carousel .dish__img--fatayer::before { width: 50%; }
+  .carousel .dish__body { padding: 1.1rem 1.1rem 1.3rem; }
+  .carousel .review { padding: 1.6rem 1.4rem 1.3rem; }
   .menu__list { grid-template-columns: 1fr; }
   .story__visual { max-width: 340px; margin: 0 auto; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
   .footer__grid > :first-child { grid-column: 1 / -1; }
   .section { padding: 80px 0; }
 }
+@media (max-width: 860px) {
+  .carousel-dots, .swipe-hint { display: flex; justify-content: center; }
+  .action-bar {
+    display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 8px;
+    position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 60;
+    padding: 8px; border-radius: 18px;
+    background: rgba(31, 42, 28, .92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 16px 40px -12px rgba(0,0,0,.55); border: 1px solid rgba(226,196,106,.18);
+    transform: translateY(130%); transition: transform .45s var(--ease);
+  }
+  .action-bar.is-visible { transform: none; }
+  .action-bar a {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    min-height: 52px; border-radius: 12px; text-decoration: none; color: var(--cream); font-size: .74rem; font-weight: 600;
+  }
+  .action-bar a svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .action-bar a.is-primary { background: var(--gold); color: var(--olive-900); flex-direction: row; gap: 8px; font-size: .9rem; }
+  .footer { padding-bottom: 110px; }
+}
 @media (max-width: 520px) {
   body { font-size: 16px; }
   .container { width: calc(100% - 32px); }
-  .signature__grid, .spice__grid { grid-template-columns: 1fr; }
+  .spice__grid { grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .spice { padding: 1.4rem 1rem; }
+  .spice h3 { font-size: .98rem; }
+  .spice p { font-size: .85rem; }
+  .spice__dot { width: 48px; height: 48px; margin-bottom: .9rem; }
   .hero__facts { gap: 1.2rem; }
   .hero__facts strong { font-size: 1.25rem; }
   .hero__badge { left: 0; }

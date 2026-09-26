@@ -199,13 +199,33 @@
       });
     });
 
-    // 3D-Karten: klappen beim Scrollen nach vorne
-    [".feature", ".dish", ".review", ".spice"].forEach(sel => {
-      gsap.utils.toArray(sel).forEach((card, i) => {
+    const mm = gsap.matchMedia();
+
+    // Desktop: 3D-Karten klappen beim Scrollen nach vorne
+    mm.add("(min-width: 861px)", () => {
+      [".feature", ".dish", ".review", ".spice"].forEach(sel => {
+        gsap.utils.toArray(sel).forEach((card, i) => {
+          gsap.from(card, {
+            y: 80, rotateX: -35, rotateY: i % 2 ? 8 : -8, opacity: 0, transformOrigin: "50% 100%",
+            transformPerspective: 900, duration: 1.2, ease: "power3.out", delay: (i % 4) * 0.08,
+            scrollTrigger: { trigger: card, start: "top 100%" }
+          });
+        });
+      });
+    });
+
+    // Handy: ruhige, saubere Einblendung – Karussells gleiten als Ganzes von rechts herein
+    mm.add("(max-width: 860px)", () => {
+      gsap.utils.toArray(".carousel").forEach(row => {
+        gsap.from(row.children, {
+          x: 60, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.08,
+          scrollTrigger: { trigger: row, start: "top 90%" }
+        });
+      });
+      gsap.utils.toArray(".feature, .spice").forEach(card => {
         gsap.from(card, {
-          y: 80, rotateX: -35, rotateY: i % 2 ? 8 : -8, opacity: 0, transformOrigin: "50% 100%",
-          transformPerspective: 900, duration: 1.2, ease: "power3.out", delay: (i % 4) * 0.08,
-          scrollTrigger: { trigger: card, start: "top 100%" }
+          y: 30, opacity: 0, duration: 0.7, ease: "power2.out",
+          scrollTrigger: { trigger: card, start: "top 95%" }
         });
       });
     });
@@ -265,6 +285,52 @@
 
     // Nach dem Laden von Schriften Positionen neu berechnen
     if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
+  }
+
+  /* ---------- Karussell (Handy): Punkte-Anzeige ---------- */
+  document.querySelectorAll(".carousel").forEach(row => {
+    const items = [...row.children];
+    const dots = document.createElement("div");
+    dots.className = "carousel-dots";
+    dots.setAttribute("aria-hidden", "true");
+    items.forEach((item, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.tabIndex = -1;
+      b.addEventListener("click", () => row.scrollTo({ left: item.offsetLeft - row.offsetLeft - 16, behavior: "smooth" }));
+      dots.appendChild(b);
+    });
+    row.after(dots);
+    const update = () => {
+      const center = row.scrollLeft + row.clientWidth / 2;
+      let best = 0, bestDist = Infinity;
+      items.forEach((item, i) => {
+        const c = item.offsetLeft - row.offsetLeft + item.offsetWidth / 2;
+        const d = Math.abs(c - center);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      if (row.scrollLeft < 8) best = 0;
+      if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 8) best = items.length - 1;
+      [...dots.children].forEach((d, i) => d.classList.toggle("is-active", i === best));
+    };
+    let ticking = false;
+    row.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { update(); ticking = false; });
+    }, { passive: true });
+    update();
+  });
+
+  /* ---------- Aktionsleiste (Handy): erscheint nach dem Startbereich ---------- */
+  const bar = document.querySelector(".action-bar");
+  const heroEl = document.querySelector(".hero");
+  if (bar && heroEl) {
+    const footer = document.querySelector(".footer");
+    let pastHero = false, atFooter = false;
+    const sync = () => bar.classList.toggle("is-visible", pastHero && !atFooter);
+    new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }, { threshold: 0.15 }).observe(heroEl);
+    if (footer) new IntersectionObserver(([e]) => { atFooter = e.isIntersecting; sync(); }).observe(footer);
   }
 
   document.getElementById("year").textContent = now.getFullYear();

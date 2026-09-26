@@ -152,14 +152,26 @@ function init() {
     const cx = ar.left - hr.left + ar.width / 2;
     const cy = ar.top - hr.top + ar.height / 2;
     baseCenter.set((cx / w - 0.5) * viewW, -(cy / h - 0.5) * viewH, 0);
-    const px = Math.min(ar.width, ar.height) * 0.92;
+    small = mqSmall.matches;
+    // Handy: Manakish füllt den Bereich fast ganz aus
+    const px = Math.min(ar.width, ar.height) * (small ? 1.02 : 0.92);
     baseScale = (px / w) * viewW / (R * 2);
   }
+  const mqSmall = window.matchMedia("(max-width: 860px)");
+  let small = mqSmall.matches;
+
+  // Wichtig: erst das 3D-Layout aktivieren, DANN messen –
+  // sonst wird die Position des alten (2D-)Layouts verwendet.
+  hero.classList.add("has-3d");
   layout();
   window.addEventListener("resize", layout);
-  if ("ResizeObserver" in window) new ResizeObserver(layout).observe(hero);
-
-  hero.classList.add("has-3d");
+  window.addEventListener("load", layout);
+  if (document.fonts) document.fonts.ready.then(layout);
+  if ("ResizeObserver" in window) {
+    const ro = new ResizeObserver(layout);
+    ro.observe(hero);
+    ro.observe(anchor);
+  }
 
   /* ---------- Interaktion ---------- */
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
@@ -185,7 +197,7 @@ function init() {
     const t = clock.elapsedTime;
     const progress = Math.min(1, Math.max(0, window.scrollY / hero.offsetHeight));
 
-    if (intro < 1) intro = Math.min(1, intro + dt / 1.6);
+    if (intro < 1) intro = Math.min(1, intro + dt / (small ? 1.1 : 1.6));
     const e = 1 - Math.pow(1 - intro, 4); // easeOutQuart
 
     pointer.x += (pointer.tx - pointer.x) * 0.06;
@@ -196,13 +208,17 @@ function init() {
     // Position & Größe
     holder.position.set(
       baseCenter.x,
-      baseCenter.y + progress * viewH * 0.35 + (reduceMotion ? 0 : Math.sin(t * 0.8) * 0.06),
+      baseCenter.y + progress * viewH * (small ? 0.12 : 0.35) + (reduceMotion ? 0 : Math.sin(t * 0.8) * 0.06),
       0
     );
-    holder.scale.setScalar(baseScale * (0.6 + 0.4 * e) * (1 + progress * 0.25));
+    // Handy: sofort volle Größe, kein Wachsen beim Scrollen
+    holder.scale.setScalar(small
+      ? baseScale * (0.85 + 0.15 * e)
+      : baseScale * (0.6 + 0.4 * e) * (1 + progress * 0.25));
 
-    // Neigung: zu Beginn Draufsicht, beim Scrollen kippt sie
-    tilt.rotation.x = 0.95 - progress * 0.75 + pointer.y * 0.18 + (1 - e) * 0.9;
+    // Neigung: Handy fast Draufsicht (wirkt größer), Desktop schräger
+    const baseTilt = small ? 0.5 : 0.95;
+    tilt.rotation.x = baseTilt - progress * (small ? 0.35 : 0.75) + pointer.y * 0.18 + (1 - e) * 0.9;
     tilt.rotation.z = -0.12 + pointer.x * -0.15;
     bread.rotation.y = spin + (1 - e) * -2.2;
 
