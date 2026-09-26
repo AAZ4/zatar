@@ -54,6 +54,13 @@
   const chips = [...chipList.querySelectorAll(".chip")];
   const sections = [...page.querySelectorAll(".menu-cat")];
 
+  /* ---------- Kategorie-Leiste direkt unter der Navigation andocken ---------- */
+  const navEl = document.querySelector(".nav");
+  const dock = () => { if (chipsBar && navEl) chipsBar.style.top = navEl.offsetHeight + "px"; };
+  dock();
+  window.addEventListener("resize", dock);
+  if ("ResizeObserver" in window && navEl) new ResizeObserver(dock).observe(navEl);
+
   /* ---------- Chips: sanft zur Kategorie scrollen ---------- */
   const offset = () => (document.querySelector(".nav")?.offsetHeight || 0) + (chipsBar?.offsetHeight || 0) + 8;
   const scrollToSection = (sec, smooth = true) =>
@@ -73,7 +80,8 @@
     chips.forEach(c => {
       const on = c.dataset.chip === key;
       c.classList.toggle("is-active", on);
-      if (on) c.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+      // Nur die Chip-Leiste seitlich verschieben – NICHT die Seite (scrollIntoView würde die Seite mitbewegen)
+      if (on) chipList.scrollTo({ left: c.offsetLeft - chipList.offsetLeft - (chipList.clientWidth - c.offsetWidth) / 2, behavior: "smooth" });
     });
   }
   let lastActive = "";
