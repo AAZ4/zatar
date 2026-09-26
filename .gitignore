@@ -1,0 +1,4 @@
+# Upload-Ordner für manuelles Hochladen (wird durch GitHub-Deploy ersetzt)
+vorschau/
+# Lokale Claude-Einstellungen
+.claude/

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zatar – Arabische Bäckerei & Küche in Darmstadt</title>
+  <meta name="description" content="Zatar in Darmstadt: frisch gebackene Manakish, Fatayer und Pizzen aus dem Ofen – nach arabischen Familienrezepten. Rheinstraße 46, täglich ab 9:30 Uhr.">
+  <meta name="theme-color" content="#1f2a1c">
+  <!-- TESTVERSION: vor dem offiziellen Livegang diese Zeile entfernen -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Open Graph (Vorschau beim Teilen in WhatsApp, Instagram, Facebook) -->
+  <meta property="og:title" content="Zatar – Arabische Bäckerei & Küche in Darmstadt">
+  <meta property="og:description" content="Frisch aus dem Ofen: Manakish, Fatayer & mehr. Rheinstraße 46, Darmstadt.">
+  <meta property="og:type" content="restaurant">
+  <meta property="og:locale" content="de_DE">
+  <!-- <meta property="og:image" content="https://www.IHRE-DOMAIN.de/images/og.jpg"> -->
+
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Strukturierte Daten für Google (Rich Results: Öffnungszeiten, Adresse, Speisekarte) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Zatar – Arabische Küche & Patisserie",
+    "servesCuisine": ["Arabisch", "Levantinisch", "Bäckerei"],
+    "priceRange": "€",
+    "telephone": "+49 6151 9679790",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rheinstraße 46",
+      "postalCode": "64283",
+      "addressLocality": "Darmstadt",
+      "addressCountry": "DE"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": 49.8715, "longitude": 8.6430 },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "09:30", "closes": "20:00" }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/zatar.patisserie/",
+      "https://www.facebook.com/p/%D8%B2%D8%B9%D8%AA%D8%B1-Zatar-61575074091990/"
+    ],
+    "acceptsReservations": "False",
+    "hasMenu": "#speisekarte"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav" id="top">
+    <div class="container nav__inner">
+      <a href="#top" class="brand" aria-label="Zatar Startseite">
+        <span class="brand__ar" lang="ar">زعتر</span>
+        <span class="brand__lat">ZATAR</span>
+      </a>
+      <nav class="nav__links" aria-label="Hauptnavigation">
+        <a href="#speisekarte">Speisekarte</a>
+        <a href="#bewertungen">Bewertungen</a>
+        <a href="#geschichte">Geschichte</a>
+        <a href="#zaatar">Was ist Za'atar?</a>
+        <a href="#catering">Catering</a>
+        <a href="#besuch">Besuch</a>
+      </nav>
+      <a href="#bestellen" class="btn btn--sm btn--gold nav__cta">Jetzt bestellen</a>
+      <button class="nav__toggle" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__pattern" aria-hidden="true"></div>
+      <div class="container hero__grid">
+        <div class="hero__text reveal">
+          <p class="eyebrow"><span class="status" id="openStatus">Darmstadt · Rheinstraße 46</span></p>
+          <h1 class="split">Frisch aus dem Ofen.<br><em>Wie zu Hause in der Levante.</em></h1>
+          <p class="lead">Manakish mit wildem Thymian, knusprige Fatayer und Pizzen aus dem Ofen – jeden Tag frisch gebacken, nach Rezepten, die von Generation zu Generation weitergegeben wurden.</p>
+          <div class="hero__actions">
+            <a href="#speisekarte" class="btn btn--gold">Speisekarte ansehen</a>
+            <a href="#bestellen" class="btn btn--ghost">Liefern lassen</a>
+          </div>
+          <ul class="hero__facts">
+            <li><strong>ab 4 €</strong><span>Manakish</span></li>
+            <li><strong>4,7 ★</strong><span>128 Google-Rezensionen</span></li>
+            <li><strong>täglich</strong><span>ab 9:30 Uhr</span></li>
+          </ul>
+        </div>
+
+        <div class="hero__visual reveal" aria-hidden="true">
+          <!-- Bild-Platzhalter: Ersetzen Sie das SVG durch ein echtes Foto, z. B.
+               <img src="images/hero.jpg" alt="Frische Manakish Zaatar"> -->
+          <div class="plate">
+            <svg viewBox="0 0 400 400" class="manakish">
+              <defs>
+                <radialGradient id="dough" cx="50%" cy="45%" r="55%">
+                  <stop offset="0%" stop-color="#e9c48a"/>
+                  <stop offset="70%" stop-color="#d49a52"/>
+                  <stop offset="100%" stop-color="#a86a2c"/>
+                </radialGradient>
+                <radialGradient id="topping" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#5b6b2e"/>
+                  <stop offset="100%" stop-color="#3f4b1f"/>
+                </radialGradient>
+              </defs>
+              <circle cx="200" cy="200" r="185" fill="url(#dough)"/>
+              <circle cx="200" cy="200" r="158" fill="url(#topping)"/>
+              <g id="specks"></g>
+            </svg>
+          </div>
+          <div class="hero__badge">
+            <span lang="ar">مناقيش</span>
+            <small>Signature<br>Manakish Zaatar</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VORTEILE ============ -->
+    <section class="features">
+      <div class="container features__grid">
+        <article class="feature reveal">
+          <div class="feature__icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3c2 3 5 4.5 5 8.5A5 5 0 0 1 7 11.5C7 9 8.5 7.5 9.5 6c.3 1.8 1.2 2.7 2 3 .2-2.2.2-4.2.5-6Z"/></svg>
+          </div>
+          <h3>Frisch aus dem Ofen</h3>
+          <p>Unser Teig wird täglich frisch angesetzt und jedes Gebäck erst gebacken, wenn Sie bestellen.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="feature__icon">
+            <svg viewBox="0 0 24 24"><path d="M5 19c8 0 14-6 14-14-8 0-14 6-14 14Zm0 0 7-7"/></svg>
+          </div>
+          <h3>Echte Zutaten</h3>
+          <p>Za'atar, Sumach, Akkawi-Käse und Muhammara – wir verwenden Gewürze und Zutaten wie im Original.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="feature__icon">
+            <svg viewBox="0 0 24 24"><path d="M3 12h13l-3-3m3 3-3 3M17 6h4v12h-4"/></svg>
+          </div>
+          <h3>Abholen oder liefern</h3>
+          <p>Kommen Sie vorbei oder bestellen Sie bequem über Wolt und Uber Eats – heiß bis vor Ihre Tür.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ LAUFBAND ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Manakish</span><span lang="ar">مناقيش</span><span>Fatayer</span><span lang="ar">فطاير</span><span>Za&#39;atar</span><span lang="ar">زعتر</span><span>Muhammara</span><span lang="ar">محمرة</span><span>Manakish</span><span lang="ar">مناقيش</span><span>Fatayer</span><span lang="ar">فطاير</span><span>Za&#39;atar</span><span lang="ar">زعتر</span><span>Muhammara</span><span lang="ar">محمرة</span>
+      </div>
+    </div>
+
+    <!-- ============ SIGNATURE ============ -->
+    <section class="section section--cream" id="signature">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">Unsere Lieblinge</p>
+          <h2 class="split">Die Klassiker des Hauses</h2>
+          <p class="section__sub">Wenn Sie zum ersten Mal bei uns sind – hiermit fangen Sie an.</p>
+        </header>
+
+        <div class="signature__grid">
+          <article class="dish reveal">
+            <div class="dish__img dish__img--zaatar"><span lang="ar">زعتر</span></div>
+            <div class="dish__body">
+              <div class="dish__row"><h3>Manakish Zaatar</h3><span class="price">4,00 €</span></div>
+              <p>Das Herz unseres Hauses: Fladenbrot mit wildem Oregano, Sesam, Sumach und Olivenöl.</p>
+              <span class="tag tag--veg">Vegetarisch</span>
+            </div>
+          </article>
+          <article class="dish reveal">
+            <div class="dish__img dish__img--muhammara"><span lang="ar">محمرة</span></div>
+            <div class="dish__body">
+              <div class="dish__row"><h3>Manakish Muhammara mit Käse</h3><span class="price">5,00 €</span></div>
+              <p>Würzige Paste aus gerösteter Paprika und Walnüssen, überbacken mit Käse.</p>
+              <span class="tag tag--veg">Vegetarisch</span>
+            </div>
+          </article>
+          <article class="dish reveal">
+            <div class="dish__img dish__img--fatayer"><span lang="ar">فطاير</span></div>
+            <div class="dish__body">
+              <div class="dish__row"><h3>Fatayer Spinat</h3><span class="price">5,00 €</span></div>
+              <p>Die klassische Teigtasche mit Spinat, Zwiebeln und einem Hauch Granatapfel.</p>
+              <span class="tag tag--veg">Vegetarisch</span>
+            </div>
+          </article>
+          <article class="dish reveal">
+            <div class="dish__img dish__img--lahm"><span lang="ar">لحم بعجين</span></div>
+            <div class="dish__body">
+              <div class="dish__row"><h3>Lahmajin</h3><span class="price">5,00 €</span></div>
+              <p>Hauchdünner Teig mit feinem Hackfleisch, Petersilie, Zwiebeln und Paprika.</p>
+              <span class="tag">Mit Fleisch</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============ BEWERTUNGEN ============ -->
+    <!-- Echte Google-Rezensionen (Stand: 24.09.2026), gekürzt. Zahlen gelegentlich aktualisieren. -->
+    <section class="section reviews" id="bewertungen">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">Das sagen unsere Gäste</p>
+          <h2 class="split">Mit Liebe gebacken – und geschmeckt</h2>
+        </header>
+
+        <div class="rating reveal">
+          <div class="rating__score">4,7</div>
+          <div>
+            <div class="rating__stars" aria-label="4,7 von 5 Sternen">★★★★★</div>
+            <p class="rating__meta">aus <strong>128 Rezensionen</strong> auf Google</p>
+          </div>
+        </div>
+
+        <div class="reviews__grid">
+          <figure class="review reveal">
+            <div class="review__stars" aria-label="5 von 5 Sternen">★★★★★</div>
+            <blockquote>„Die Spezialität des Hauses – die Manakish – sind einfach großartig: frisch gebacken, knusprig und unglaublich aromatisch. Egal ob Zaatar, Käse, Muhamara oder Fleisch, jede Sorte überzeugt …“</blockquote>
+            <figcaption><span class="review__avatar">S</span><span><strong>Sweety L</strong><small>Google-Rezension</small></span></figcaption>
+          </figure>
+          <figure class="review reveal">
+            <div class="review__stars" aria-label="5 von 5 Sternen">★★★★★</div>
+            <blockquote>„Wer auf der Suche nach authentischer arabischer Küche ist, kommt an diesem Restaurant nicht vorbei. … Das Foul war hervorragend zubereitet und perfekt abgeschmeckt … Auch beim Zatar merkt man sofort die Frische der Zutaten.“</blockquote>
+            <figcaption><span class="review__avatar">W</span><span><strong>Wafa Abdallah</strong><small>Google-Rezension</small></span></figcaption>
+          </figure>
+          <figure class="review reveal">
+            <div class="review__stars" aria-label="5 von 5 Sternen">★★★★★</div>
+            <blockquote>„Ich war heute zum ersten Mal im Zatar und bin wirklich begeistert! … Preis-Leistung ist hier wirklich unschlagbar! Das Essen war einfach unglaublich lecker: super frisches Gemüse, tolle eingelegte Beilagen und alles mit viel Liebe gemacht.“</blockquote>
+            <figcaption><span class="review__avatar">L</span><span><strong>Luisa</strong><small>Google-Rezension</small></span></figcaption>
+          </figure>
+        </div>
+
+        <div class="reviews__actions reveal">
+          <a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&query=Zatar+Rheinstra%C3%9Fe+46+64283+Darmstadt" target="_blank" rel="noopener">Alle Bewertungen auf Google</a>
+          <a class="btn btn--gold" href="https://www.google.com/maps/search/?api=1&query=Zatar+Rheinstra%C3%9Fe+46+64283+Darmstadt" target="_blank" rel="noopener">★ Bewertung schreiben</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SPEISEKARTE ============ -->
+    <section class="section" id="speisekarte">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">Speisekarte</p>
+          <h2 class="split">Alles, was unser Ofen hergibt</h2>
+        </header>
+
+        <div class="tabs reveal" role="tablist" aria-label="Kategorien">
+          <button class="tab is-active" role="tab" aria-selected="true" data-tab="manakish">Manakish</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="fatayer">Fatayer</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="pizza">Pizzen</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="drinks">Getränke</button>
+        </div>
+
+        <div class="menu" id="menu" aria-live="polite"><!-- wird per JS aus js/menu.js gefüllt --></div>
+
+        <p class="menu__note">
+          <span class="tag tag--veg">V</span> vegetarisch · ★ Empfehlung des Hauses ·
+          Alle Preise in Euro inkl. MwSt. Informationen zu Allergenen erhalten Sie gerne bei unserem Team.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ GESCHICHTE ============ -->
+    <section class="section section--dark story" id="geschichte">
+      <div class="story__pattern" aria-hidden="true"></div>
+      <div class="container story__grid">
+        <div class="story__visual reveal" aria-hidden="true">
+          <!-- Hier eignet sich ein Foto des Inhabers am Ofen oder des Ladens -->
+          <div class="story__frame">
+            <span lang="ar">من فرننا<br>إلى قلبك</span>
+            <small>„Aus unserem Ofen – in Ihr Herz"</small>
+          </div>
+        </div>
+        <div class="story__text reveal">
+          <p class="eyebrow eyebrow--light">Unsere Geschichte</p>
+          <h2 class="split">Ein Stück Heimat, mitten in Darmstadt</h2>
+          <!-- ✏️ ENTWURF: Bitte mit der echten Geschichte des Inhabers ersetzen/ergänzen -->
+          <p>In der Levante beginnt der Tag mit dem Duft von frischem Brot. An jeder Straßenecke steht ein kleiner Ofen, der Bäcker streicht Za'atar und Olivenöl auf den Teig, und wenige Minuten später hält man eine warme Manousheh in den Händen. Für uns ist das nicht nur Frühstück – es ist Erinnerung, Familie und Zuhause.</p>
+          <p>Genau dieses Gefühl wollten wir nach Darmstadt bringen. 2025 haben wir an der Rheinstraße unseren eigenen Ofen angefeuert: mit den Rezepten unserer Familie, mit Gewürzen, die wir sorgfältig auswählen, und mit dem Anspruch, dass jedes Stück so schmeckt wie bei uns zu Hause.</p>
+          <p>Heute backen wir jeden Tag für Studierende, Nachbarn, Familien und alle, die neugierig auf die arabische Küche sind. Wir freuen uns auf Ihren Besuch – <em>Ahlan wa Sahlan</em>, herzlich willkommen!</p>
+          <div class="signature">
+            <span class="signature__name">Kotaibeh Al Mhamid</span>
+            <span class="signature__role">Inhaber</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WAS IST ZA'ATAR ============ -->
+    <section class="section section--cream" id="zaatar">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">Gut zu wissen</p>
+          <h2 class="split">Was ist eigentlich Za'atar?</h2>
+          <p class="section__sub">Unser Name ist Programm: Za'atar (زعتر) ist die berühmteste Gewürzmischung der Levante – und die Seele unserer Manakish.</p>
+        </header>
+        <div class="spice__grid">
+          <article class="spice reveal">
+            <div class="spice__dot" style="--c:#5b6b2e"></div>
+            <h3>Wilder Thymian & Oregano</h3>
+            <p>Das getrocknete Kraut gibt der Mischung ihre grüne Farbe und das kräftige, erdige Aroma.</p>
+          </article>
+          <article class="spice reveal">
+            <div class="spice__dot" style="--c:#e9d6a8"></div>
+            <h3>Gerösteter Sesam</h3>
+            <p>Sorgt für Biss und ein nussiges Aroma, das beim Backen besonders schön zur Geltung kommt.</p>
+          </article>
+          <article class="spice reveal">
+            <div class="spice__dot" style="--c:#9b2d20"></div>
+            <h3>Sumach</h3>
+            <p>Die tiefrote Beere bringt eine feine, zitronige Säure – ganz ohne Zitrone.</p>
+          </article>
+          <article class="spice reveal">
+            <div class="spice__dot" style="--c:#c9a227"></div>
+            <h3>Olivenöl</h3>
+            <p>Verbindet alles zu einer aromatischen Paste, die großzügig auf den Teig gestrichen wird.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CATERING ============ -->
+    <section class="section catering" id="catering">
+      <div class="container catering__inner reveal">
+        <div>
+          <p class="eyebrow">Für Ihre Feier</p>
+          <h2 class="split">Catering & Partyplatten</h2>
+          <p>Geburtstag, Büro-Frühstück, Uni-Event oder Familienfeier: Wir stellen Ihnen eine bunte Auswahl aus Manakish, Fatayer und Mini-Pizzen zusammen – frisch gebacken und fertig zum Servieren.</p>
+          <ul class="checklist">
+            <li>Ab 10 Personen, individuell zusammengestellt</li>
+            <li>Viele vegetarische Optionen</li>
+            <li>Zum Abholen oder auf Anfrage geliefert</li>
+          </ul>
+        </div>
+        <div class="catering__card">
+          <h3>Jetzt anfragen</h3>
+          <p>Rufen Sie uns an oder schreiben Sie uns auf Instagram – am besten 2 Tage im Voraus.</p>
+          <a href="tel:+4961519679790" class="btn btn--gold btn--block">📞 06151 967 97 90</a>
+          <a href="https://www.instagram.com/zatar.patisserie/" target="_blank" rel="noopener" class="btn btn--outline btn--block">Nachricht auf Instagram</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BESTELLEN ============ -->
+    <section class="section section--olive" id="bestellen">
+      <div class="container order reveal">
+        <p class="eyebrow eyebrow--light">Keine Zeit vorbeizukommen?</p>
+        <h2 class="split">Wir liefern zu Ihnen nach Hause</h2>
+        <p class="section__sub section__sub--light">Bestellen Sie Ihre Lieblinge bequem über unsere Lieferpartner.</p>
+        <div class="order__buttons">
+          <a class="order__btn" href="https://wolt.com/de/deu/darmstadt/restaurant/zatar-arabische-kchedarmstadt" target="_blank" rel="noopener">
+            <strong>Wolt</strong><span>Jetzt bestellen →</span>
+          </a>
+          <a class="order__btn" href="https://www.ubereats.com/de/store/zatar-arabische-kuche/ykQxKYyoU3-AmatqnmtpwA" target="_blank" rel="noopener">
+            <strong>Uber Eats</strong><span>Jetzt bestellen →</span>
+          </a>
+          <a class="order__btn" href="tel:+4961519679790">
+            <strong>Abholung</strong><span>Telefonisch vorbestellen →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BESUCH / KONTAKT ============ -->
+    <section class="section" id="besuch">
+      <div class="container visit">
+        <div class="visit__info reveal">
+          <p class="eyebrow">Besuchen Sie uns</p>
+          <h2 class="split">Mitten in Darmstadt</h2>
+          <address>
+            <strong>Zatar – Arabische Küche</strong><br>
+            Rheinstraße 46<br>
+            64283 Darmstadt
+          </address>
+          <p class="visit__hint">Zentral an der Rheinstraße – zwischen Hauptbahnhof und Luisenplatz.</p>
+          <div class="visit__contact">
+            <a href="tel:+4961519679790">06151 967 97 90</a>
+            <a href="https://www.instagram.com/zatar.patisserie/" target="_blank" rel="noopener">@zatar.patisserie</a>
+          </div>
+
+          <h3 class="hours__title">Öffnungszeiten</h3>
+          <table class="hours" id="hours">
+            <tbody>
+              <tr data-day="1"><th>Montag</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="2"><th>Dienstag</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="3"><th>Mittwoch</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="4"><th>Donnerstag</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="5"><th>Freitag</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="6"><th>Samstag</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="0"><th>Sonntag</th><td>09:30 – 20:00</td></tr>
+            </tbody>
+          </table>
+          <a class="btn btn--gold" href="https://www.google.com/maps/dir/?api=1&destination=Zatar+Rheinstra%C3%9Fe+46+64283+Darmstadt" target="_blank" rel="noopener">Route planen</a>
+        </div>
+
+        <div class="visit__map reveal">
+          <!-- Datenschutz: Die Karte wird erst nach Klick geladen (DSGVO-freundlich) -->
+          <div class="map-consent" id="mapConsent">
+            <p>Mit dem Laden der Karte werden Daten an OpenStreetMap übertragen.</p>
+            <button class="btn btn--outline" id="loadMap">Karte anzeigen</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INSTAGRAM ============ -->
+    <section class="section section--cream insta">
+      <div class="container reveal">
+        <p class="eyebrow">Folgen Sie uns</p>
+        <h2 class="split">Frisch auf Instagram</h2>
+        <p class="section__sub">Neue Kreationen, Tagesangebote und ein Blick hinter den Ofen.</p>
+        <a href="https://www.instagram.com/zatar.patisserie/" target="_blank" rel="noopener" class="btn btn--gold">@zatar.patisserie folgen</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <a href="#top" class="brand brand--footer">
+          <span class="brand__ar" lang="ar">زعتر</span>
+          <span class="brand__lat">ZATAR</span>
+        </a>
+        <p>Arabische Bäckerei & Küche<br>Rheinstraße 46 · 64283 Darmstadt</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <a href="#speisekarte">Speisekarte</a>
+        <a href="#geschichte">Geschichte</a>
+        <a href="#catering">Catering</a>
+        <a href="#besuch">Anfahrt</a>
+      </div>
+      <div>
+        <h4>Rechtliches</h4>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <span>© <span id="year"></span> Zatar Darmstadt</span>
+      <span lang="ar">أهلاً وسهلاً</span>
+    </div>
+  </footer>
+
+  <!-- Animations-Bibliotheken (lokal, keine Daten an Dritte) -->
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/main.js"></script>
+  <script type="module" src="js/hero3d.js"></script>
+</body>
+</html>
