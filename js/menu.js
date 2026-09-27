@@ -3,7 +3,8 @@
  * Quelle: offizielle Speisekarte des Restaurants (PDF "Zaatar_kleiner.pdf"), Stand September 2026.
  * Preise = Preise im Restaurant (bei Lieferdiensten können sie abweichen).
  *
- * Felder: name, ar (arabischer Name), desc, price, veg (vegetarisch), star (Empfehlung des Hauses)
+ * Felder: name, ar (arabischer Name), desc, price, veg (vegetarisch), star (Empfehlung des Hauses),
+ *         vegan (true = vegan, "wunsch" = auf Wunsch vegan zubereitbar) – vegane Gerichte haben immer auch veg: true
  * Kategorie-Feld noBadge: keine V-Kennzeichnung anzeigen (z. B. Getränke)
  */
 window.ZATAR_MENU = {
@@ -12,12 +13,12 @@ window.ZATAR_MENU = {
     ar: "مناقيش",
     intro: "Offenes Fladenbrot frisch aus dem Steinofen – das traditionelle Frühstück der Levante.",
     items: [
-      { name: "Zatar", ar: "زعتر", desc: "Gewürzmischung aus Thymian", price: 2.0, veg: true, star: true },
+      { name: "Zatar", ar: "زعتر", desc: "Gewürzmischung aus Thymian", price: 2.0, veg: true, star: true, vegan: true },
       { name: "Zatar mit Käse", ar: "زعتر جبنة", desc: "Gewürzmischung aus Thymian mit Käse", price: 2.5, veg: true },
-      { name: "Zatar mit Gemüse", ar: "زعتر خضار", desc: "Gewürzmischung aus Thymian mit Gemüse", price: 3.5, veg: true },
+      { name: "Zatar mit Gemüse", ar: "زعتر خضار", desc: "Gewürzmischung aus Thymian mit Gemüse", price: 3.5, veg: true, vegan: true },
       { name: "Zatar mit Muhammara", ar: "زعتر محمرة", desc: "Gewürzmischung aus Thymian mit Paprikapaste", price: 3.0, veg: true },
       { name: "Zatar Muhammara Käse", ar: "زعتر محمرة مع جبنة", desc: "Gewürzmischung aus Thymian mit Paprikapaste und Käse", price: 3.5, veg: true, star: true },
-      { name: "Muhammara", ar: "محمرة", desc: "Würziger Aufstrich aus Paprikapaste", price: 2.0, veg: true },
+      { name: "Muhammara", ar: "محمرة", desc: "Würziger Aufstrich aus Paprikapaste", price: 2.0, veg: true, vegan: true },
       { name: "Muhammara mit Käse", ar: "محمرة جبنة", desc: "Würzige Paprikapaste und Käse", price: 2.5, veg: true },
       { name: "Akkawi Käse", ar: "جبنة عكاوي", desc: "Nahöstlicher Salzlakenkäse", price: 2.5, veg: true },
       { name: "Kashkawan Käse", ar: "جبنة قشقوان", desc: "Gouda-Käse", price: 2.5, veg: true },
@@ -57,14 +58,14 @@ window.ZATAR_MENU = {
     items: [
       { name: "Sucuk", ar: "سجق و جبنة تركي", desc: "Teigtaschen mit Sucuk und Käse gefüllt", price: 2.5 },
       { name: "Martadella", ar: "مارتديلا جبنة", desc: "Teigtaschen mit Hähnchenwurst gefüllt", price: 2.5 },
-      { name: "Oliven", ar: "زيتون جبنة", desc: "Teigtaschen mit Oliven gefüllt", price: 2.5, veg: true },
+      { name: "Oliven", ar: "زيتون جبنة", desc: "Teigtaschen mit Oliven gefüllt – auf Wunsch ohne Käse", price: 2.5, veg: true, vegan: "wunsch" },
       { name: "Labne", ar: "لبنة", desc: "Teigtaschen mit Frischkäse gefüllt", price: 2.5, veg: true },
       { name: "Labne mit Zatar", ar: "لبنة و زعتر", desc: "Teigtaschen mit Frischkäse und Zatar", price: 3.5, veg: true },
       { name: "Labne mit Gemüse", ar: "لبنة و خضرة", desc: "Teigtaschen mit Frischkäse und Gemüse gefüllt", price: 3.5, veg: true },
       { name: "Akkawi mit Oliven", ar: "عكاوي جبنة و زيتون", desc: "Pide mit nahöstlichem Salzlakenkäse und Oliven", price: 3.0, veg: true },
       { name: "Akkawi mit Tomaten", ar: "عكاوي جبنة و بندورة", desc: "Pide mit nahöstlichem Salzlakenkäse und Tomaten", price: 3.0, veg: true },
       { name: "Akkawi mit Spinat", ar: "عكاوي جبنة و سبانخ", desc: "Pide mit nahöstlichem Salzlakenkäse und Spinat", price: 3.0, veg: true },
-      { name: "Spinat", ar: "سبانخ", desc: "Teigtasche mit Spinat gefüllt", price: 2.5, veg: true },
+      { name: "Spinat", ar: "سبانخ", desc: "Teigtasche mit Spinat gefüllt", price: 2.5, veg: true, vegan: true },
       { name: "Spinat mit Käse", ar: "سبانخ جبنة", desc: "Teigtaschen mit Spinat und Käse gefüllt", price: 3.0, veg: true }
     ]
   },
@@ -73,17 +74,17 @@ window.ZATAR_MENU = {
     ar: "صحون",
     intro: "Frühstück und Mittag wie in der Heimat – Falafel, Hummus, Foul und mehr.",
     items: [
-      { name: "Falafel-Teller", ar: "صحن فلافل", desc: "Knusprige Falafel", price: 7.5, veg: true, star: true },
+      { name: "Falafel-Teller", ar: "صحن فلافل", desc: "Knusprige Falafel", price: 7.5, veg: true, star: true, vegan: true },
       { name: "Foul mit Joghurt", ar: "صحن فول باللبن", desc: "Saubohnen mit Joghurt, Knoblauch und Olivenöl", price: 7.5, veg: true, star: true },
-      { name: "Musabbaha", ar: "صحن مسبحة", desc: "Ganze Kichererbsen mit Tahina und Gewürzen", price: 7.5, veg: true },
-      { name: "Hummus", ar: "صحن حمص", desc: "Hausgemachter Hummus", price: 7.5, veg: true },
+      { name: "Musabbaha", ar: "صحن مسبحة", desc: "Ganze Kichererbsen mit Tahina und Gewürzen", price: 7.5, veg: true, vegan: true },
+      { name: "Hummus", ar: "صحن حمص", desc: "Hausgemachter Hummus", price: 7.5, veg: true, vegan: true },
       { name: "Fatteh (klein)", ar: "تسقية حجم صغير", desc: "Brot mit Joghurt, Kichererbsen und Nüssen", price: 7.5, veg: true },
       { name: "Fatteh (groß)", ar: "تسقية حجم كبير", desc: "Brot mit Joghurt, Kichererbsen und Nüssen", price: 9.5, veg: true },
       { name: "Eier mit Sucuk", ar: "بيض بالسجق", desc: "Gebratene Eier mit würziger Rindswurst (Sucuk)", price: 7.5 },
       { name: "Rührei", ar: "بيض مقلي", desc: "Frisch zubereitet", price: 6.5, veg: true },
-      { name: "Gemüseteller", ar: "صحن خضار", desc: "Frisches Gemüse", price: 3.5, veg: true },
-      { name: "Falafel mini", ar: "فلافل خرطوش", desc: "Kleiner Falafel-Wrap", price: 3.0, veg: true },
-      { name: "Foul mit Kichererbsen", ar: "فول مدمس", desc: "Saubohnen mit Kichererbsen", price: 7.0, veg: true }
+      { name: "Gemüseteller", ar: "صحن خضار", desc: "Frisches Gemüse", price: 3.5, veg: true, vegan: true },
+      { name: "Falafel mini", ar: "فلافل خرطوش", desc: "Kleiner Falafel-Wrap", price: 3.0, veg: true, vegan: true },
+      { name: "Foul mit Kichererbsen", ar: "فول مدمس", desc: "Saubohnen mit Kichererbsen", price: 7.0, veg: true, vegan: true }
     ]
   },
   drinks: {

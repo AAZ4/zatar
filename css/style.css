@@ -291,6 +291,7 @@ html.lenis, html.lenis body { height: auto; }
   padding: .25em .7em; border-radius: 999px; background: var(--cream-dark); color: var(--muted);
 }
 .tag--veg { background: #e3ebd2; color: var(--olive-700); }
+.tag--vegan { background: #dcefd3; color: #1f5a2a; }
 
 /* ---------- Reviews ---------- */
 .reviews { background: var(--white); }

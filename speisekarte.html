@@ -50,9 +50,14 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <input type="search" id="menuSearch" placeholder="Gericht suchen, z. B. Käse, Spinat …" autocomplete="off" aria-label="Speisekarte durchsuchen">
         </label>
-        <button class="chip chip--toggle" id="vegToggle" type="button" aria-pressed="false">
-          <span class="chip__dot"></span> Nur vegetarisch
-        </button>
+        <div class="diet-filter" role="group" aria-label="Ernährung">
+          <button class="chip chip--toggle" data-diet="veg" type="button" aria-pressed="false">
+            <span class="chip__dot"></span> Vegetarisch
+          </button>
+          <button class="chip chip--toggle chip--vegan" data-diet="vegan" type="button" aria-pressed="false">
+            <span class="chip__dot"></span> 🌱 Vegan
+          </button>
+        </div>
       </div>
     </section>
 
@@ -70,7 +75,7 @@
     <div class="container">
       <p class="menu-empty" id="menuEmpty" hidden>Keine Treffer. Versuchen Sie einen anderen Suchbegriff.</p>
       <p class="menu__note">
-        <span class="menu__badge">V</span> vegetarisch · <span class="menu__star">★</span> Empfehlung des Hauses ·
+        <span class="menu__badge menu__badge--vegan">🌱 Vegan</span> vegan · <span class="menu__badge">V</span> vegetarisch (vegane Gerichte sind natürlich auch vegetarisch) · <span class="menu__star">★</span> Empfehlung des Hauses ·
         Alle Preise in Euro inkl. MwSt. und gelten im Restaurant – bei Lieferdiensten können sie abweichen. Informationen zu Allergenen erhalten Sie gerne bei unserem Team.
       </p>
     </div>

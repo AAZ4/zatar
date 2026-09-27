@@ -9,7 +9,7 @@
   const page = document.getElementById("menuPage");
   const chipList = document.getElementById("chipList");
   const search = document.getElementById("menuSearch");
-  const vegToggle = document.getElementById("vegToggle");
+  const dietButtons = [...document.querySelectorAll("[data-diet]")];
   const empty = document.getElementById("menuEmpty");
   const chipsBar = document.getElementById("chips");
   const count = document.getElementById("menuCount");
@@ -18,6 +18,14 @@
   const fmt = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" });
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+  // Nur die "strengste" Kennzeichnung zeigen: vegan > vegetarisch
+  function dietBadge(i) {
+    if (i.vegan === "wunsch") return '<span class="menu__badge menu__badge--vegan" title="Auf Wunsch vegan zubereitbar">🌱 Vegan auf Wunsch</span>';
+    if (i.vegan) return '<span class="menu__badge menu__badge--vegan" title="vegan">🌱 Vegan</span>';
+    if (i.veg) return '<span class="menu__badge" title="vegetarisch">V</span>';
+    return "";
+  }
 
   /* ---------- Rendern ---------- */
   const keys = Object.keys(data);
@@ -35,11 +43,11 @@
         </header>
         <div class="menu-cat__list">
           ${cat.items.map(i => `
-            <article class="dish-row${i.star ? " is-star" : ""}" data-veg="${i.veg ? 1 : 0}" data-search="${esc(norm(i.name + " " + i.desc + " " + (i.ar || "")))}">
+            <article class="dish-row${i.star ? " is-star" : ""}" data-veg="${i.veg ? 1 : 0}" data-vegan="${i.vegan ? 1 : 0}" data-food="${cat.noBadge ? 0 : 1}" data-search="${esc(norm(i.name + " " + i.desc + " " + (i.ar || "")))}">
               <div class="dish-row__main">
                 <h3>${esc(i.name)}
                   ${i.star ? '<span class="menu__star" title="Empfehlung des Hauses">★</span>' : ""}
-                  ${i.veg && !cat.noBadge ? '<span class="menu__badge" title="vegetarisch">V</span>' : ""}
+                  ${cat.noBadge ? "" : dietBadge(i)}
                 </h3>
                 ${i.desc ? `<p>${esc(i.desc)}</p>` : ""}
               </div>
@@ -102,15 +110,17 @@
     requestAnimationFrame(() => { spy(); ticking = false; });
   }, { passive: true });
 
-  /* ---------- Suche & Vegetarisch-Filter ---------- */
-  let vegOnly = false;
+  /* ---------- Suche & Filter vegetarisch / vegan ---------- */
+  let diet = "";   // "", "veg" (vegetarisch inkl. vegan) oder "vegan"
   function filter() {
     const q = norm(search.value.trim());
     let total = 0;
     sections.forEach(sec => {
       let visible = 0;
       sec.querySelectorAll(".dish-row").forEach(row => {
-        const show = (!q || row.dataset.search.includes(q)) && (!vegOnly || row.dataset.veg === "1");
+        // Ernährungsfilter gelten nur für Speisen (Getränke werden dann ausgeblendet)
+        const dietOk = !diet || (row.dataset.food === "1" && (diet === "veg" ? row.dataset.veg === "1" : row.dataset.vegan === "1"));
+        const show = (!q || row.dataset.search.includes(q)) && dietOk;
         row.hidden = !show;
         if (show) visible++;
       });
@@ -120,25 +130,29 @@
     });
     empty.hidden = total > 0;
     if (count) {
-      const active = q || vegOnly;
+      const active = q || diet;
+      const label = diet === "vegan" ? "vegan" : "vegetarisch";
       count.hidden = !active || total === 0;
-      count.textContent = vegOnly && !q
-        ? `🌿 ${total} vegetarische Gerichte`
-        : `${total} ${total === 1 ? "Treffer" : "Treffer"}${vegOnly ? " (nur vegetarisch)" : ""}`;
+      count.textContent = diet && !q
+        ? `${diet === "vegan" ? "🌱" : "🌿"} ${total} ${label}e Gerichte${diet === "veg" ? " (inkl. vegan)" : ""}`
+        : `${total} Treffer${diet ? ` (nur ${label})` : ""}`;
     }
     lastActive = "";
     spy();
   }
   search.addEventListener("input", filter);
-  vegToggle.addEventListener("click", () => {
-    vegOnly = !vegOnly;
-    vegToggle.setAttribute("aria-pressed", String(vegOnly));
-    vegToggle.classList.toggle("is-active", vegOnly);
+  dietButtons.forEach(btn => btn.addEventListener("click", () => {
+    diet = diet === btn.dataset.diet ? "" : btn.dataset.diet;   // erneutes Tippen schaltet aus
+    dietButtons.forEach(b => {
+      const on = b.dataset.diet === diet;
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
     filter();
     // zum Anfang der Speisekarte springen, damit man das Ergebnis sieht
     const first = sections.find(s => !s.hidden);
     if (first && window.scrollY > first.offsetTop) scrollToSection(first);
-  });
+  }));
 
   // Direktlink auf eine Kategorie (z. B. speisekarte.html#fatayer)
   window.addEventListener("load", () => {

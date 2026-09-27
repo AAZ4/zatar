@@ -53,6 +53,11 @@ html { scroll-behavior: smooth; }
 .chip.is-active { background: var(--olive-800); border-color: var(--olive-800); color: var(--cream); }
 .chip.is-empty { opacity: .4; }
 .chip__dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--olive-500); transition: background .25s; }
+.diet-filter { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+.diet-filter .chip--toggle { margin-top: 0 !important; }
+.chip--vegan.is-active, .page-hero .chip--vegan.is-active { background: #cfe8c4; border-color: #cfe8c4; color: #1f5a2a; }
+.chip--vegan.is-active .chip__dot { background: #2f7a3d; border-color: #2f7a3d; }
+.menu__badge--vegan { background: #dcefd3 !important; color: #1f5a2a !important; white-space: nowrap; }
 .page-hero .chip--toggle { margin-top: 1rem; background: transparent; color: var(--cream); border-color: rgba(247,241,229,.3); }
 .page-hero .chip--toggle .chip__dot { border-color: var(--gold-light); }
 .chip--toggle.is-active, .page-hero .chip--toggle.is-active { background: #e3ebd2; border-color: #e3ebd2; color: var(--olive-800); }
