@@ -240,8 +240,8 @@
     }
 
     // Parallax in der Geschichte
-    if (document.querySelector(".story")) gsap.fromTo(".story__frame", { y: 80, rotate: -3 }, {
-      y: -80, rotate: 2, ease: "none",
+    if (document.querySelector(".story")) gsap.fromTo(".story__frame", { y: 80 }, {
+      y: -80, ease: "none",
       scrollTrigger: { trigger: ".story", start: "top bottom", end: "bottom top", scrub: true }
     });
     if (document.querySelector(".story")) gsap.fromTo(".story__frame span", { y: 40 }, {
