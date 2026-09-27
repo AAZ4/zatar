@@ -22,6 +22,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 
+  <!-- 3D: Dateien sofort vorladen und die flache Ersatzgrafik gar nicht erst zeigen,
+       wenn das Gerät 3D kann (sonst sieht man kurz das alte 2D-Bild) -->
+  <link rel="modulepreload" href="js/hero3d.js">
+  <link rel="modulepreload" href="js/vendor/three.module.min.js">
+  <link rel="modulepreload" href="js/vendor/RoomEnvironment.js">
+  <script>
+    (function () {
+      try {
+        var c = document.createElement("canvas");
+        if (c.getContext("webgl2") || c.getContext("webgl")) {
+          var root = document.documentElement;
+          root.classList.add("will-3d");
+          // Notfall: falls 3D nach 10 s nicht geladen ist, doch die Ersatzgrafik zeigen
+          setTimeout(function () { if (!root.classList.contains("has-3d")) root.classList.remove("will-3d"); }, 10000);
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- Strukturierte Daten für Google (Rich Results: Öffnungszeiten, Adresse, Speisekarte) -->
   <script type="application/ld+json">
   {

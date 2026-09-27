@@ -139,7 +139,8 @@ p { margin: 0 0 1em; }
 /* ---------- 3D-Hero ---------- */
 .hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 .hero.has-3d .plate { visibility: hidden; animation: none; }
-.hero.has-3d .hero__visual { aspect-ratio: 1; }
+.will-3d .hero .plate { visibility: hidden; animation: none; }
+.hero.has-3d .hero__visual, .will-3d .hero .hero__visual { aspect-ratio: 1; }
 .hero.has-3d .hero__visual::before { content: none; }
 .hero__grid { z-index: 1; }
 
@@ -485,9 +486,9 @@ address { font-style: normal; font-size: 1.15rem; line-height: 1.7; margin-botto
   .has-3d .story3d__progress { margin-top: .6rem; }
   .menu-teaser { grid-template-columns: 1fr 1fr; gap: .8rem; }
   .menu-teaser__item { padding: 1.2rem 1.1rem; }
-  .hero.has-3d .hero__visual { width: min(90vw, 420px); margin-top: -.5rem; }
-  .hero.has-3d .hero__badge { left: auto; right: -6px; bottom: 4%; padding: .6rem .9rem; }
-  .hero.has-3d .hero__badge span { font-size: 1.4rem; }
+  .hero.has-3d .hero__visual, .will-3d .hero .hero__visual { width: min(90vw, 420px); margin-top: -.5rem; }
+  .hero.has-3d .hero__badge, .will-3d .hero .hero__badge { left: auto; right: -6px; bottom: 4%; padding: .6rem .9rem; }
+  .hero.has-3d .hero__badge span, .will-3d .hero .hero__badge span { font-size: 1.4rem; }
   .features__grid, .order__buttons { grid-template-columns: 1fr; }
 
   /* Handy: Klassiker & Bewertungen als Wisch-Karussell (wie in Liefer-Apps) */
