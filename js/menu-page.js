@@ -35,15 +35,18 @@
         </header>
         <div class="menu-cat__list">
           ${cat.items.map(i => `
-            <article class="dish-row${i.star ? " is-star" : ""}" data-veg="${i.veg ? 1 : 0}" data-search="${esc(norm(i.name + " " + i.desc))}">
+            <article class="dish-row${i.star ? " is-star" : ""}" data-veg="${i.veg ? 1 : 0}" data-search="${esc(norm(i.name + " " + i.desc + " " + (i.ar || "")))}">
               <div class="dish-row__main">
                 <h3>${esc(i.name)}
                   ${i.star ? '<span class="menu__star" title="Empfehlung des Hauses">★</span>' : ""}
-                  ${i.veg ? '<span class="menu__badge" title="vegetarisch">V</span>' : ""}
+                  ${i.veg && !cat.noBadge ? '<span class="menu__badge" title="vegetarisch">V</span>' : ""}
                 </h3>
-                <p>${esc(i.desc)}</p>
+                ${i.desc ? `<p>${esc(i.desc)}</p>` : ""}
               </div>
-              <span class="dish-row__price">${fmt.format(i.price)}</span>
+              <div class="dish-row__side">
+                <span class="dish-row__price">${fmt.format(i.price)}</span>
+                ${i.ar ? `<span class="dish-row__ar" lang="ar">${esc(i.ar)}</span>` : ""}
+              </div>
             </article>`).join("")}
         </div>
       </section>`;

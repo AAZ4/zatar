@@ -198,6 +198,7 @@ html:not(.has-3d) .story3d__step { margin-bottom: 2.2rem; }
 .menu-teaser__item small { color: var(--sumac); font-weight: 600; }
 .menu-teaser__item:hover { transform: translateY(-4px); background: var(--white); box-shadow: var(--shadow); }
 .menu-teaser__cta { text-align: center; margin-top: 2.2rem; }
+.menu-teaser__item--wide { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; }
 
 /* Wort-für-Wort-Animation der Überschriften */
 .split .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
