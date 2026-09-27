@@ -168,22 +168,31 @@
       );
     }
 
+    // Hero-Animationen warten auf den Ladebildschirm (Startzustand wird sofort gesetzt)
+    const heroIntro = [];
+    const ready = window.zatarReady || Promise.resolve();
+    ready.then(() => heroIntro.forEach(tw => tw.play()));
+
     // Überschriften: Wörter gleiten von unten herein
     document.querySelectorAll(".split").forEach(el => {
       const words = splitWords(el);
       const inHero = el.closest(".hero");
-      gsap.from(words, {
+      const tw = gsap.from(words, {
         yPercent: 110, rotate: 4, duration: inHero ? 1.1 : 0.9, ease: "power4.out",
-        stagger: inHero ? 0.07 : 0.04, delay: inHero ? 0.2 : 0,
+        stagger: inHero ? 0.07 : 0.04, delay: inHero ? 0.15 : 0,
+        paused: !!inHero,
         scrollTrigger: inHero ? null : { trigger: el, start: "top 88%" }
       });
+      if (inHero) heroIntro.push(tw);
     });
 
     // Hero-Text
-    gsap.from(".hero .lead, .hero__actions, .hero__facts li, .hero .eyebrow", {
-      y: 30, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.08, delay: 0.6
-    });
-    gsap.from(".hero__badge", { scale: 0.6, opacity: 0, rotate: -8, duration: 1, ease: "back.out(1.7)", delay: 1.2 });
+    heroIntro.push(gsap.from(".hero .lead, .hero__actions, .hero__facts li, .hero .eyebrow", {
+      y: 30, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.08, delay: 0.45, paused: true
+    }));
+    if (document.querySelector(".hero__badge")) heroIntro.push(gsap.from(".hero__badge", {
+      scale: 0.6, opacity: 0, rotate: -8, duration: 1, ease: "back.out(1.7)", delay: 0.9, paused: true
+    }));
     // Hero-Text verschwindet beim Scrollen leicht nach oben (Parallax)
     if (document.querySelector(".hero")) gsap.to(".hero__text", {
       yPercent: -18, opacity: 0.2, ease: "none",

@@ -109,6 +109,7 @@ function polarGeometry(rings, segs, tMaxFn, lift) {
 function init() {
   const small = () => mqSmall.matches;
   const lowPower = small();
+  if (window.zatarProgress) window.zatarProgress(0.88);
 
   // Erst das 3D-Layout aktivieren, dann messen
   document.documentElement.classList.add("has-3d");
@@ -265,6 +266,9 @@ function init() {
   const clock = new THREE.Clock();
   const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), sc = new THREE.Vector3(), p = new THREE.Vector3();
   let intro = reduceMotion ? 1 : 0, spin = 0, activeStep = -1;
+  // Einflug-Animation erst starten, wenn der Ladebildschirm weggleitet
+  let started = !window.zatarReady;
+  if (window.zatarReady) window.zatarReady.then(() => { started = true; });
   const layerOpacity = [1, 1, 1, 1];
   const layerMats = [[doughMat, doughBottom.material], [toppingMat], [seedMat], [sumacMat]];
 
@@ -299,7 +303,7 @@ function init() {
       }
     }
 
-    if (intro < 1) intro = Math.min(1, intro + dt / (sm ? 1.1 : 1.6));
+    if (intro < 1 && started) intro = Math.min(1, intro + dt / (sm ? 1.1 : 1.6));
     const e = 1 - Math.pow(1 - intro, 4);
 
     pointer.x += (pointer.tx - pointer.x) * 0.06;
@@ -391,6 +395,8 @@ function init() {
   document.addEventListener("visibilitychange", wake);
   window.addEventListener("resize", wake);
   loop();
+  // erstes Bild ist gezeichnet -> Ladebildschirm darf verschwinden
+  requestAnimationFrame(() => requestAnimationFrame(() => window.zatarLoaded && window.zatarLoaded()));
 }
 
 /* ======================================================================
