@@ -38,24 +38,6 @@ window.ZATAR_MENU = {
       { name: "Martadella", ar: "مرتديلا بندورة جبنة", desc: "Hähnchenwurst, Tomaten und Käse", price: 3.0 }
     ]
   },
-  pizza: {
-    title: "Pizzen",
-    titleAr: "بيتزا",
-    introAr: "من فرن الحجر، وكلّها مع جبنة.",
-    ar: "بيتزا",
-    intro: "Aus dem Steinofen – alle Pizzen werden mit Käse zubereitet.",
-    items: [
-      { name: "Margherita", ar: "بيتزا مرغريتا", desc: "Tomatensoße und Käse", price: 9.0, veg: true },
-      { name: "Vegetarisch", ar: "بيتزا خضار", desc: "Belegt mit Oliven, Paprika und Champignons", price: 11.0, veg: true },
-      { name: "Martadella", ar: "بيتزا مرتديلا", desc: "Mit Hähnchen-Mortadella", price: 10.5 },
-      { name: "Spinat", ar: "بيتزا سبانخ", desc: "Mit Spinat", price: 10.5, veg: true },
-      { name: "Vier Jahreszeiten", ar: "بيتزا الفصول الأربعة", desc: "Belegt mit Paprika, Oliven, Tomaten und Champignons", price: 11.0, veg: true },
-      { name: "Hähnchen", ar: "بيتزا دجاج", desc: "Mit Hähnchen", price: 11.0 },
-      { name: "Sucuk", ar: "بيتزا سجق", desc: "Mit Sucuk", price: 10.0 },
-      { name: "Salami", ar: "بيتزا سلامي", desc: "Mit Salami", price: 10.0 },
-      { name: "Champignons", ar: "بيتزا فطر", desc: "Mit Champignons", price: 10.0, veg: true }
-    ]
-  },
   fatayer: {
     title: "Fatayer",
     titleAr: "فطاير",
@@ -74,6 +56,24 @@ window.ZATAR_MENU = {
       { name: "Akkawi mit Spinat", ar: "عكاوي جبنة و سبانخ", desc: "Pide mit nahöstlichem Salzlakenkäse und Spinat", price: 3.0, veg: true },
       { name: "Spinat", ar: "سبانخ", desc: "Teigtasche mit Spinat gefüllt", price: 2.5, veg: true, vegan: true },
       { name: "Spinat mit Käse", ar: "سبانخ جبنة", desc: "Teigtaschen mit Spinat und Käse gefüllt", price: 3.0, veg: true }
+    ]
+  },
+  pizza: {
+    title: "Pizzen",
+    titleAr: "بيتزا",
+    introAr: "من فرن الحجر، وكلّها مع جبنة.",
+    ar: "بيتزا",
+    intro: "Aus dem Steinofen – alle Pizzen werden mit Käse zubereitet.",
+    items: [
+      { name: "Margherita", ar: "بيتزا مرغريتا", desc: "Tomatensoße und Käse", price: 9.0, veg: true },
+      { name: "Vegetarisch", ar: "بيتزا خضار", desc: "Belegt mit Oliven, Paprika und Champignons", price: 11.0, veg: true },
+      { name: "Martadella", ar: "بيتزا مرتديلا", desc: "Mit Hähnchen-Mortadella", price: 10.5 },
+      { name: "Spinat", ar: "بيتزا سبانخ", desc: "Mit Spinat", price: 10.5, veg: true },
+      { name: "Vier Jahreszeiten", ar: "بيتزا الفصول الأربعة", desc: "Belegt mit Paprika, Oliven, Tomaten und Champignons", price: 11.0, veg: true },
+      { name: "Hähnchen", ar: "بيتزا دجاج", desc: "Mit Hähnchen", price: 11.0 },
+      { name: "Sucuk", ar: "بيتزا سجق", desc: "Mit Sucuk", price: 10.0 },
+      { name: "Salami", ar: "بيتزا سلامي", desc: "Mit Salami", price: 10.0 },
+      { name: "Champignons", ar: "بيتزا فطر", desc: "Mit Champignons", price: 10.0, veg: true }
     ]
   },
   teller: {
