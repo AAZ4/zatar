@@ -12,7 +12,7 @@ window.ZATAR_MENU = {
   manakish: {
     title: "Manakish",
     titleAr: "مناقيش",
-    introAr: "طازة من فرن الحجر – ترويقة الشام على أصولها.",
+    introAr: "طازة من فرن الحجر – ترويقة عربية على أصولها.",
     ar: "مناقيش",
     intro: "Offenes Fladenbrot frisch aus dem Steinofen – das traditionelle Frühstück der Levante.",
     items: [
