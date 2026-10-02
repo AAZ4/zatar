@@ -12,7 +12,7 @@ window.ZATAR_MENU = {
   manakish: {
     title: "Manakish",
     titleAr: "مناقيش",
-    introAr: "خبزنا المفتوح طازة من فرن الحجر – فطور الشام على أصوله.",
+    introAr: "طازة من فرن الحجر – ترويقة الشام على أصولها.",
     ar: "مناقيش",
     intro: "Offenes Fladenbrot frisch aus dem Steinofen – das traditionelle Frühstück der Levante.",
     items: [
@@ -41,7 +41,7 @@ window.ZATAR_MENU = {
   pizza: {
     title: "Pizzen",
     titleAr: "بيتزا",
-    introAr: "من فرن الحجر – وكل البيتزا مع الجبنة.",
+    introAr: "من فرن الحجر، وكلّها مع جبنة.",
     ar: "بيتزا",
     intro: "Aus dem Steinofen – alle Pizzen werden mit Käse zubereitet.",
     items: [
@@ -59,7 +59,7 @@ window.ZATAR_MENU = {
   fatayer: {
     title: "Fatayer",
     titleAr: "فطاير",
-    introAr: "فطاير محشوة وبيدا – مقرمشة من الخارج وطرية من الداخل.",
+    introAr: "فطاير محشية وبيدا – مقرمشة من برّا وطرية من جوّا.",
     ar: "فطاير",
     intro: "Gefüllte Teigtaschen und Pide – knusprig außen, saftig innen.",
     items: [
@@ -79,7 +79,7 @@ window.ZATAR_MENU = {
   teller: {
     title: "Arabische Teller",
     titleAr: "صحون عربية",
-    introAr: "فطور وغداء مثل البيت – فلافل، حمص، فول وأكثر.",
+    introAr: "ترويقة وغدا متل البيت – فلافل، حمص، فول وأكتر.",
     ar: "صحون",
     intro: "Frühstück und Mittag wie in der Heimat – Falafel, Hummus, Foul und mehr.",
     items: [
@@ -99,7 +99,7 @@ window.ZATAR_MENU = {
   drinks: {
     title: "Getränke",
     titleAr: "مشروبات",
-    introAr: "باردة ومنعشة – أو فنجان قهوة بعد الأكل.",
+    introAr: "شي بارد يبرّد عالقلب، أو فنجان قهوة بعد الأكل.",
     ar: "مشروبات",
     intro: "Kalt, erfrischend – oder ein Mokka zum Abschluss.",
     noBadge: true,

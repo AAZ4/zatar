@@ -93,13 +93,13 @@
   const hhmm = m => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
 
   if (mins >= open && mins < close) {
-    status.textContent = isAr ? `مفتوح الآن · حتى الساعة ${hhmm(close)}` : `Jetzt geöffnet · bis ${hhmm(close)} Uhr`;
+    status.textContent = isAr ? `فاتحين هلّق · لحد الساعة ${hhmm(close)}` : `Jetzt geöffnet · bis ${hhmm(close)} Uhr`;
     status.classList.add("is-open");
   } else {
     const opensToday = mins < open;
     const opensAt = hhmm(opensToday ? open : HOURS[(day + 1) % 7][0]);
     status.textContent = isAr
-      ? `مغلق الآن · نفتح ${opensToday ? "اليوم" : "غداً"} الساعة ${opensAt}`
+      ? `مسكّرين هلّق · منفتح ${opensToday ? "اليوم" : "بكرا"} الساعة ${opensAt}`
       : `Geschlossen · öffnet ${opensToday ? "heute" : "morgen"} um ${opensAt} Uhr`;
     status.classList.add("is-closed");
   }

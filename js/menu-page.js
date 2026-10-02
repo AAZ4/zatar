@@ -17,8 +17,8 @@
   if (!page) return;
   const isAr = document.documentElement.lang === "ar";
   const T = isAr ? {
-    from: "من", star: "توصية البيت", vegan: "🌱 فيغان", veganTitle: "خالٍ من أي منتج حيواني",
-    veganWish: "🌱 فيغان عند الطلب", veganWishTitle: "يمكن تحضيره فيغان عند الطلب", veg: "نباتي", vegTitle: "بدون لحم"
+    from: "من", star: "بننصح فيها", vegan: "🌱 فيغان", veganTitle: "خالٍ من أي منتج حيواني",
+    veganWish: "🌱 فيغان حسب الطلب", veganWishTitle: "منعملها فيغان إذا طلبت", veg: "نباتي", vegTitle: "بدون لحم"
   } : {
     from: "ab", star: "Empfehlung des Hauses", vegan: "🌱 Vegan", veganTitle: "vegan",
     veganWish: "🌱 Vegan auf Wunsch", veganWishTitle: "Auf Wunsch vegan zubereitbar", veg: "V", vegTitle: "vegetarisch"
@@ -146,7 +146,7 @@
       if (isAr) {
         const label = diet === "vegan" ? "فيغان" : "نباتية";
         count.textContent = diet && !q
-          ? `${diet === "vegan" ? "🌱" : "🌿"} ${total} ${diet === "vegan" ? "أطباق فيغان" : "طبقاً نباتياً"}${diet === "veg" ? " (مع أطباق الفيغان)" : ""}`
+          ? `${diet === "vegan" ? "🌱" : "🌿"} ${total} ${diet === "vegan" ? "أكلة فيغان" : "أكلة نباتية"}${diet === "veg" ? " (مع الفيغان)" : ""}`
           : `${total} نتيجة${diet ? ` (${label} فقط)` : ""}`;
       } else {
         const label = diet === "vegan" ? "vegan" : "vegetarisch";
