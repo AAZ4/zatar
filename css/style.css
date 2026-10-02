@@ -88,6 +88,17 @@ p { margin: 0 0 1em; }
 .nav__links a::after { content: ""; position: absolute; left: 0; bottom: -4px; height: 2px; width: 0; background: var(--gold); transition: width .3s var(--ease); }
 .nav__links a:hover { color: var(--white); }
 .nav__links a:hover::after { width: 100%; }
+/* Sprachumschalter (immer sichtbar, auch auf dem Handy) */
+.lang-switch {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 40px; min-width: 44px; padding: 0 .9rem;
+  border-radius: 999px; border: 1.5px solid rgba(226,196,106,.55); color: var(--gold-light); text-decoration: none;
+  font-weight: 600; font-size: .9rem; white-space: nowrap; transition: background .25s, color .25s, border-color .25s;
+}
+.lang-switch[lang="ar"] { font-family: var(--font-ar); font-size: 1rem; }
+.lang-switch:hover { background: var(--gold); color: var(--olive-900); border-color: var(--gold); }
+.lang-switch:focus-visible, .nav__toggle:focus-visible, .btn:focus-visible, .chip:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
+@media (max-width: 1279px) { .lang-switch { margin-left: auto; } }
+
 /* Desktop: "Bestellen" steht schon als goldener Button rechts – Link nur im Handy-Menü */
 .nav__link--order { display: none; }
 @media (max-width: 860px) { .nav__link--order { display: inline; } }
@@ -451,12 +462,13 @@ address { font-style: normal; font-size: 1.15rem; line-height: 1.7; margin-botto
 /* ---------- Aktionsleiste unten (Handy) ---------- */
 .action-bar { display: none; }
 
-/* ---------- Navigation: Hamburger-Menü bis 1180 px (Tablets, kleine Laptops) ---------- */
+/* ---------- Navigation: Hamburger-Menü bis 1279 px (Tablets, kleine Laptops) ---------- */
 .nav__links a { white-space: nowrap; }
-@media (max-width: 1180px) {
+@media (max-width: 1279px) {
   .nav__links, .nav__cta { display: none; }
-  .nav__toggle { display: block; }
+  .nav__toggle { display: block; margin-left: .4rem; }
   .nav__link--order { display: inline; }
+  .nav__inner { gap: 1rem; }
   .nav.is-open .nav__links {
     display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
     background: var(--olive-900); padding: 1.5rem max(20px, calc((100% - 1180px) / 2)) 2rem; gap: 1.2rem;

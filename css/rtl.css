@@ -1,0 +1,73 @@
+/* =========================================================
+   Arabische Version (/ar/) – Leserichtung rechts → links
+   Wird NACH style.css (und ggf. speisekarte.css) geladen und spiegelt nur,
+   was nicht automatisch über dir="rtl" gespiegelt wird.
+   Schriften: Überschriften Reem Kufi, Fließtext Noto Kufi Arabic
+   (Fraunces/Inter haben keine arabischen Zeichen).
+   ========================================================= */
+:root {
+  --font-display: "Reem Kufi", "Noto Kufi Arabic", Tahoma, sans-serif;
+  --font-body: "Noto Kufi Arabic", "Reem Kufi", Tahoma, system-ui, sans-serif;
+}
+body { line-height: 1.85; }
+h1, h2, h3 { line-height: 1.35; letter-spacing: 0 !important; }
+.hero h1, .page-hero h1 { line-height: 1.25; }
+
+/* Arabische Schrift verträgt keine Sperrung und keine Kursivschrift */
+.eyebrow, .brand__lat, .story3d__num, .tag, .signature__role, .footer h4,
+.swipe-hint, .hero__badge small, .rating__stars, .review__stars { letter-spacing: 0; text-transform: none; }
+.eyebrow { font-size: .9rem; }
+em, .story__frame small, .signature__name, .page-hero__sub { font-style: normal; }
+.brand__lat { letter-spacing: .3em; }          /* lateinischer Schriftzug ZATAR bleibt gesperrt */
+.loader__lat { direction: ltr; }
+
+/* Zahlen, Uhrzeiten, Telefonnummern und Preise immer von links nach rechts */
+.price, .dish-row__price, .hours td, .rating__score, a[href^="tel:"], .ltr { direction: ltr; unicode-bidi: isolate; }
+bdi[dir="ltr"] { unicode-bidi: isolate; }
+
+/* ---------- Navigation ---------- */
+.nav__links { margin-left: 0; margin-right: auto; }
+.nav__links a::after { left: auto; right: 0; }
+.nav__toggle { margin-left: 0; margin-right: auto; }
+@media (max-width: 1279px) {
+  .lang-switch { margin-left: 0; margin-right: auto; }
+  .nav__toggle { margin-right: .4rem; margin-left: 0; }
+}
+.lang-switch[lang="de"] { font-family: "Inter", system-ui, sans-serif; font-size: .88rem; }
+
+/* ---------- Startbereich ---------- */
+.hero__badge { left: auto; right: -10px; }
+@media (max-width: 860px) {
+  .hero.has-3d .hero__badge, .will-3d .hero .hero__badge { right: auto; left: -6px; }
+}
+@media (max-width: 520px) { .hero__badge { right: 0; } }
+
+/* Laufband läuft in Leserichtung */
+.marquee__track { animation-name: marqueeRtl; }
+.marquee__track span { font-family: var(--font-ar); }
+@keyframes marqueeRtl { to { transform: translateX(50%); } }
+
+/* ---------- Bewertungen ---------- */
+.rating { text-align: right; }
+.review::before { right: auto; left: 1.4rem; content: "”"; }
+.review__note { display: block; color: var(--muted); font-size: .78rem; }
+
+/* ---------- Catering ---------- */
+.checklist li { padding-left: 0; padding-right: 2rem; }
+.checklist li::before { left: auto; right: 0; }
+
+/* ---------- Öffnungszeiten ---------- */
+.hours th { text-align: right; }
+.hours td { text-align: left; }
+.hours tr.is-today th::after { content: " · اليوم"; }
+
+/* ---------- Speisekarte (arabische Namen vorne) ---------- */
+.menu-cat__from { margin-left: 0; margin-right: .3rem; }
+.dish-row h3 { font-family: var(--font-display); font-size: 1.2rem; }
+.dish-row__de { color: var(--muted); font-family: "Inter", system-ui, sans-serif; font-size: .82rem; margin: .1rem 0 0; text-align: right; }
+.menu-cat__ar { font-size: 1.15rem; }
+.search input { font-family: var(--font-body); }
+.page-menu .menu__note { line-height: 1.9; }
+
+/* Knöpfe: Pfeile zeigen in Leserichtung */
+.order__btn span, .menu-teaser__cta .btn { unicode-bidi: plaintext; }

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قائمة الطعام – زعتر دارمشتات</title>
+  <meta name="description" content="قائمة طعام زعتر في دارمشتات: مناقيش من 2 €، فطاير، بيتزا، فلافل، حمص، فول ومشروبات – طازة من فرن الحجر، مع الأسعار.">
+  <meta name="theme-color" content="#1f2a1c">
+  <link rel="alternate" hreflang="de" href="../speisekarte.html">
+  <link rel="alternate" hreflang="ar" href="speisekarte.html">
+  <!-- TESTVERSION: vor dem offiziellen Livegang diese Zeile entfernen -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/speisekarte.css">
+  <link rel="stylesheet" href="../css/rtl.css">
+</head>
+<body class="page-menu">
+
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav is-scrolled" id="top">
+    <div class="container nav__inner">
+      <a href="index.html" class="brand" aria-label="زعتر – الصفحة الرئيسية">
+        <span class="brand__ar">زعتر</span>
+        <span class="brand__lat" lang="de">ZATAR</span>
+      </a>
+      <nav class="nav__links" aria-label="القائمة الرئيسية">
+        <a href="speisekarte.html" aria-current="page">قائمة الطعام</a>
+        <a href="index.html#bestellen" class="nav__link--order">التوصيل والاستلام</a>
+        <a href="index.html#geschichte">قصتنا</a>
+        <a href="index.html#catering">الضيافة والمناسبات</a>
+        <a href="index.html#besuch">الموقع والتواصل</a>
+      </nav>
+      <a href="index.html#bestellen" class="btn btn--sm btn--gold nav__cta">اطلب الآن</a>
+      <a href="../speisekarte.html" class="lang-switch" data-lang="de" hreflang="de" lang="de" aria-label="Deutsche Version – النسخة الألمانية">Deutsch</a>
+      <button class="nav__toggle" aria-label="فتح القائمة" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ الرأس ============ -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow eyebrow--light"><span class="status" id="openStatus">دارمشتات · Rheinstraße 44–46</span></p>
+        <h1>قائمة الطعام</h1>
+        <p class="page-hero__sub">طازة من فرن الحجر – كل يوم.</p>
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="menuSearch" placeholder="ابحث عن طبق، مثلاً: جبنة، سبانخ…" autocomplete="off" aria-label="ابحث في قائمة الطعام">
+        </label>
+        <div class="diet-filter" role="group" aria-label="النظام الغذائي">
+          <button class="chip chip--toggle" data-diet="veg" type="button" aria-pressed="false">
+            <span class="chip__dot"></span> نباتي
+          </button>
+          <button class="chip chip--toggle chip--vegan" data-diet="vegan" type="button" aria-pressed="false">
+            <span class="chip__dot"></span> 🌱 فيغان
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ الأقسام (تبقى في الأعلى) ============ -->
+    <div class="chips" id="chips">
+      <div class="container chips__inner">
+        <nav class="chips__list" id="chipList" aria-label="الأقسام"></nav>
+      </div>
+    </div>
+
+    <!-- ============ الأطباق (aus js/menu.js) ============ -->
+    <div class="container"><p class="menu-count" id="menuCount" aria-live="polite" hidden></p></div>
+    <div class="container menu-page" id="menuPage"></div>
+
+    <div class="container">
+      <p class="menu-empty" id="menuEmpty" hidden>لا توجد نتائج. جرّب كلمة بحث أخرى.</p>
+      <p class="menu__note">
+        <span class="menu__badge menu__badge--vegan">🌱 فيغان</span> خالٍ من أي منتج حيواني ·
+        <span class="menu__badge">نباتي</span> بدون لحم (أطباق الفيغان نباتية أيضاً) ·
+        <span class="menu__star">★</span> توصية البيت ·
+        الأسعار باليورو شاملة الضريبة وتسري في المطعم – قد تختلف لدى خدمات التوصيل. للاستفسار عن مسببات الحساسية يسعدنا مساعدتكم في المحل.
+      </p>
+    </div>
+
+    <!-- ============ اطلب ============ -->
+    <section class="section section--olive">
+      <div class="container order">
+        <p class="eyebrow eyebrow--light">جوعان؟</p>
+        <h2>اطلب أو مرّ علينا</h2>
+        <div class="order__buttons">
+          <a class="order__btn" href="https://wolt.com/de/deu/darmstadt/restaurant/zatar-arabische-kchedarmstadt" target="_blank" rel="noopener">
+            <strong>Wolt</strong><span>اطلب الآن ←</span>
+          </a>
+          <a class="order__btn" href="https://www.ubereats.com/de/store/zatar-arabische-kuche/ykQxKYyoU3-AmatqnmtpwA" target="_blank" rel="noopener">
+            <strong>Uber Eats</strong><span>اطلب الآن ←</span>
+          </a>
+          <a class="order__btn" href="tel:+4961519679790">
+            <strong>استلام من المحل</strong><span>اطلب مسبقاً بالهاتف ←</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ شريط سريع (للموبايل) ============ -->
+  <nav class="action-bar" aria-label="وصول سريع">
+    <a href="tel:+4961519679790">
+      <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+      اتصل بنا
+    </a>
+    <a href="https://www.google.com/maps/dir/?api=1&destination=Zatar+Rheinstra%C3%9Fe+46+64283+Darmstadt" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      الطريق
+    </a>
+    <a href="index.html#bestellen" class="is-primary">
+      <svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7Zm3 0V5a3 3 0 0 1 6 0v2"/></svg>
+      اطلب الآن
+    </a>
+  </nav>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <a href="index.html" class="brand brand--footer">
+          <span class="brand__ar">زعتر</span>
+          <span class="brand__lat" lang="de">ZATAR</span>
+        </a>
+        <p>مخبز ومطبخ شامي<br><span class="ltr">Rheinstraße 44–46 · 64283 Darmstadt</span></p>
+      </div>
+      <div>
+        <h4>روابط</h4>
+        <a href="index.html">الصفحة الرئيسية</a>
+        <a href="index.html#bestellen">التوصيل والاستلام</a>
+        <a href="index.html#geschichte">قصتنا</a>
+        <a href="index.html#catering">الضيافة والمناسبات</a>
+        <a href="index.html#besuch">الموقع والتواصل</a>
+      </div>
+      <div>
+        <h4>معلومات قانونية</h4>
+        <a href="../impressum.html" hreflang="de">بيانات الناشر (Impressum)</a>
+        <a href="../datenschutz.html" hreflang="de">حماية البيانات (Datenschutz)</a>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <span>© <span id="year"></span> زعتر دارمشتات</span>
+      <span lang="de">Herzlich willkommen</span>
+    </div>
+  </footer>
+
+  <script src="../js/menu.js"></script>
+  <script src="../js/menu-page.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -5,11 +5,14 @@
  *
  * Felder: name, ar (arabischer Name), desc, price, veg (vegetarisch), star (Empfehlung des Hauses),
  *         vegan (true = vegan, "wunsch" = auf Wunsch vegan zubereitbar) – vegane Gerichte haben immer auch veg: true
- * Kategorie-Feld noBadge: keine V-Kennzeichnung anzeigen (z. B. Getränke)
+ * Kategorie-Felder: title/intro (Deutsch), titleAr/introAr (arabische Version unter /ar/),
+ *                   noBadge: keine Ernährungs-Kennzeichnung anzeigen (z. B. Getränke)
  */
 window.ZATAR_MENU = {
   manakish: {
     title: "Manakish",
+    titleAr: "مناقيش",
+    introAr: "خبزنا المفتوح طازة من فرن الحجر – فطور الشام على أصوله.",
     ar: "مناقيش",
     intro: "Offenes Fladenbrot frisch aus dem Steinofen – das traditionelle Frühstück der Levante.",
     items: [
@@ -37,6 +40,8 @@ window.ZATAR_MENU = {
   },
   pizza: {
     title: "Pizzen",
+    titleAr: "بيتزا",
+    introAr: "من فرن الحجر – وكل البيتزا مع الجبنة.",
     ar: "بيتزا",
     intro: "Aus dem Steinofen – alle Pizzen werden mit Käse zubereitet.",
     items: [
@@ -53,6 +58,8 @@ window.ZATAR_MENU = {
   },
   fatayer: {
     title: "Fatayer",
+    titleAr: "فطاير",
+    introAr: "فطاير محشوة وبيدا – مقرمشة من الخارج وطرية من الداخل.",
     ar: "فطاير",
     intro: "Gefüllte Teigtaschen und Pide – knusprig außen, saftig innen.",
     items: [
@@ -71,6 +78,8 @@ window.ZATAR_MENU = {
   },
   teller: {
     title: "Arabische Teller",
+    titleAr: "صحون عربية",
+    introAr: "فطور وغداء مثل البيت – فلافل، حمص، فول وأكثر.",
     ar: "صحون",
     intro: "Frühstück und Mittag wie in der Heimat – Falafel, Hummus, Foul und mehr.",
     items: [
@@ -89,18 +98,20 @@ window.ZATAR_MENU = {
   },
   drinks: {
     title: "Getränke",
+    titleAr: "مشروبات",
+    introAr: "باردة ومنعشة – أو فنجان قهوة بعد الأكل.",
     ar: "مشروبات",
     intro: "Kalt, erfrischend – oder ein Mokka zum Abschluss.",
     noBadge: true,
     items: [
-      { name: "Cola", desc: "", price: 2.5, veg: true },
-      { name: "Fanta", desc: "", price: 2.5, veg: true },
-      { name: "Sprite", desc: "", price: 2.5, veg: true },
-      { name: "Wasser", desc: "", price: 1.5, veg: true },
-      { name: "Ayran", desc: "Joghurtgetränk", price: 2.0, veg: true },
-      { name: "Capri-Sonne", desc: "", price: 1.5, veg: true },
-      { name: "Eistee", desc: "", price: 1.5, veg: true },
-      { name: "Mokka", desc: "", price: 2.0, veg: true }
+      { name: "Cola", ar: "كولا", desc: "", price: 2.5, veg: true },
+      { name: "Fanta", ar: "فانتا", desc: "", price: 2.5, veg: true },
+      { name: "Sprite", ar: "سبرايت", desc: "", price: 2.5, veg: true },
+      { name: "Wasser", ar: "مياه", desc: "", price: 1.5, veg: true },
+      { name: "Ayran", ar: "عيران", desc: "Joghurtgetränk", price: 2.0, veg: true },
+      { name: "Capri-Sonne", ar: "كابري زون", desc: "", price: 1.5, veg: true },
+      { name: "Eistee", ar: "شاي مثلّج", desc: "", price: 1.5, veg: true },
+      { name: "Mokka", ar: "قهوة موكا", desc: "", price: 2.0, veg: true }
     ]
   }
 };

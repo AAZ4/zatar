@@ -6,6 +6,14 @@
   <title>Zatar – Arabische Bäckerei & Küche in Darmstadt</title>
   <meta name="description" content="Zatar in Darmstadt: frisch gebackene Manakish ab 2 €, Fatayer, Pizzen, Falafel, Hummus und Foul aus dem Steinofen. Rheinstraße 44–46, täglich ab 9:30 Uhr.">
   <meta name="theme-color" content="#1f2a1c">
+  <!-- Sprachversionen (vor Livegang auf absolute URLs mit eigener Domain umstellen) -->
+  <link rel="alternate" hreflang="de" href="./">
+  <link rel="alternate" hreflang="ar" href="ar/">
+  <link rel="alternate" hreflang="x-default" href="./">
+  <script>
+    /* Wer früher Arabisch gewählt hat, landet direkt auf der arabischen Startseite */
+    try { if (localStorage.getItem("zatarLang") === "ar") location.replace("ar/" + location.hash); } catch (e) {}
+  </script>
   <!-- TESTVERSION: vor dem offiziellen Livegang diese Zeile entfernen -->
   <meta name="robots" content="noindex, nofollow">
 
@@ -70,127 +78,35 @@
   }
   </script>
 
-  <!-- Ladebildschirm: direkt im HTML, damit er ab dem ersten Moment sichtbar ist -->
-  <style>
-    html.is-loading, html.is-loading body { overflow: hidden; }
-    .loader {
-      position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center;
-      background: radial-gradient(ellipse at 50% 40%, #33442b 0%, #1f2a1c 65%);
-      transition: transform 1s cubic-bezier(.76, 0, .24, 1);
-    }
-    .loader::after {
-      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
-      background: linear-gradient(90deg, transparent, #c9a227, transparent);
-    }
-    .is-loaded .loader { transform: translateY(-101%); pointer-events: none; }
-    .loader__inner { position: relative; text-align: center; transition: opacity .45s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
-    .is-loaded .loader__inner { opacity: 0; transform: translateY(-40px); }
-    .loader__ar {
-      display: block; color: #c9a227; line-height: 1;
-      font: 700 clamp(4.2rem, 20vw, 7.5rem)/1 "Reem Kufi", "Noto Kufi Arabic", "Segoe UI", Tahoma, sans-serif;
-      animation: ldIn .9s cubic-bezier(.2,.7,.2,1) both;
-    }
-    .loader__lat {
-      display: block; margin-top: .9rem; padding-left: .6em; color: #f7f1e5;
-      font: 600 .95rem/1 Georgia, "Times New Roman", serif; letter-spacing: .6em;
-      animation: ldIn .9s .15s cubic-bezier(.2,.7,.2,1) both;
-    }
-    .loader__bar {
-      width: 170px; height: 2px; margin: 2.2rem auto 1.1rem; border-radius: 2px; overflow: hidden;
-      background: rgba(247, 241, 229, .14); animation: ldIn .9s .25s both;
-    }
-    .loader__bar span {
-      display: block; height: 100%; transform-origin: left; transform: scaleX(0);
-      background: linear-gradient(90deg, #c9a227, #f0d77e);
-    }
-    .loader__tag {
-      margin: 0; color: rgba(226, 196, 106, .85); font: italic 1rem Georgia, serif;
-      animation: ldIn .9s .35s both;
-    }
-    .loader__seeds { position: absolute; inset: -120px -90px; pointer-events: none; }
-    .loader__seeds i {
-      position: absolute; bottom: 0; width: 7px; height: 3.5px; border-radius: 50%;
-      background: #efdcb0; opacity: 0; animation: ldSeed 2.4s ease-in infinite;
-    }
-    .loader__seeds i:nth-child(1) { left: 12%; animation-delay: .1s; }
-    .loader__seeds i:nth-child(2) { left: 30%; animation-delay: .7s; transform: rotate(40deg); }
-    .loader__seeds i:nth-child(3) { left: 48%; animation-delay: 1.3s; }
-    .loader__seeds i:nth-child(4) { left: 66%; animation-delay: .4s; }
-    .loader__seeds i:nth-child(5) { left: 82%; animation-delay: 1s; }
-    .loader__seeds i:nth-child(6) { left: 92%; animation-delay: 1.7s; background: #9b2d20; width: 4px; height: 4px; }
-    .loader__seeds i:nth-child(7) { left: 22%; animation-delay: 1.9s; background: #5b6b2e; }
-    @keyframes ldIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-    @keyframes ldSeed {
-      0% { opacity: 0; transform: translateY(0) rotate(0); }
-      20% { opacity: .9; }
-      100% { opacity: 0; transform: translateY(-260px) rotate(220deg); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .loader { transition: opacity .4s; }
-      .is-loaded .loader { transform: none; opacity: 0; }
-      .loader__seeds { display: none; }
-    }
-  </style>
+  <!-- Ladebildschirm + Sprachauswahl (im Kopf geladen, damit er ab dem ersten Moment sichtbar ist) -->
+  <link rel="stylesheet" href="css/loader.css">
 </head>
 <body>
-  <!-- ============ LADEBILDSCHIRM ============ -->
+  <!-- ============ LADEBILDSCHIRM + SPRACHAUSWAHL ============ -->
   <div class="loader" id="loader" aria-hidden="true">
     <div class="loader__inner">
       <div class="loader__seeds"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <span class="loader__ar" lang="ar">زعتر</span>
       <span class="loader__lat">ZATAR</span>
-      <div class="loader__bar"><span id="loaderBar"></span></div>
-      <p class="loader__tag">Frisch aus dem Steinofen</p>
+      <div class="loader__progress">
+        <div class="loader__bar"><span id="loaderBar"></span></div>
+        <p class="loader__tag">Frisch aus dem Steinofen</p>
+      </div>
+      <div class="lang-pick" id="langPick" role="dialog" aria-modal="true" aria-labelledby="langPickTitle" hidden>
+        <p class="lang-pick__title" id="langPickTitle"><span lang="de">Sprache wählen</span> · <span lang="ar">اختر اللغة</span></p>
+        <div class="lang-pick__options">
+          <a class="lang-opt" href="index.html" data-lang="de" hreflang="de" lang="de">
+            <span class="lang-opt__code" aria-hidden="true">DE</span><strong>Deutsch</strong><small>Willkommen</small>
+          </a>
+          <a class="lang-opt" href="ar/index.html" data-lang="ar" hreflang="ar" lang="ar" dir="rtl">
+            <span class="lang-opt__code" aria-hidden="true">ع</span><strong>العربية</strong><small>أهلاً وسهلاً</small>
+          </a>
+        </div>
+        <p class="lang-pick__note"><span lang="de">Jederzeit oben im Menü änderbar</span> · <span lang="ar">يمكنك تغييرها من الأعلى</span></p>
+      </div>
     </div>
   </div>
-  <script>
-    /* Ladebildschirm-Steuerung
-       - Fortschritt folgt dem echten Laden (HTML, Schriften, 3D-Modell)
-       - erster Besuch: mind. 0,9 s sichtbar (kein Aufblitzen), danach nur kurz
-       - spätestens nach 5 s öffnet sich die Seite auf jeden Fall */
-    (function () {
-      var root = document.documentElement;
-      var el = document.getElementById("loader");
-      var bar = document.getElementById("loaderBar");
-      var seen = false;
-      try { seen = sessionStorage.getItem("zatarSeen") === "1"; } catch (e) {}
-      root.classList.add("is-loading");
-      var start = performance.now();
-      var minTime = seen ? 250 : 900, maxTime = 5000;
-      var progress = 0, target = 0.12, finished = false, resolveReady;
-      window.zatarReady = new Promise(function (r) { resolveReady = r; });
-      window.zatarProgress = function (p) { if (p > target) target = p; };
-      (function tick() {
-        progress += (target - progress) * 0.09;
-        bar.style.transform = "scaleX(" + progress.toFixed(3) + ")";
-        if (!finished) requestAnimationFrame(tick);
-      })();
-      window.zatarLoaded = function () {
-        if (finished) return;
-        target = 1;
-        var wait = Math.max(0, minTime - (performance.now() - start));
-        setTimeout(function () {
-          finished = true;
-          bar.style.transform = "scaleX(1)";
-          setTimeout(function () {
-            root.classList.add("is-loaded");
-            root.classList.remove("is-loading");
-            try { sessionStorage.setItem("zatarSeen", "1"); } catch (e) {}
-            setTimeout(resolveReady, 250);                   // Inhalte starten, während der Vorhang hochgleitet
-            setTimeout(function () { el.remove(); }, 1200);
-          }, 180);
-        }, wait);
-      };
-      setTimeout(window.zatarLoaded, maxTime);
-      document.addEventListener("DOMContentLoaded", function () { window.zatarProgress(0.35); });
-      if (document.fonts) document.fonts.ready.then(function () { window.zatarProgress(0.6); });
-      window.addEventListener("load", function () {
-        window.zatarProgress(0.8);
-        // ohne 3D gibt es nichts mehr zu warten
-        if (!root.classList.contains("will-3d")) window.zatarLoaded();
-      });
-    })();
-  </script>
+  <script src="js/loader.js"></script>
 
   <!-- ============ NAVIGATION ============ -->
   <header class="nav" id="top">
@@ -208,6 +124,7 @@
         <a href="#besuch">Kontakt &amp; Anfahrt</a>
       </nav>
       <a href="#bestellen" class="btn btn--sm btn--gold nav__cta">Jetzt bestellen</a>
+      <a href="ar/index.html" class="lang-switch" data-lang="ar" hreflang="ar" lang="ar" aria-label="الموقع بالعربية – Arabische Version">العربية</a>
       <button class="nav__toggle" aria-label="Menü öffnen" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>

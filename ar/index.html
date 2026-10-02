@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>زعتر – مخبز ومطبخ شامي في دارمشتات</title>
+  <meta name="description" content="زعتر في دارمشتات: مناقيش طازة من فرن الحجر ابتداءً من 2 €، فطاير، بيتزا، فلافل، حمص وفول. Rheinstraße 44–46، يومياً من 9:30.">
+  <meta name="theme-color" content="#1f2a1c">
+  <!-- TESTVERSION: vor dem offiziellen Livegang diese Zeile entfernen -->
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Sprachversionen (vor Livegang auf absolute URLs mit eigener Domain umstellen) -->
+  <link rel="alternate" hreflang="de" href="../">
+  <link rel="alternate" hreflang="ar" href="./">
+  <link rel="alternate" hreflang="x-default" href="../">
+
+  <meta property="og:title" content="زعتر – مخبز ومطبخ شامي في دارمشتات">
+  <meta property="og:description" content="طعم الشام من فرن الحجر: مناقيش، فطاير وأكثر. Rheinstraße 44–46، دارمشتات.">
+  <meta property="og:type" content="restaurant">
+  <meta property="og:locale" content="ar_AR">
+
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/rtl.css">
+
+  <!-- 3D: Dateien sofort vorladen; flache Ersatzgrafik nur zeigen, wenn das Gerät kein 3D kann -->
+  <link rel="modulepreload" href="../js/hero3d.js">
+  <link rel="modulepreload" href="../js/vendor/three.module.min.js">
+  <link rel="modulepreload" href="../js/vendor/RoomEnvironment.js">
+  <script>
+    (function () {
+      try {
+        var c = document.createElement("canvas");
+        if (c.getContext("webgl2") || c.getContext("webgl")) {
+          var root = document.documentElement;
+          root.classList.add("will-3d");
+          setTimeout(function () { if (!root.classList.contains("has-3d")) root.classList.remove("will-3d"); }, 10000);
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Ladebildschirm + Sprachauswahl -->
+  <link rel="stylesheet" href="../css/loader.css">
+</head>
+<body>
+  <!-- ============ LADEBILDSCHIRM + SPRACHAUSWAHL ============ -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <div class="loader__seeds"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <span class="loader__ar">زعتر</span>
+      <span class="loader__lat">ZATAR</span>
+      <div class="loader__progress">
+        <div class="loader__bar"><span id="loaderBar"></span></div>
+        <p class="loader__tag" lang="ar">طازة من فرن الحجر</p>
+      </div>
+      <div class="lang-pick" id="langPick" role="dialog" aria-modal="true" aria-labelledby="langPickTitle" hidden>
+        <p class="lang-pick__title" id="langPickTitle"><span lang="ar">اختر اللغة</span> · <span lang="de">Sprache wählen</span></p>
+        <div class="lang-pick__options">
+          <a class="lang-opt" href="../index.html" data-lang="de" hreflang="de" lang="de" dir="ltr">
+            <span class="lang-opt__code" aria-hidden="true">DE</span><strong>Deutsch</strong><small>Willkommen</small>
+          </a>
+          <a class="lang-opt" href="index.html" data-lang="ar" hreflang="ar" lang="ar">
+            <span class="lang-opt__code" aria-hidden="true">ع</span><strong>العربية</strong><small>أهلاً وسهلاً</small>
+          </a>
+        </div>
+        <p class="lang-pick__note"><span lang="ar">يمكنك تغييرها من الأعلى</span> · <span lang="de">Jederzeit oben im Menü änderbar</span></p>
+      </div>
+    </div>
+  </div>
+  <script src="../js/loader.js"></script>
+
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav" id="top">
+    <div class="container nav__inner">
+      <a href="#top" class="brand" aria-label="زعتر – الصفحة الرئيسية">
+        <span class="brand__ar">زعتر</span>
+        <span class="brand__lat" lang="de">ZATAR</span>
+      </a>
+      <nav class="nav__links" aria-label="القائمة الرئيسية">
+        <a href="speisekarte.html">قائمة الطعام</a>
+        <a href="#bestellen" class="nav__link--order">التوصيل والاستلام</a>
+        <a href="#geschichte">قصتنا</a>
+        <a href="#catering">الضيافة والمناسبات</a>
+        <a href="#besuch">الموقع والتواصل</a>
+      </nav>
+      <a href="#bestellen" class="btn btn--sm btn--gold nav__cta">اطلب الآن</a>
+      <a href="../index.html" class="lang-switch" data-lang="de" hreflang="de" lang="de" aria-label="Deutsche Version – النسخة الألمانية">Deutsch</a>
+      <button class="nav__toggle" aria-label="فتح القائمة" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__pattern" aria-hidden="true"></div>
+      <div class="container hero__grid">
+        <div class="hero__text reveal">
+          <p class="eyebrow"><span class="status" id="openStatus">دارمشتات · Rheinstraße 44–46</span></p>
+          <h1 class="split">طعم الشام<br><em>من فرن الحجر</em></h1>
+          <p class="lead">مناقيش، فطاير، بيتزا، فلافل، حمص وفول –<br>طازة كل يوم عند زعتر.</p>
+          <div class="hero__actions">
+            <a href="speisekarte.html" class="btn btn--gold">قائمة الطعام</a>
+            <a href="#bestellen" class="btn btn--ghost">اطلب توصيل</a>
+          </div>
+          <ul class="hero__facts">
+            <li><strong>من <bdi dir="ltr">2 €</bdi></strong><span>المنقوشة</span></li>
+            <li><strong><bdi dir="ltr">4,7 ★</bdi></strong><span>128 تقييماً على Google</span></li>
+            <li><strong>يومياً</strong><span>من الساعة 9:30</span></li>
+          </ul>
+        </div>
+
+        <div class="hero__visual reveal" aria-hidden="true">
+          <div class="plate">
+            <svg viewBox="0 0 400 400" class="manakish">
+              <defs>
+                <radialGradient id="dough" cx="50%" cy="45%" r="55%">
+                  <stop offset="0%" stop-color="#e9c48a"/>
+                  <stop offset="70%" stop-color="#d49a52"/>
+                  <stop offset="100%" stop-color="#a86a2c"/>
+                </radialGradient>
+                <radialGradient id="topping" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#5b6b2e"/>
+                  <stop offset="100%" stop-color="#3f4b1f"/>
+                </radialGradient>
+              </defs>
+              <circle cx="200" cy="200" r="185" fill="url(#dough)"/>
+              <circle cx="200" cy="200" r="158" fill="url(#topping)"/>
+              <g id="specks"></g>
+            </svg>
+          </div>
+          <div class="hero__badge">
+            <span>مناقيش</span>
+            <small>طبق البيت<br>منقوشة زعتر</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3D: ما سرّ المنقوشة؟ ============ -->
+    <section class="story3d" id="zaatar" aria-label="ما سرّ المنقوشة؟">
+      <div class="story3d__sticky">
+        <div class="story3d__stage" aria-hidden="true"></div>
+        <div class="story3d__text">
+          <p class="eyebrow eyebrow--light story3d__eyebrow">ما سرّ منقوشتنا؟</p>
+          <div class="story3d__steps">
+            <article class="story3d__step" data-step="0">
+              <span class="story3d__num">01</span>
+              <h2>عجينة طازة كل صباح</h2>
+              <p>نعجنها يومياً بأيدينا ونخبزها في فرن الحجر: مقرمشة من برّا وطرية من جوّا.</p>
+            </article>
+            <article class="story3d__step" data-step="1">
+              <span class="story3d__num">02</span>
+              <h2>زعتر وزيت زيتون</h2>
+              <p>خلطة زعتر على أصولها، ممزوجة بزيت الزيتون حتى تصير غنية بالنكهة.</p>
+            </article>
+            <article class="story3d__step" data-step="2">
+              <span class="story3d__num">03</span>
+              <h2>سمسم محمّص</h2>
+              <p>قرمشة ونكهة تفوح مع حرارة الفرن.</p>
+            </article>
+            <article class="story3d__step" data-step="3">
+              <span class="story3d__num">04</span>
+              <h2>سمّاق</h2>
+              <p>حموضة لطيفة ولون أحمر يكمّل الخلطة.</p>
+            </article>
+            <article class="story3d__step" data-step="4">
+              <span class="story3d__num">05</span>
+              <h2>منقوشة زعتر</h2>
+              <p>كل شيء معاً، طازة من الفرن – بطعم فطور البيت، بـ <strong class="ltr">2,00 €</strong> فقط.</p>
+              <a href="speisekarte.html" class="btn btn--gold">قائمة الطعام</a>
+            </article>
+          </div>
+          <div class="story3d__progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ المزايا ============ -->
+    <section class="features">
+      <div class="container features__grid">
+        <article class="feature reveal">
+          <div class="feature__icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3c2 3 5 4.5 5 8.5A5 5 0 0 1 7 11.5C7 9 8.5 7.5 9.5 6c.3 1.8 1.2 2.7 2 3 .2-2.2.2-4.2.5-6Z"/></svg>
+          </div>
+          <h3>طازة من الفرن</h3>
+          <p>نحضّر العجينة كل يوم، ونخبز كل قطعة عند طلبها.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="feature__icon">
+            <svg viewBox="0 0 24 24"><path d="M5 19c8 0 14-6 14-14-8 0-14 6-14 14Zm0 0 7-7"/></svg>
+          </div>
+          <h3>مكوّنات البلد</h3>
+          <p>زعتر، سماق، جبنة عكاوي ومحمّرة – بنفس نكهات البلد.</p>
+        </article>
+        <article class="feature reveal">
+          <div class="feature__icon">
+            <svg viewBox="0 0 24 24"><path d="M21 12H8l3-3m-3 3 3 3M7 6H3v12h4"/></svg>
+          </div>
+          <h3>استلام أو توصيل</h3>
+          <p>زورونا في المحل أو اطلبوا عبر Wolt و Uber Eats – يصلكم الطلب ساخناً إلى الباب.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ شريط متحرك ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>مناقيش</span><span>فطاير</span><span>زعتر</span><span>محمّرة</span><span>فلافل</span><span>حمص</span><span>فول</span><span>فتّة</span><span>مناقيش</span><span>فطاير</span><span>زعتر</span><span>محمّرة</span><span>فلافل</span><span>حمص</span><span>فول</span><span>فتّة</span>
+      </div>
+    </div>
+
+    <!-- ============ الأكثر طلباً ============ -->
+    <section class="section section--cream" id="signature">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">الأكثر طلباً</p>
+          <h2 class="split">أطباق البيت المفضّلة</h2>
+          <p class="section__sub">أول زيارة لك؟ ابدأ من هنا.</p>
+        </header>
+
+        <p class="swipe-hint" aria-hidden="true">← اسحب للمزيد →</p>
+        <div class="signature__grid carousel" aria-label="أطباق البيت المفضّلة">
+          <article class="dish reveal">
+            <div class="dish__img dish__img--zaatar"><span>زعتر</span></div>
+            <div class="dish__body">
+              <div class="dish__row"><h3>منقوشة زعتر</h3><span class="price">2,00 €</span></div>
+              <p>قلب مطبخنا: خبز طازج مع خلطة الزعتر والسمسم والسماق وزيت الزيتون.</p>
+              <span class="tag tag--vegan">🌱 فيغان</span>
+            </div>
+          </article>
+          <article class="dish reveal">
+            <div class="dish__img dish__img--muhammara"><span>محمّرة</span></div>
+            <div class="dish__body">
+              <div class="dish__row"><h3>محمّرة بجبنة</h3><span class="price">2,50 €</span></div>
+              <p>معجونة الفليفلة الحمراء المتبّلة مع جبنة ذائبة.</p>
+              <span class="tag tag--veg">نباتي</span>
+            </div>
+          </article>
+          <article class="dish reveal">
+            <div class="dish__img dish__img--fatayer"><span>فطاير</span></div>
+            <div class="dish__body">
+              <div class="dish__row"><h3>فطيرة سبانخ بجبنة</h3><span class="price">3,00 €</span></div>
+              <p>الفطيرة التقليدية، محشوة بالسبانخ والجبنة.</p>
+              <span class="tag tag--veg">نباتي</span>
+            </div>
+          </article>
+          <article class="dish reveal">
+            <div class="dish__img dish__img--lahm"><span>لحم بعجين</span></div>
+            <div class="dish__body">
+              <div class="dish__row"><h3>لحم بعجين</h3><span class="price">2,50 €</span></div>
+              <p>عجينة رقيقة مع لحمة مفرومة متبّلة.</p>
+              <span class="tag">باللحمة</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ التقييمات ============ -->
+    <!-- Echte Google-Rezensionen (Stand: 24.09.2026), sinngemäß aus dem Deutschen übersetzt und als Übersetzung gekennzeichnet -->
+    <section class="section reviews" id="bewertungen">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">آراء ضيوفنا</p>
+          <h2 class="split">مخبوز بحب… وطعمه يشهد</h2>
+        </header>
+
+        <div class="rating reveal">
+          <div class="rating__score">4,7</div>
+          <div>
+            <div class="rating__stars" aria-label="4,7 من 5 نجوم">★★★★★</div>
+            <p class="rating__meta">من <strong>128 تقييماً</strong> على Google</p>
+          </div>
+        </div>
+
+        <div class="reviews__grid carousel" aria-label="التقييمات">
+          <figure class="review reveal">
+            <div class="review__stars" aria-label="5 من 5 نجوم">★★★★★</div>
+            <blockquote>«تخصص البيت – المناقيش – رائعة ببساطة: طازجة ومقرمشة وعطرة بشكل لا يُصدَّق. سواء بالزعتر أو الجبنة أو المحمّرة أو اللحم، كل نوع مقنع …»</blockquote>
+            <figcaption><span class="review__avatar">S</span><span><strong>Sweety L</strong><small>تقييم على Google · مترجم من الألمانية</small></span></figcaption>
+          </figure>
+          <figure class="review reveal">
+            <div class="review__stars" aria-label="5 من 5 نجوم">★★★★★</div>
+            <blockquote>«من يبحث عن مطبخ عربي أصيل لا يمكنه أن يتجاوز هذا المطعم. … الفول كان محضّراً بإتقان ومتبّلاً بشكل مثالي … وفي الزعتر تلاحظ فوراً طزاجة المكوّنات.»</blockquote>
+            <figcaption><span class="review__avatar">W</span><span><strong>Wafa Abdallah</strong><small>تقييم على Google · مترجم من الألمانية</small></span></figcaption>
+          </figure>
+          <figure class="review reveal">
+            <div class="review__stars" aria-label="5 من 5 نجوم">★★★★★</div>
+            <blockquote>«كانت هذه أول زيارة لي لزعتر وأنا متحمّسة جداً! … السعر مقابل الجودة لا يُضاهى! الأكل لذيذ بشكل لا يُصدَّق: خضار طازجة جداً، مخللات رائعة، وكل شيء محضّر بحب.»</blockquote>
+            <figcaption><span class="review__avatar">L</span><span><strong>Luisa</strong><small>تقييم على Google · مترجم من الألمانية</small></span></figcaption>
+          </figure>
+        </div>
+
+        <div class="reviews__actions reveal">
+          <a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&query=Zatar+Rheinstra%C3%9Fe+46+64283+Darmstadt" target="_blank" rel="noopener">كل التقييمات على Google</a>
+          <a class="btn btn--gold" href="https://www.google.com/maps/search/?api=1&query=Zatar+Rheinstra%C3%9Fe+46+64283+Darmstadt" target="_blank" rel="noopener">★ اكتب تقييماً</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ قائمة الطعام (معاينة) ============ -->
+    <section class="section" id="speisekarte">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">قائمة الطعام</p>
+          <h2 class="split">كل ما يخرج من فرننا</h2>
+          <p class="section__sub">أكثر من 50 صنفاً: مناقيش، فطاير، بيتزا وصحون عربية – طازة كل يوم من فرن الحجر.</p>
+        </header>
+        <div class="menu-teaser reveal">
+          <a class="menu-teaser__item" href="speisekarte.html#manakish">
+            <span>مناقيش</span><strong>زعتر، جبنة، لحم بعجين…</strong><small>من <bdi dir="ltr">2,00 €</bdi></small>
+          </a>
+          <a class="menu-teaser__item" href="speisekarte.html#fatayer">
+            <span>فطاير</span><strong>سبانخ، لبنة، عكاوي…</strong><small>من <bdi dir="ltr">2,50 €</bdi></small>
+          </a>
+          <a class="menu-teaser__item" href="speisekarte.html#pizza">
+            <span>بيتزا</span><strong>من فرن الحجر</strong><small>من <bdi dir="ltr">9,00 €</bdi></small>
+          </a>
+          <a class="menu-teaser__item" href="speisekarte.html#drinks">
+            <span>مشروبات</span><strong>عيران، قهوة وأكثر</strong><small>من <bdi dir="ltr">1,50 €</bdi></small>
+          </a>
+          <a class="menu-teaser__item menu-teaser__item--wide" href="speisekarte.html#teller">
+            <span>صحون عربية</span><strong>فلافل، حمص، فول، فتّة، مسبّحة</strong><small>من <bdi dir="ltr">3,00 €</bdi></small>
+          </a>
+        </div>
+        <div class="menu-teaser__cta reveal">
+          <a href="speisekarte.html" class="btn btn--gold">القائمة الكاملة ←</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ قصتنا ============ -->
+    <section class="section section--dark story" id="geschichte">
+      <div class="story__pattern" aria-hidden="true"></div>
+      <div class="container story__grid">
+        <div class="story__visual reveal" aria-hidden="true">
+          <div class="story__frame">
+            <span>من فرننا<br>إلى قلبك</span>
+            <small>مخبوز بحب في دارمشتات</small>
+          </div>
+        </div>
+        <div class="story__text reveal">
+          <p class="eyebrow eyebrow--light">قصتنا</p>
+          <h2 class="split">قطعة من البلد في قلب دارمشتات</h2>
+          <!-- ✏️ ENTWURF: mit der echten Geschichte des Inhabers abstimmen (wie die deutsche Version) -->
+          <p>في بلاد الشام يبدأ النهار برائحة الخبز الطازج. في كل حارة فرن صغير، يدهن الخبّاز الزعتر وزيت الزيتون على العجين، وبعد دقائق تكون المنقوشة الساخنة بين يديك. بالنسبة لنا ليست مجرد فطور – إنها ذكريات وعائلة وبيت.</p>
+          <p>أردنا أن نحمل هذا الإحساس إلى دارمشتات. في عام 2025 أشعلنا فرننا في شارع راين (Rheinstraße): بوصفات عائلتنا، وبتوابل نختارها بعناية، وبوعدٍ أن يكون طعم كل قطعة مثل طعم البيت.</p>
+          <p>اليوم نخبز كل يوم للطلاب والجيران والعائلات، ولكل من اشتاق لطعم البلد. <em>أهلاً وسهلاً بكم!</em></p>
+          <div class="signature">
+            <span class="signature__name">قتيبة المحاميد</span>
+            <span class="signature__role">صاحب المحل</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ الضيافة والمناسبات ============ -->
+    <section class="section catering" id="catering">
+      <div class="container catering__inner reveal">
+        <div>
+          <p class="eyebrow">لمناسباتكم</p>
+          <h2 class="split">ضيافة وصواني للمناسبات</h2>
+          <p>عيد ميلاد، فطور في الشغل، مناسبة جامعية أو عزيمة عائلية: نجهّز لكم تشكيلة من المناقيش والفطاير والبيتزا الصغيرة – طازة وجاهزة للتقديم.</p>
+          <ul class="checklist">
+            <li>من 10 أشخاص فما فوق، حسب طلبكم</li>
+            <li>خيارات نباتية كثيرة</li>
+            <li>استلام من المحل أو توصيل عند الطلب</li>
+          </ul>
+        </div>
+        <div class="catering__card">
+          <h3>تواصلوا معنا</h3>
+          <p>اتصلوا بنا أو راسلونا على إنستغرام – ويفضّل قبل يومين.</p>
+          <a href="tel:+4961519679790" class="btn btn--gold btn--block">📞 06151 967 97 90</a>
+          <a href="https://www.instagram.com/zatar.patisserie/" target="_blank" rel="noopener" class="btn btn--outline btn--block">راسلنا على إنستغرام</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ التوصيل والاستلام ============ -->
+    <section class="section section--olive" id="bestellen">
+      <div class="container order reveal">
+        <p class="eyebrow eyebrow--light">ما عندك وقت تمرّ علينا؟</p>
+        <h2 class="split">نوصل طلبك لباب البيت</h2>
+        <p class="section__sub section__sub--light">اطلب أكلاتك المفضّلة بسهولة عبر شركائنا في التوصيل.</p>
+        <div class="order__buttons">
+          <a class="order__btn" href="https://wolt.com/de/deu/darmstadt/restaurant/zatar-arabische-kchedarmstadt" target="_blank" rel="noopener">
+            <strong>Wolt</strong><span>اطلب الآن ←</span>
+          </a>
+          <a class="order__btn" href="https://www.ubereats.com/de/store/zatar-arabische-kuche/ykQxKYyoU3-AmatqnmtpwA" target="_blank" rel="noopener">
+            <strong>Uber Eats</strong><span>اطلب الآن ←</span>
+          </a>
+          <a class="order__btn" href="tel:+4961519679790">
+            <strong>استلام من المحل</strong><span>اطلب مسبقاً بالهاتف ←</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ الموقع والتواصل ============ -->
+    <section class="section" id="besuch">
+      <div class="container visit">
+        <div class="visit__info reveal">
+          <p class="eyebrow">زورونا</p>
+          <h2 class="split">في قلب دارمشتات</h2>
+          <address>
+            <strong>زعتر – مطبخ عربي</strong><br>
+            <span class="ltr">Rheinstraße 44–46</span><br>
+            <span class="ltr">64283 Darmstadt</span>
+          </address>
+          <p class="visit__hint">في شارع راين (Rheinstraße) – بين محطة القطار الرئيسية وساحة لويزن (Luisenplatz).</p>
+          <div class="visit__contact">
+            <a href="tel:+4961519679790">06151 967 97 90</a>
+            <a href="https://www.instagram.com/zatar.patisserie/" target="_blank" rel="noopener" class="ltr">@zatar.patisserie</a>
+          </div>
+
+          <h3 class="hours__title">أوقات الدوام</h3>
+          <table class="hours" id="hours">
+            <tbody>
+              <tr data-day="1"><th>الاثنين</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="2"><th>الثلاثاء</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="3"><th>الأربعاء</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="4"><th>الخميس</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="5"><th>الجمعة</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="6"><th>السبت</th><td>09:30 – 20:00</td></tr>
+              <tr data-day="0"><th>الأحد</th><td>09:30 – 20:00</td></tr>
+            </tbody>
+          </table>
+          <a class="btn btn--gold" href="https://www.google.com/maps/dir/?api=1&destination=Zatar+Rheinstra%C3%9Fe+46+64283+Darmstadt" target="_blank" rel="noopener">خطّط طريقك</a>
+        </div>
+
+        <div class="visit__map reveal">
+          <!-- Datenschutz: Die Karte wird erst nach Klick geladen -->
+          <div class="map-consent" id="mapConsent">
+            <p>عند عرض الخريطة تُرسَل بيانات إلى OpenStreetMap.</p>
+            <button class="btn btn--outline" id="loadMap">اعرض الخريطة</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ إنستغرام ============ -->
+    <section class="section section--cream insta">
+      <div class="container reveal">
+        <p class="eyebrow">تابعونا</p>
+        <h2 class="split">جديدنا على إنستغرام</h2>
+        <p class="section__sub">أصناف جديدة، عروض اليوم ونظرة من وراء الفرن.</p>
+        <a href="https://www.instagram.com/zatar.patisserie/" target="_blank" rel="noopener" class="btn btn--gold">تابع <span class="ltr">@zatar.patisserie</span></a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ شريط سريع (للموبايل) ============ -->
+  <nav class="action-bar" aria-label="وصول سريع">
+    <a href="tel:+4961519679790">
+      <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+      اتصل بنا
+    </a>
+    <a href="https://www.google.com/maps/dir/?api=1&destination=Zatar+Rheinstra%C3%9Fe+46+64283+Darmstadt" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      الطريق
+    </a>
+    <a href="#bestellen" class="is-primary">
+      <svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7Zm3 0V5a3 3 0 0 1 6 0v2"/></svg>
+      اطلب الآن
+    </a>
+  </nav>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <a href="#top" class="brand brand--footer">
+          <span class="brand__ar">زعتر</span>
+          <span class="brand__lat" lang="de">ZATAR</span>
+        </a>
+        <p>مخبز ومطبخ شامي<br><span class="ltr">Rheinstraße 44–46 · 64283 Darmstadt</span></p>
+      </div>
+      <div>
+        <h4>روابط</h4>
+        <a href="speisekarte.html">قائمة الطعام</a>
+        <a href="#bestellen">التوصيل والاستلام</a>
+        <a href="#geschichte">قصتنا</a>
+        <a href="#catering">الضيافة والمناسبات</a>
+        <a href="#besuch">الموقع والتواصل</a>
+      </div>
+      <div>
+        <h4>معلومات قانونية</h4>
+        <a href="../impressum.html" hreflang="de">بيانات الناشر (Impressum)</a>
+        <a href="../datenschutz.html" hreflang="de">حماية البيانات (Datenschutz)</a>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <span>© <span id="year"></span> زعتر دارمشتات</span>
+      <span lang="de">Herzlich willkommen</span>
+    </div>
+  </footer>
+
+  <script src="../js/vendor/gsap.min.js"></script>
+  <script src="../js/vendor/ScrollTrigger.min.js"></script>
+  <script src="../js/vendor/lenis.min.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/main.js"></script>
+  <script type="module" src="../js/hero3d.js"></script>
+</body>
+</html>

@@ -11,6 +11,19 @@ Statische One-Page-Website (HTML/CSS/JS, kein Build nötig) für **Zatar – Ara
 | `css/style.css` | Design (Farben oben unter `:root`) |
 | `impressum.html`, `datenschutz.html` | Pflichtseiten (Vorlagen) |
 
+## Zweisprachig (Deutsch / Arabisch)
+| Datei | Inhalt |
+|---|---|
+| `index.html`, `speisekarte.html`, `manakish-fatayer.html` | Deutsche Version |
+| `ar/index.html`, `ar/speisekarte.html` | Arabische Version (`dir="rtl"`, eigener Ton für arabische Gäste; keine Erklärseite) |
+| `css/rtl.css` | Spiegelungen für Rechts-nach-links + arabische Schriften (Reem Kufi / Noto Kufi Arabic) |
+| `css/loader.css`, `js/loader.js` | Ladebildschirm + Sprachauswahl beim ersten Besuch (gemeinsam für beide Sprachen) |
+
+- Erster Besuch: Nach dem Laden erscheint die Sprachauswahl. Die Wahl wird im Browser gespeichert (`localStorage: zatarLang`).
+- Wer Arabisch gewählt hat, wird von der deutschen Startseite automatisch auf `/ar/` geleitet. Der Umschalter oben („العربية“ / „Deutsch“) ändert die gespeicherte Wahl.
+- Speisekarte bleibt zentral in `js/menu.js` (arabische Felder: `ar`, `titleAr`, `introAr`).
+- Vor dem Livegang: `hreflang`-Links auf absolute URLs mit eigener Domain umstellen.
+
 ## Lokal ansehen
 ```bash
 npx http-server -p 5500

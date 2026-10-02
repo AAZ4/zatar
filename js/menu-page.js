@@ -1,6 +1,7 @@
 /*
  * Speisekarten-Seite: rendert alle Kategorien aus js/menu.js,
- * klebende Kategorie-Chips mit Scroll-Spy, Suche und Vegetarisch-Filter.
+ * klebende Kategorie-Chips mit Scroll-Spy, Suche und Vegetarisch-/Vegan-Filter.
+ * Zweisprachig: auf der arabischen Seite (<html lang="ar">) stehen die arabischen Namen vorne.
  */
 (function () {
   "use strict";
@@ -14,6 +15,14 @@
   const chipsBar = document.getElementById("chips");
   const count = document.getElementById("menuCount");
   if (!page) return;
+  const isAr = document.documentElement.lang === "ar";
+  const T = isAr ? {
+    from: "من", star: "توصية البيت", vegan: "🌱 فيغان", veganTitle: "خالٍ من أي منتج حيواني",
+    veganWish: "🌱 فيغان عند الطلب", veganWishTitle: "يمكن تحضيره فيغان عند الطلب", veg: "نباتي", vegTitle: "بدون لحم"
+  } : {
+    from: "ab", star: "Empfehlung des Hauses", vegan: "🌱 Vegan", veganTitle: "vegan",
+    veganWish: "🌱 Vegan auf Wunsch", veganWishTitle: "Auf Wunsch vegan zubereitbar", veg: "V", vegTitle: "vegetarisch"
+  };
 
   const fmt = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" });
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -21,9 +30,9 @@
 
   // Nur die "strengste" Kennzeichnung zeigen: vegan > vegetarisch
   function dietBadge(i) {
-    if (i.vegan === "wunsch") return '<span class="menu__badge menu__badge--vegan" title="Auf Wunsch vegan zubereitbar">🌱 Vegan auf Wunsch</span>';
-    if (i.vegan) return '<span class="menu__badge menu__badge--vegan" title="vegan">🌱 Vegan</span>';
-    if (i.veg) return '<span class="menu__badge" title="vegetarisch">V</span>';
+    if (i.vegan === "wunsch") return `<span class="menu__badge menu__badge--vegan" title="${T.veganWishTitle}">${T.veganWish}</span>`;
+    if (i.vegan) return `<span class="menu__badge menu__badge--vegan" title="${T.veganTitle}">${T.vegan}</span>`;
+    if (i.veg) return `<span class="menu__badge" title="${T.vegTitle}">${T.veg}</span>`;
     return "";
   }
 
@@ -37,23 +46,25 @@
         <header class="menu-cat__head">
           <span class="menu-cat__ar" lang="ar">${cat.ar}</span>
           <div>
-            <h2>${esc(cat.title)}</h2>
-            <p>${esc(cat.intro)} <span class="menu-cat__from">ab ${fmt.format(from)}</span></p>
+            <h2>${esc(isAr ? cat.titleAr || cat.ar : cat.title)}</h2>
+            <p>${esc(isAr ? cat.introAr || "" : cat.intro)} <span class="menu-cat__from">${T.from} <bdi dir="ltr">${fmt.format(from)}</bdi></span></p>
           </div>
         </header>
         <div class="menu-cat__list">
           ${cat.items.map(i => `
             <article class="dish-row${i.star ? " is-star" : ""}" data-veg="${i.veg ? 1 : 0}" data-vegan="${i.vegan ? 1 : 0}" data-food="${cat.noBadge ? 0 : 1}" data-search="${esc(norm(i.name + " " + i.desc + " " + (i.ar || "")))}">
               <div class="dish-row__main">
-                <h3>${esc(i.name)}
-                  ${i.star ? '<span class="menu__star" title="Empfehlung des Hauses">★</span>' : ""}
+                <h3>${esc(isAr ? i.ar || i.name : i.name)}
+                  ${i.star ? `<span class="menu__star" title="${T.star}">★</span>` : ""}
                   ${cat.noBadge ? "" : dietBadge(i)}
                 </h3>
-                ${i.desc ? `<p>${esc(i.desc)}</p>` : ""}
+                ${isAr
+                  ? `<p class="dish-row__de" lang="de" dir="ltr">${esc(i.name)}</p>`
+                  : (i.desc ? `<p>${esc(i.desc)}</p>` : "")}
               </div>
               <div class="dish-row__side">
                 <span class="dish-row__price">${fmt.format(i.price)}</span>
-                ${i.ar ? `<span class="dish-row__ar" lang="ar">${esc(i.ar)}</span>` : ""}
+                ${!isAr && i.ar ? `<span class="dish-row__ar" lang="ar">${esc(i.ar)}</span>` : ""}
               </div>
             </article>`).join("")}
         </div>
@@ -61,7 +72,7 @@
   }).join("");
 
   chipList.innerHTML = keys.map(key =>
-    `<a class="chip" href="#${key}" data-chip="${key}">${esc(data[key].title)}</a>`).join("");
+    `<a class="chip" href="#${key}" data-chip="${key}">${esc(isAr ? data[key].titleAr || data[key].ar : data[key].title)}</a>`).join("");
   const chips = [...chipList.querySelectorAll(".chip")];
   const sections = [...page.querySelectorAll(".menu-cat")];
 
@@ -131,11 +142,18 @@
     empty.hidden = total > 0;
     if (count) {
       const active = q || diet;
-      const label = diet === "vegan" ? "vegan" : "vegetarisch";
       count.hidden = !active || total === 0;
-      count.textContent = diet && !q
-        ? `${diet === "vegan" ? "🌱" : "🌿"} ${total} ${label}e Gerichte${diet === "veg" ? " (inkl. vegan)" : ""}`
-        : `${total} Treffer${diet ? ` (nur ${label})` : ""}`;
+      if (isAr) {
+        const label = diet === "vegan" ? "فيغان" : "نباتية";
+        count.textContent = diet && !q
+          ? `${diet === "vegan" ? "🌱" : "🌿"} ${total} ${diet === "vegan" ? "أطباق فيغان" : "طبقاً نباتياً"}${diet === "veg" ? " (مع أطباق الفيغان)" : ""}`
+          : `${total} نتيجة${diet ? ` (${label} فقط)` : ""}`;
+      } else {
+        const label = diet === "vegan" ? "vegan" : "vegetarisch";
+        count.textContent = diet && !q
+          ? `${diet === "vegan" ? "🌱" : "🌿"} ${total} ${label}e Gerichte${diet === "veg" ? " (inkl. vegan)" : ""}`
+          : `${total} Treffer${diet ? ` (nur ${label})` : ""}`;
+      }
     }
     lastActive = "";
     spy();

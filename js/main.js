@@ -1,6 +1,14 @@
 (function () {
   "use strict";
 
+  const isAr = document.documentElement.lang === "ar";
+  const isRtl = document.documentElement.dir === "rtl";
+
+  /* ---------- Sprachumschalter: Wahl merken ---------- */
+  document.querySelectorAll("a[data-lang]").forEach(a => a.addEventListener("click", () => {
+    try { localStorage.setItem("zatarLang", a.dataset.lang); } catch (e) {}
+  }));
+
   /* ---------- Navigation: Hintergrund beim Scrollen, mobiles Menü ---------- */
   const nav = document.querySelector(".nav");
   const toggle = document.querySelector(".nav__toggle");
@@ -85,11 +93,14 @@
   const hhmm = m => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
 
   if (mins >= open && mins < close) {
-    status.textContent = `Jetzt geöffnet · bis ${hhmm(close)} Uhr`;
+    status.textContent = isAr ? `مفتوح الآن · حتى الساعة ${hhmm(close)}` : `Jetzt geöffnet · bis ${hhmm(close)} Uhr`;
     status.classList.add("is-open");
   } else {
     const opensToday = mins < open;
-    status.textContent = `Geschlossen · öffnet ${opensToday ? "heute" : "morgen"} um ${hhmm(opensToday ? open : HOURS[(day + 1) % 7][0])} Uhr`;
+    const opensAt = hhmm(opensToday ? open : HOURS[(day + 1) % 7][0]);
+    status.textContent = isAr
+      ? `مغلق الآن · نفتح ${opensToday ? "اليوم" : "غداً"} الساعة ${opensAt}`
+      : `Geschlossen · öffnet ${opensToday ? "heute" : "morgen"} um ${opensAt} Uhr`;
     status.classList.add("is-closed");
   }
   const todayRow = document.querySelector(`#hours tr[data-day="${day}"]`);
@@ -227,7 +238,7 @@
     mm.add("(max-width: 860px)", () => {
       gsap.utils.toArray(".carousel").forEach(row => {
         gsap.from(row.children, {
-          x: 60, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.08,
+          x: isRtl ? -60 : 60, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.08,
           scrollTrigger: { trigger: row, start: "top 90%" }
         });
       });
@@ -306,20 +317,27 @@
       const b = document.createElement("button");
       b.type = "button";
       b.tabIndex = -1;
-      b.addEventListener("click", () => row.scrollTo({ left: item.offsetLeft - row.offsetLeft - 16, behavior: "smooth" }));
+      b.addEventListener("click", () => {
+        const rr = row.getBoundingClientRect(), ir = item.getBoundingClientRect();
+        const delta = isRtl ? ir.right - (rr.right - 16) : ir.left - (rr.left + 16);
+        row.scrollBy({ left: delta, behavior: "smooth" });
+      });
       dots.appendChild(b);
     });
     row.after(dots);
     const update = () => {
-      const center = row.scrollLeft + row.clientWidth / 2;
+      // Bildschirmpositionen statt scrollLeft – funktioniert auch bei Rechts-nach-links (Arabisch)
+      const rr = row.getBoundingClientRect();
+      const center = rr.left + rr.width / 2;
       let best = 0, bestDist = Infinity;
       items.forEach((item, i) => {
-        const c = item.offsetLeft - row.offsetLeft + item.offsetWidth / 2;
-        const d = Math.abs(c - center);
+        const ir = item.getBoundingClientRect();
+        const d = Math.abs(ir.left + ir.width / 2 - center);
         if (d < bestDist) { bestDist = d; best = i; }
       });
-      if (row.scrollLeft < 8) best = 0;
-      if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 8) best = items.length - 1;
+      const scrolled = Math.abs(row.scrollLeft);
+      if (scrolled < 8) best = 0;
+      if (scrolled + row.clientWidth >= row.scrollWidth - 8) best = items.length - 1;
       [...dots.children].forEach((d, i) => d.classList.toggle("is-active", i === best));
     };
     let ticking = false;
