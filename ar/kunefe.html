@@ -17,6 +17,19 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/kunefe.css">
   <link rel="stylesheet" href="../css/rtl.css">
+  <script>
+    /* 3D-Bühne sofort vorbereiten, damit die Karten nicht kurz als Liste aufblitzen */
+    (function () {
+      var d = document.documentElement;
+      try {
+        var c = document.createElement("canvas");
+        if (window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl"))) {
+          d.classList.add("kn-3d");
+          setTimeout(function () { if (!d.classList.contains("kn-ready")) { d.classList.remove("kn-3d"); d.classList.add("no-3d"); } }, 20000);
+        } else d.classList.add("no-3d");
+      } catch (e) { d.classList.add("no-3d"); }
+    })();
+  </script>
   <link rel="modulepreload" href="../js/kunefe-scene.js">
   <link rel="modulepreload" href="../js/vendor/three.module.min.js">
 </head>
@@ -51,6 +64,7 @@
       <div class="kn__sticky">
         <div class="kn__stage"></div>
         <div class="kn__glow" aria-hidden="true"></div>
+        <div class="kn__loader" aria-hidden="true"><span></span></div>
         <svg class="kn__line" aria-hidden="true"><path d=""/><circle cx="0" cy="0" r="5"/></svg>
 
         <div class="kn__intro">

@@ -5,7 +5,7 @@
 
 /* ---------- Scroll-Bühne ---------- */
 .kn { position: relative; background: radial-gradient(ellipse at 40% 45%, #3a3020 0%, var(--olive-900) 62%); color: var(--cream); }
-.kn-3d .kn { height: 800vh; }
+.kn-3d .kn { height: 900vh; }
 .kn__sticky { position: relative; }
 .kn-3d .kn__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .kn__stage { position: absolute; inset: 0; }
@@ -104,3 +104,19 @@
 @media (prefers-reduced-motion: reduce) {
   .kn__hint::after { animation: none; }
 }
+
+/* ---------- Laden: Bühne erst zeigen, wenn das erste 3D-Bild steht ---------- */
+.kn-3d .kn__canvas { opacity: 0; transition: opacity .8s var(--ease); }
+.kn-ready .kn__canvas { opacity: 1; }
+.kn-3d:not(.kn-ready) .kn__intro,
+.kn-3d:not(.kn-ready) .kn__cards,
+.kn-3d:not(.kn-ready) .kn__progress { opacity: 0; }
+.kn__loader { display: none; }
+.kn-3d:not(.kn-ready) .kn__loader { display: grid; position: absolute; inset: 0; place-items: center; z-index: 4; }
+.kn__loader span {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 3px solid rgba(226,196,106,.25); border-top-color: var(--gold);
+  animation: knSpin 0.9s linear infinite;
+}
+@keyframes knSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .kn__loader span { animation-duration: 2.5s; } }
