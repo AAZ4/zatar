@@ -17,6 +17,7 @@ Statische One-Page-Website (HTML/CSS/JS, kein Build nötig) für **Zatar – Ara
 | `index.html`, `speisekarte.html`, `manakish-fatayer.html` | Deutsche Version |
 | `ar/index.html`, `ar/speisekarte.html` | Arabische Version (`dir="rtl"`, eigener Ton für arabische Gäste; keine Erklärseite) |
 | `css/rtl.css` | Spiegelungen für Rechts-nach-links + arabische Schriften (Reem Kufi / Noto Kufi Arabic) |
+| `kunefe.html`, `ar/kunefe.html` | Künefe-Seite: 3D-Künefe über der Flamme, beim Scrollen Schicht für Schicht erklärt (`js/kunefe-scene.js`, `css/kunefe.css`) |
 | `css/loader.css`, `js/loader.js` | Ladebildschirm + Sprachauswahl beim ersten Besuch (gemeinsam für beide Sprachen) |
 
 - Erster Besuch: Nach dem Laden erscheint die Sprachauswahl. Die Wahl wird im Browser gespeichert (`localStorage: zatarLang`).
