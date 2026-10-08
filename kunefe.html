@@ -17,20 +17,10 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/kunefe.css">
   <script>
-    /* 3D-Bühne sofort vorbereiten, damit die Karten nicht kurz als Liste aufblitzen */
-    (function () {
-      var d = document.documentElement;
-      try {
-        var c = document.createElement("canvas");
-        if (window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl"))) {
-          d.classList.add("kn-3d");
-          setTimeout(function () { if (!d.classList.contains("kn-ready")) { d.classList.remove("kn-3d"); d.classList.add("no-3d"); } }, 20000);
-        } else d.classList.add("no-3d");
-      } catch (e) { d.classList.add("no-3d"); }
-    })();
+    /* Scroll-Bühne sofort vorbereiten, damit die Karten nicht kurz als Liste aufblitzen */
+    document.documentElement.classList.add("kn-3d");
   </script>
-  <link rel="modulepreload" href="js/kunefe-scene.js">
-  <link rel="modulepreload" href="js/vendor/three.module.min.js">
+  <link rel="preload" as="image" href="images/kunefe/herd.webp" imagesrcset="images/kunefe/herd-900.webp 900w, images/kunefe/herd.webp 1376w" imagesizes="(max-width: 860px) 150vw, 66vw">
 </head>
 <body class="page-kn">
 
@@ -211,6 +201,6 @@
   <script src="js/vendor/ScrollTrigger.min.js"></script>
   <script src="js/vendor/lenis.min.js"></script>
   <script src="js/main.js"></script>
-  <script type="module" src="js/kunefe-scene.js"></script>
+  <script src="js/kunefe.js"></script>
 </body>
 </html>

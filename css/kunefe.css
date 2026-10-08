@@ -1,31 +1,86 @@
 /* =========================================================
-   Künefe-Seite – 3D-Künefe über dem Feuer mit Schicht-Erklärung
+   Künefe-Seite – Künefe auf dem Herd, dann Schicht für Schicht (Bilder)
    ========================================================= */
 .page-kn { background: var(--olive-900); }
 
 /* ---------- Scroll-Bühne ---------- */
-.kn { position: relative; background: radial-gradient(ellipse at 40% 45%, #3a3020 0%, var(--olive-900) 62%); color: var(--cream); }
-.kn-3d .kn { height: 900vh; }
+.kn { position: relative; background: radial-gradient(ellipse at 45% 55%, #2c3520 0%, var(--olive-900) 65%); color: var(--cream); }
+.kn-3d .kn { height: 700vh; }
 .kn__sticky { position: relative; }
 .kn-3d .kn__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .kn__stage { position: absolute; inset: 0; }
-.kn__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .kn__glow {
   position: absolute; left: 0; right: 0; bottom: 0; height: 45%; pointer-events: none;
-  background: radial-gradient(ellipse at 35% 100%, rgba(255,130,40,.18), transparent 60%);
+  background: radial-gradient(ellipse at 50% 100%, rgba(255,130,40,.12), transparent 60%);
 }
+
+/* Künefe auf dem Herd (Start) */
+.kn__hero {
+  position: absolute; top: 50%; right: -3vw; width: 66vw; margin-top: -18.5vw;
+  transform-origin: 50% 60%; will-change: opacity, transform;
+}
+[dir="rtl"] .kn__hero { right: auto; left: -3vw; }
+.kn__hero img {
+  display: block; width: 100%; height: auto;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
+          mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
+}
+/* Feuer flackert leicht */
+.kn__fire {
+  position: absolute; left: 10%; right: 10%; top: 30%; bottom: 18%; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 70%, rgba(255,140,40,.35), transparent 65%);
+  mix-blend-mode: screen; animation: knFlicker 1.8s ease-in-out infinite;
+}
+@keyframes knFlicker { 0%, 100% { opacity: .55; } 30% { opacity: .9; } 55% { opacity: .65; } 75% { opacity: 1; } }
+
+/* Schichten */
+.kn__stack {
+  position: absolute; top: 50%; left: max(12px, calc((100% - 1180px) / 2 - 30px));
+  width: min(54vw, 800px, calc((100svh - 150px) * 1.4)); aspect-ratio: 1200 / 896;
+  transform: translateY(calc(-46% - var(--st, 1) * 20%)) scale(calc(1 + var(--fin, 0) * .06)); opacity: 0;
+}
+[dir="rtl"] .kn__stack { left: auto; right: max(12px, calc((100% - 1180px) / 2 - 30px)); }
+.kn__layer {
+  position: absolute; display: block; height: auto; will-change: transform;
+  transition: opacity .5s var(--ease), filter .5s var(--ease);
+}
+.kn__layer--dough { opacity: 0; }
+.kn__stack[data-hl] .kn__layer { opacity: .16; }
+.kn__stack[data-hl="base"] .kn__layer--base,
+.kn__stack[data-hl="dough"] .kn__layer--dough,
+.kn__stack[data-hl="cheese"] .kn__layer--cheese,
+.kn__stack[data-hl="top"] .kn__layer--top,
+.kn__stack[data-hl="syrup"] .kn__layer--syrup,
+.kn__stack[data-hl="pist"] .kn__layer--pist { opacity: 1; filter: drop-shadow(0 0 22px rgba(226,196,106,.35)); }
+/* Blech hervorgehoben: Teigboden darauf abdunkeln */
+.kn__stack[data-hl="base"] .kn__layer--dough { opacity: .85; filter: brightness(.28) saturate(.5); }
+
+/* Laden */
+.kn-3d .kn__stage { opacity: 0; transition: opacity .8s var(--ease); }
+.kn-ready .kn__stage { opacity: 1; }
+.kn-3d:not(.kn-ready) .kn__intro,
+.kn-3d:not(.kn-ready) .kn__cards,
+.kn-3d:not(.kn-ready) .kn__progress { opacity: 0; }
+.kn__loader { display: none; }
+.kn-3d:not(.kn-ready) .kn__loader { display: grid; position: absolute; inset: 0; place-items: center; z-index: 4; }
+.kn__loader span {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 3px solid rgba(226,196,106,.25); border-top-color: var(--gold);
+  animation: knSpin .9s linear infinite;
+}
+@keyframes knSpin { to { transform: rotate(360deg); } }
 
 /* Einstieg */
 .kn__intro {
   position: absolute; z-index: 3; top: 18vh; left: max(20px, calc((100% - 1180px) / 2));
-  max-width: 30rem; transition: opacity .6s var(--ease), transform .6s var(--ease);
+  max-width: 28rem; transition: opacity .6s var(--ease), transform .6s var(--ease);
 }
 [dir="rtl"] .kn__intro { left: auto; right: max(20px, calc((100% - 1180px) / 2)); }
 .kn__intro.is-hidden { opacity: 0; transform: translateY(-20px); pointer-events: none; }
 .kn__intro h1 { font-size: clamp(3.2rem, 9vw, 6.5rem); line-height: 1; margin: .2rem 0 .6rem; color: var(--white); }
 .kn__intro h1 [lang="ar"], .kn__intro .kn__ar { font-family: var(--font-ar); color: var(--gold); }
 .kn__intro .kn__ar { display: block; font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: .8rem; }
-.kn__intro p { color: rgba(247,241,229,.8); font-size: 1.1rem; }
+.kn__intro p { color: rgba(247,241,229,.85); font-size: 1.1rem; text-shadow: 0 2px 12px rgba(0,0,0,.5); }
 .kn__hint { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1rem; color: var(--gold-light); font-size: .9rem; }
 .kn__hint::after { content: "↓"; animation: knBob 1.6s ease-in-out infinite; }
 @keyframes knBob { 50% { transform: translateY(5px); } }
@@ -34,12 +89,12 @@
 .kn__cards { position: relative; z-index: 3; }
 .kn-3d .kn__cards { position: absolute; inset: 0; pointer-events: none; }
 .kn__card {
-  background: rgba(31, 42, 28, .82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  background: rgba(31, 42, 28, .84); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(226,196,106,.35); border-radius: 20px; padding: 1.4rem 1.5rem 1.5rem;
   box-shadow: 0 24px 50px -24px rgba(0,0,0,.7);
 }
 .kn-3d .kn__card {
-  position: absolute; top: 50%; right: max(20px, calc((100% - 1180px) / 2)); width: min(380px, 34vw);
+  position: absolute; top: 50%; right: max(20px, calc((100% - 1180px) / 2)); width: min(380px, 32vw);
   opacity: 0; transform: translateY(-40%) translateX(20px);
   transition: opacity .45s var(--ease), transform .55s var(--ease);
 }
@@ -66,11 +121,11 @@
 .kn__progress span { width: 26px; height: 3px; border-radius: 3px; background: rgba(247,241,229,.2); transition: background .3s; }
 .kn__progress span.is-done { background: var(--gold); }
 
-/* Ohne 3D: alles als Liste */
-.no-3d .kn { padding: 120px 0 60px; }
-.no-3d .kn__intro { position: static; margin: 0 auto 2rem; width: min(1180px, 100% - 40px); max-width: none; }
-.no-3d .kn__cards { width: min(760px, 100% - 40px); margin: 0 auto; display: grid; gap: 1rem; }
-.no-3d .kn__line, .no-3d .kn__glow { display: none; }
+/* Ohne JavaScript: alles als Liste */
+html:not(.kn-3d) .kn { padding: 120px 0 60px; }
+html:not(.kn-3d) .kn__intro { position: static; margin: 0 auto 2rem; width: min(1180px, 100% - 40px); max-width: none; }
+html:not(.kn-3d) .kn__cards { width: min(760px, 100% - 40px); margin: 0 auto; display: grid; gap: 1rem; }
+html:not(.kn-3d) .kn__line, html:not(.kn-3d) .kn__glow { display: none; }
 
 /* ---------- Abschnitte darunter ---------- */
 .kn-info { background: var(--cream); color: var(--ink); }
@@ -84,12 +139,17 @@
 .kn-origin strong { color: var(--ink); }
 .kn-cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
 
-/* Aktionsleiste ausblenden, solange die 3D-Bühne läuft (sonst verdeckt sie die Karten) */
+/* Aktionsleiste ausblenden, solange die Bühne läuft (sonst verdeckt sie die Karten) */
 .kn-in-scene .action-bar { transform: translateY(130%) !important; }
 
 /* ---------- Handy ---------- */
 @media (max-width: 860px) {
-  .kn__intro { top: auto; bottom: 14vh; left: 20px; right: 20px; text-align: center; max-width: none; }
+  .kn__hero, [dir="rtl"] .kn__hero { top: 70px; left: 50%; right: auto; width: 150vw; margin: 0 0 0 -75vw; }
+  .kn__stack, [dir="rtl"] .kn__stack {
+    top: max(84px, calc(50% - 300px)); left: 50%; right: auto; width: 128vw; margin-left: -64vw;
+    transform: translateY(calc(var(--st, 1) * -12%)) scale(calc(1 + var(--fin, 0) * .04));
+  }
+  .kn__intro { top: auto; bottom: 12vh; left: 20px; right: 20px; text-align: center; max-width: none; }
   [dir="rtl"] .kn__intro { right: 20px; }
   .kn-3d .kn__card, [dir="rtl"].kn-3d .kn__card, .kn-3d [dir="rtl"] .kn__card {
     top: auto; bottom: 46px; left: 16px; right: 16px; width: auto;
@@ -102,21 +162,6 @@
   .kn-tips { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .kn__hint::after { animation: none; }
+  .kn__hint::after, .kn__fire { animation: none; }
+  .kn__loader span { animation-duration: 2.5s; }
 }
-
-/* ---------- Laden: Bühne erst zeigen, wenn das erste 3D-Bild steht ---------- */
-.kn-3d .kn__canvas { opacity: 0; transition: opacity .8s var(--ease); }
-.kn-ready .kn__canvas { opacity: 1; }
-.kn-3d:not(.kn-ready) .kn__intro,
-.kn-3d:not(.kn-ready) .kn__cards,
-.kn-3d:not(.kn-ready) .kn__progress { opacity: 0; }
-.kn__loader { display: none; }
-.kn-3d:not(.kn-ready) .kn__loader { display: grid; position: absolute; inset: 0; place-items: center; z-index: 4; }
-.kn__loader span {
-  width: 44px; height: 44px; border-radius: 50%;
-  border: 3px solid rgba(226,196,106,.25); border-top-color: var(--gold);
-  animation: knSpin 0.9s linear infinite;
-}
-@keyframes knSpin { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .kn__loader span { animation-duration: 2.5s; } }
