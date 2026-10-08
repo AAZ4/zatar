@@ -7,7 +7,7 @@
  *  7       das Video läuft rückwärts, die Künefe setzt sich wieder zusammen und brennt weiter
  *
  * Bilder: images/kunefe/d/000–144.webp (Desktop), images/kunefe/m/… (Handy).
- * 000–048 = Schleife (ganze Künefe), danach jedes zweite Videobild bis zur fertigen Aufteilung.
+ * 000–048 = Schleife (ganze Künefe, läuft vorwärts mit weicher Überblendung), danach jedes zweite Videobild bis zur fertigen Aufteilung.
  * html.kn-3d (schon im <head>) = Scroll-Bühne aktiv, html.kn-ready = erstes Bild geladen.
  */
 (function () {
@@ -126,33 +126,40 @@
     bars.forEach((b, i) => b.classList.toggle("is-done", i <= step));
   }
 
+  // Schleife nur vorwärts: die letzten K Bilder blenden weich in den Anfang über (kein Rückwärtslaufen)
+  // Ergebnis: Hauptbild a, darüber Bild b mit Deckkraft w
+  function loopFrames(sec, start, end, fps, K) {
+    const P = end - start + 1 - K;          // Länge einer Runde
+    const pos = (sec * fps) % P;
+    const n = Math.floor(pos);
+    return pos < K
+      ? { a: start + n, b: start + n + P, w: 1 - pos / K }
+      : { a: start + n, b: -1, w: 0 };
+  }
+
   function frameIndex(now) {
     const sec = (now - t0) / 1000;
-    // Schleife: Bilder 0–48 vor und zurück (24 Bilder/s)
-    const loopIdx = () => {
-      if (reduceMotion) return 0;
-      const n = Math.floor(sec * 24) % ((LOOP - 1) * 2);
-      return n < LOOP ? n : (LOOP - 1) * 2 - n;
-    };
-    // nach der Aufteilung leicht weiterflackern (letzte ~1,5 s vor und zurück)
-    const tailIdx = () => {
-      if (reduceMotion) return LAST;
-      const span = 9, n = Math.floor(sec * 12) % (span * 2);
-      return LAST - (n < span ? n : span * 2 - n);
-    };
-    if (p < 0.025 || p > 0.93) return loopIdx();
-    if (p < 0.28) return Math.round(lerp(LOOP - 1, LAST, smooth(0.025, 0.28, p)));
-    if (p < 0.8) return tailIdx();
-    return Math.round(lerp(LAST, LOOP - 1, smooth(0.8, 0.93, p)));
+    const still = (i) => ({ a: i, b: -1, w: 0 });
+    if (p < 0.025 || p > 0.93) return reduceMotion ? still(0) : loopFrames(sec, 0, LOOP - 1, 24, 12);
+    if (p < 0.28) return still(Math.round(lerp(LOOP - 1, LAST, smooth(0.025, 0.28, p))));
+    // nach der Aufteilung flackert das Feuer weiter (letzte ~1,7 s des Videos, 12 Bilder/s)
+    if (p < 0.8) return reduceMotion ? still(LAST) : loopFrames(sec, LAST - 20, LAST, 12, 7);
+    return still(Math.round(lerp(LAST, LOOP - 1, smooth(0.8, 0.93, p))));
   }
 
   function draw(now) {
     const b = box();
-    const img = nearest(frameIndex(now));
+    const fr = frameIndex(now);
+    const img = nearest(fr.a);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.globalCompositeOperation = "source-over";
     ctx.clearRect(0, 0, W, H);
     if (img) ctx.drawImage(img, b.x, b.y, b.w, b.h);
+    if (fr.w > 0 && frames[fr.b]) {
+      ctx.globalAlpha = fr.w;
+      ctx.drawImage(frames[fr.b], b.x, b.y, b.w, b.h);
+      ctx.globalAlpha = 1;
+    }
 
     // Lichtkegel auf die aktive Schicht
     const s = SPOT[activeStep];
