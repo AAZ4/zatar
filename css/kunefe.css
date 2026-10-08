@@ -4,7 +4,7 @@
 .page-kn { background: var(--olive-900); }
 
 /* ---------- Scroll-Bühne ---------- */
-.kn { position: relative; background: radial-gradient(ellipse at 45% 55%, #2c3520 0%, var(--olive-900) 65%); color: var(--cream); }
+.kn { position: relative; background: radial-gradient(ellipse at 50% 50%, #2a3420 0%, var(--olive-900) 70%); color: var(--cream); }
 .kn-3d .kn { height: 700vh; }
 .kn__sticky { position: relative; }
 .kn-3d .kn__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
@@ -14,46 +14,8 @@
   background: radial-gradient(ellipse at 50% 100%, rgba(255,130,40,.12), transparent 60%);
 }
 
-/* Künefe auf dem Herd (Start) */
-.kn__hero {
-  position: absolute; top: 50%; right: -3vw; width: 66vw; margin-top: -18.5vw;
-  transform-origin: 50% 60%; will-change: opacity, transform;
-}
-[dir="rtl"] .kn__hero { right: auto; left: -3vw; }
-.kn__hero img {
-  display: block; width: 100%; height: auto;
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
-          mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
-}
-/* Feuer flackert leicht */
-.kn__fire {
-  position: absolute; left: 10%; right: 10%; top: 30%; bottom: 18%; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 70%, rgba(255,140,40,.35), transparent 65%);
-  mix-blend-mode: screen; animation: knFlicker 1.8s ease-in-out infinite;
-}
-@keyframes knFlicker { 0%, 100% { opacity: .55; } 30% { opacity: .9; } 55% { opacity: .65; } 75% { opacity: 1; } }
-
-/* Schichten */
-.kn__stack {
-  position: absolute; top: 50%; left: max(12px, calc((100% - 1180px) / 2 - 30px));
-  width: min(54vw, 800px, calc((100svh - 150px) * 1.4)); aspect-ratio: 1200 / 896;
-  transform: translateY(calc(-46% - var(--st, 1) * 20%)) scale(calc(1 + var(--fin, 0) * .06)); opacity: 0;
-}
-[dir="rtl"] .kn__stack { left: auto; right: max(12px, calc((100% - 1180px) / 2 - 30px)); }
-.kn__layer {
-  position: absolute; display: block; height: auto; will-change: transform;
-  transition: opacity .5s var(--ease), filter .5s var(--ease);
-}
-.kn__layer--dough { opacity: 0; }
-.kn__stack[data-hl] .kn__layer { opacity: .16; }
-.kn__stack[data-hl="base"] .kn__layer--base,
-.kn__stack[data-hl="dough"] .kn__layer--dough,
-.kn__stack[data-hl="cheese"] .kn__layer--cheese,
-.kn__stack[data-hl="top"] .kn__layer--top,
-.kn__stack[data-hl="syrup"] .kn__layer--syrup,
-.kn__stack[data-hl="pist"] .kn__layer--pist { opacity: 1; filter: drop-shadow(0 0 22px rgba(226,196,106,.35)); }
-/* Blech hervorgehoben: Teigboden darauf abdunkeln */
-.kn__stack[data-hl="base"] .kn__layer--dough { opacity: .85; filter: brightness(.28) saturate(.5); }
+/* Video-Bühne (Einzelbilder auf Canvas) */
+.kn__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
 /* Laden */
 .kn-3d .kn__stage { opacity: 0; transition: opacity .8s var(--ease); }
@@ -144,11 +106,6 @@ html:not(.kn-3d) .kn__line, html:not(.kn-3d) .kn__glow { display: none; }
 
 /* ---------- Handy ---------- */
 @media (max-width: 860px) {
-  .kn__hero, [dir="rtl"] .kn__hero { top: 70px; left: 50%; right: auto; width: 150vw; margin: 0 0 0 -75vw; }
-  .kn__stack, [dir="rtl"] .kn__stack {
-    top: max(84px, calc(50% - 300px)); left: 50%; right: auto; width: 128vw; margin-left: -64vw;
-    transform: translateY(calc(var(--st, 1) * -12%)) scale(calc(1 + var(--fin, 0) * .04));
-  }
   .kn__intro { top: auto; bottom: 12vh; left: 20px; right: 20px; text-align: center; max-width: none; }
   [dir="rtl"] .kn__intro { right: 20px; }
   .kn-3d .kn__card, [dir="rtl"].kn-3d .kn__card, .kn-3d [dir="rtl"] .kn__card {
@@ -162,6 +119,6 @@ html:not(.kn-3d) .kn__line, html:not(.kn-3d) .kn__glow { display: none; }
   .kn-tips { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .kn__hint::after, .kn__fire { animation: none; }
+  .kn__hint::after { animation: none; }
   .kn__loader span { animation-duration: 2.5s; }
 }

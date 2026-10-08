@@ -2,3 +2,8 @@
 vorschau/
 # Lokale Claude-Einstellungen
 .claude/
+
+# Rohdateien (KI-Bilder/-Videos) – nur lokal, die Seite nutzt images/kunefe/
+video/
+images/kunefe-*.jpg
+images/kunefe-*.png
