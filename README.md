@@ -34,6 +34,7 @@ npx http-server -p 5500
 
 ### Pflicht (rechtlich, vor dem Entfernen von `noindex`)
 - [ ] **Google Fonts lokal einbinden** (Fraunces, Inter, Reem Kufi, Noto Kufi Arabic in `fonts/`), Google-Fonts-Abschnitt aus `datenschutz.html` streichen – Abmahnrisiko (IP-Übertragung an Google). *Kann ohne Inhaber erledigt werden – bei der nächsten Änderung mitmachen.*
+- [ ] **Hoster in `datenschutz.html` nennen**: Platzhalter „[HOSTING-ANBIETER ERGÄNZEN]“ durch Cloudflare, Inc. (USA, EU-US Data Privacy Framework) ersetzen. *Bei der nächsten Änderung mitmachen.*
 - [ ] **„Alle Preise inkl. MwSt.“** unter die Speisekarte (DE + AR) – Preisangabenverordnung. *Bei der nächsten Änderung mitmachen.*
 - [ ] **Impressum** vom Inhaber bestätigen lassen: Name, Anschrift (Rheinstraße 44–46 ist korrekt), Telefon, E-Mail, USt-ID / Steuernummer-Angabe, Rechtsform.
 - [ ] **Datenschutzerklärung** an den tatsächlichen Stand anpassen (nach Fonts-Umstellung) und mit Generator (z. B. e-recht24) oder IHK/DEHOGA prüfen lassen.
