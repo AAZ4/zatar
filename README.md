@@ -31,11 +31,25 @@ npx http-server -p 5500
 ```
 
 ## Vor dem Livegang – TODO
+
+### Pflicht (rechtlich, vor dem Entfernen von `noindex`)
+- [ ] **Google Fonts lokal einbinden** (Fraunces, Inter, Reem Kufi, Noto Kufi Arabic in `fonts/`), Google-Fonts-Abschnitt aus `datenschutz.html` streichen – Abmahnrisiko (IP-Übertragung an Google). *Kann ohne Inhaber erledigt werden – bei der nächsten Änderung mitmachen.*
+- [ ] **„Alle Preise inkl. MwSt.“** unter die Speisekarte (DE + AR) – Preisangabenverordnung. *Bei der nächsten Änderung mitmachen.*
+- [ ] **Impressum** vom Inhaber bestätigen lassen: Name, Anschrift (Rheinstraße 44–46 ist korrekt), Telefon, E-Mail, USt-ID / Steuernummer-Angabe, Rechtsform.
+- [ ] **Datenschutzerklärung** an den tatsächlichen Stand anpassen (nach Fonts-Umstellung) und mit Generator (z. B. e-recht24) oder IHK/DEHOGA prüfen lassen.
+- [ ] **Kling-Lizenz klären**: Künefe-Video (`images/kunefe/d|m/`) stammt aus dem Kling-Gratis-Tarif (Wasserzeichen). Kommerzielle Nutzung prüfen, ggf. 1 Monat Kling bezahlen und ohne Wasserzeichen neu exportieren, dann Einzelbilder neu erzeugen.
+- [ ] **Vegan-/Vegetarisch-Kennzeichnung** in `js/menu.js` vom Inhaber bestätigen lassen.
+- [ ] Nur eigene oder lizenzierte Bilder verwenden (keine Lieferando-/Uber-Eats-/Google-Fotos).
+
+### Sollte bald gemacht werden
+- [ ] **Allergene-Hinweis** („Informationen zu Allergenen erhalten Sie im Restaurant“) unter die Speisekarte (DE + AR). *Bei der nächsten Änderung mitmachen.*
+- [ ] Google-Bewertungen: Namen der Bewerter nur abgekürzt zeigen.
+- [ ] **Domain**: `.de` bei INWX (Domaininhaber = Restaurant/Inhaber, Auto-Verlängerung an), Nameserver auf Cloudflare, Custom Domain im Worker eintragen. Bei Lieferando nach Übertragung von `zatar-darmstadt.de` fragen (läuft über takeaway.com), sonst `zatardarmstadt.de`.
+- [ ] Danach: **QR-Code für die Tüten** (Ziel: Startseite der eigenen Domain, SVG + PNG, Fehlerkorrektur H), `og:image` und `canonical` auf die neue Domain setzen, `noindex` entfernen.
+
+### Inhalt
 - [ ] **Fotos einfügen** (größter Effekt!): echte Bilder von Manakish, Fatayer, Laden, Inhaber in `images/` legen und die Platzhalter ersetzen (Hero, Signature-Karten, Geschichte).
 - [ ] **Geschichte** im Abschnitt „Unsere Geschichte“ mit dem Inhaber abstimmen (aktuell Entwurf).
-- [ ] **Speisekarte/Preise/Öffnungszeiten** bestätigen (Quelle: Wolt, Sept. 2026).
+- [ ] **Speisekarte/Preise/Öffnungszeiten** bestätigen (Quelle: Wolt, Sept. 2026). Künefe-Preis fehlt noch.
 - [ ] Ggf. **Süßspeisen/Patisserie** ergänzen (Instagram heißt „zatar.patisserie“).
-- [ ] **Impressum**: E-Mail, USt-ID ergänzen. **Datenschutz** mit Generator prüfen.
-- [ ] Google Fonts lokal einbinden (DSGVO).
-- [ ] Domain + Hosting (z. B. Netlify, GitHub Pages, IONOS), `og:image` setzen.
 - [ ] Google-Unternehmensprofil mit der Website verlinken.
