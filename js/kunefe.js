@@ -137,19 +137,19 @@
       : { a: start + n, b: -1, w: 0 };
   }
 
-  function frameIndex(now) {
-    const sec = (now - t0) / 1000;
+  // Zwischenstand: Start und Aufteilung als ruhiges Standbild – die Schleifen aus dem Video flimmerten,
+  // weil sich die Künefe darin noch bewegt. Sobald ruhige Schleifen-Videos da sind, wieder loopFrames() nutzen.
+  function frameIndex() {
     const still = (i) => ({ a: i, b: -1, w: 0 });
-    if (p < 0.025 || p > 0.93) return reduceMotion ? still(0) : loopFrames(sec, 0, LOOP - 1, 24, 12);
-    if (p < 0.28) return still(Math.round(lerp(LOOP - 1, LAST, smooth(0.025, 0.28, p))));
-    // nach der Aufteilung flackert das Feuer weiter (letzte ~1,7 s des Videos, 12 Bilder/s)
-    if (p < 0.8) return reduceMotion ? still(LAST) : loopFrames(sec, LAST - 20, LAST, 12, 7);
-    return still(Math.round(lerp(LAST, LOOP - 1, smooth(0.8, 0.93, p))));
+    if (p < 0.025 || p > 0.93) return still(0);
+    if (p < 0.28) return still(Math.round(lerp(0, LAST, smooth(0.025, 0.28, p))));
+    if (p < 0.8) return still(LAST);
+    return still(Math.round(lerp(LAST, 0, smooth(0.8, 0.93, p))));
   }
 
   function draw(now) {
     const b = box();
-    const fr = frameIndex(now);
+    const fr = frameIndex();
     const img = nearest(fr.a);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.globalCompositeOperation = "source-over";
