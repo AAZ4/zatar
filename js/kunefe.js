@@ -138,6 +138,23 @@
   }
   const loopStart = makeLoop("schleife-start");
   const loopSplit = makeLoop("schleife-aufteilung");
+  // Bei der Aufteilung kommen nur Flammen/Herd aus dem Video – die Schichten bleiben Standbild
+  // (im Clip drehen sie sich leicht). Maske: weiß = Video, schwarz = Standbild, weiche Kante.
+  const splitMask = new Image();
+  splitMask.src = `${imgBase}maske-aufteilung.png`;
+  const ofs = document.createElement("canvas");
+  const octx = ofs.getContext("2d");
+  function maskedSplit() {
+    const vw = loopSplit.videoWidth, vh = loopSplit.videoHeight;
+    if (!vw || !splitMask.complete || !splitMask.naturalWidth) return null;
+    if (ofs.width !== vw) { ofs.width = vw; ofs.height = vh; }
+    octx.globalCompositeOperation = "source-over";
+    octx.clearRect(0, 0, vw, vh);
+    octx.drawImage(loopSplit, 0, 0, vw, vh);
+    octx.globalCompositeOperation = "destination-in";
+    octx.drawImage(splitMask, 0, 0, vw, vh);
+    return ofs;
+  }
   const playing = (v) => v.readyState >= 2 && !v.paused;
   function setPlaying(v, on) {
     if (reduceMotion) on = false;
@@ -171,9 +188,10 @@
     for (const [v, w] of [[loopStart, lw.start], [loopSplit, lw.split]]) {
       // beim allerersten Start weich einblenden (das Standbild steht schon da)
       const fadeIn = v.startedAt ? clamp((now - v.startedAt) / 700) : 0;
-      if (w * fadeIn > 0.001 && playing(v)) {
+      const src = v === loopSplit ? maskedSplit() : v;
+      if (src && w * fadeIn > 0.001 && playing(v)) {
         ctx.globalAlpha = w * fadeIn;
-        ctx.drawImage(v, b.x, b.y, b.w, b.h);
+        ctx.drawImage(src, b.x, b.y, b.w, b.h);
         ctx.globalAlpha = 1;
       }
     }
