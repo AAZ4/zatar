@@ -1,0 +1,3 @@
+# QR-Code auf Tüten/Flyern zeigt auf /qr – Ziel hier änderbar, ohne neu zu drucken.
+# 302 = vorübergehend, damit Browser das Ziel nicht dauerhaft speichern.
+/qr  /  302
