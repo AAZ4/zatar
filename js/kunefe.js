@@ -7,7 +7,7 @@
  *  7       das Video läuft rückwärts, die Künefe setzt sich wieder zusammen und brennt weiter
  *
  * Bilder: images/kunefe/d/000–144.webp (Desktop), images/kunefe/m/… (Handy).
- * 000–048 = Schleife (ganze Künefe, läuft vorwärts mit weicher Überblendung), danach jedes zweite Videobild bis zur fertigen Aufteilung.
+ * Scroll-Video: Einzelbilder 000–144. Schleifen am Anfang und nach der Aufteilung: schleife-start.mp4 / schleife-aufteilung.mp4.
  * html.kn-3d (schon im <head>) = Scroll-Bühne aktiv, html.kn-ready = erstes Bild geladen.
  */
 (function () {
@@ -29,7 +29,7 @@
 
   root.classList.add("kn-3d");
 
-  const FR = 145, LOOP = 49, LAST = FR - 1;
+  const FR = 145, LAST = FR - 1;
   const ASPECT = 1924 / 1076;
   // Lage der Schichten im letzten Bild (Anteile von Breite/Höhe): Mitte y, halbe Breite, halbe Höhe
   const SPOT = {
@@ -50,9 +50,8 @@
   const set = mqSmall.matches ? "m" : "d";
   const frames = new Array(FR);
   const order = [0, LAST];
-  for (let i = 1; i < LOOP; i++) order.push(i);                     // erst die Schleife
-  for (const step of [8, 4, 2, 1])                                   // dann grob -> fein über den Rest
-    for (let i = LOOP; i < FR; i += step) if (!order.includes(i)) order.push(i);
+  for (const step of [8, 4, 2, 1])                                   // grob -> fein über das ganze Video
+    for (let i = 1; i < LAST; i += step) if (!order.includes(i)) order.push(i);
   let next = 0, ready = false;
   function loadNext() {
     if (next >= order.length) return;
@@ -116,7 +115,6 @@
 
   /* ---------- Ablauf ---------- */
   let activeStep = -1, p = 0;
-  const t0 = performance.now();
   const spot = { cy: 0.5, rx: 0.4, ry: 0.1, a: 0 };
 
   function setStep(step) {
@@ -126,39 +124,58 @@
     bars.forEach((b, i) => b.classList.toggle("is-done", i <= step));
   }
 
-  // Schleife nur vorwärts: die letzten K Bilder blenden weich in den Anfang über (kein Rückwärtslaufen)
-  // Ergebnis: Hauptbild a, darüber Bild b mit Deckkraft w
-  function loopFrames(sec, start, end, fps, K) {
-    const P = end - start + 1 - K;          // Länge einer Runde
-    const pos = (sec * fps) % P;
-    const n = Math.floor(pos);
-    return pos < K
-      ? { a: start + n, b: start + n + P, w: 1 - pos / K }
-      : { a: start + n, b: -1, w: 0 };
+  /* ---------- Schleifen (echte Videos mit eingebauter Überblendung, laufen von selbst) ----------
+     schleife-start: ganze Künefe auf dem Herd, nur Flammen und Dampf bewegen sich (= Bild 000)
+     schleife-aufteilung: aufgeteilte Künefe, nur die Flammen bewegen sich (= Bild 144)
+     Beide passen pixelgenau auf das erste bzw. letzte Bild des Scroll-Videos. */
+  function makeLoop(name) {
+    const v = document.createElement("video");
+    v.muted = true; v.loop = true; v.playsInline = true; v.preload = "auto";
+    v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
+    v.src = `${imgBase}${set}/${name}.mp4`;
+    v.addEventListener("playing", () => { if (!v.startedAt) v.startedAt = performance.now(); });
+    return v;
+  }
+  const loopStart = makeLoop("schleife-start");
+  const loopSplit = makeLoop("schleife-aufteilung");
+  const playing = (v) => v.readyState >= 2 && !v.paused;
+  function setPlaying(v, on) {
+    if (reduceMotion) on = false;
+    if (on && v.paused) v.play().catch(() => {});
+    else if (!on && !v.paused) v.pause();
   }
 
-  // Zwischenstand: Start und Aufteilung als ruhiges Standbild – die Schleifen aus dem Video flimmerten,
-  // weil sich die Künefe darin noch bewegt. Sobald ruhige Schleifen-Videos da sind, wieder loopFrames() nutzen.
+  // Welches Bild des Scroll-Videos, und wie stark die Schleifen darüberliegen
   function frameIndex() {
-    const still = (i) => ({ a: i, b: -1, w: 0 });
-    if (p < 0.025 || p > 0.93) return still(0);
-    if (p < 0.28) return still(Math.round(lerp(0, LAST, smooth(0.025, 0.28, p))));
-    if (p < 0.8) return still(LAST);
-    return still(Math.round(lerp(LAST, 0, smooth(0.8, 0.93, p))));
+    if (p < 0.28) return Math.round(lerp(0, LAST, smooth(0.025, 0.28, p)));
+    if (p < 0.8) return LAST;
+    return Math.round(lerp(LAST, 0, smooth(0.8, 0.93, p)));
+  }
+  function loopWeights() {
+    return {
+      start: Math.max(1 - smooth(0.012, 0.035, p), smooth(0.925, 0.95, p)),
+      split: smooth(0.27, 0.29, p) * (1 - smooth(0.8, 0.815, p))
+    };
   }
 
   function draw(now) {
     const b = box();
-    const fr = frameIndex();
-    const img = nearest(fr.a);
+    const img = nearest(frameIndex());
+    const lw = loopWeights();
+    setPlaying(loopStart, visible && lw.start > 0);
+    setPlaying(loopSplit, visible && lw.split > 0);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.globalCompositeOperation = "source-over";
     ctx.clearRect(0, 0, W, H);
     if (img) ctx.drawImage(img, b.x, b.y, b.w, b.h);
-    if (fr.w > 0 && frames[fr.b]) {
-      ctx.globalAlpha = fr.w;
-      ctx.drawImage(frames[fr.b], b.x, b.y, b.w, b.h);
-      ctx.globalAlpha = 1;
+    for (const [v, w] of [[loopStart, lw.start], [loopSplit, lw.split]]) {
+      // beim allerersten Start weich einblenden (das Standbild steht schon da)
+      const fadeIn = v.startedAt ? clamp((now - v.startedAt) / 700) : 0;
+      if (w * fadeIn > 0.001 && playing(v)) {
+        ctx.globalAlpha = w * fadeIn;
+        ctx.drawImage(v, b.x, b.y, b.w, b.h);
+        ctx.globalAlpha = 1;
+      }
     }
 
     // Lichtkegel auf die aktive Schicht
@@ -234,6 +251,7 @@
   }
   new IntersectionObserver(([e]) => {
     visible = e.isIntersecting;
+    if (!visible) { loopStart.pause(); loopSplit.pause(); }
     document.body.classList.toggle("kn-in-scene", e.isIntersecting && e.intersectionRatio > 0.2);
     if (visible) loop();
   }, { threshold: [0, 0.2, 0.5] }).observe(section);
