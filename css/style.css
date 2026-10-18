@@ -160,7 +160,7 @@ p { margin: 0 0 1em; }
 .hero__grid { z-index: 1; }
 
 /* 3D-Szene: liegt fest über Hero + Geschichte, Texte liegen darüber */
-.scene3d { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; transition: opacity .2s linear; }
+.scene3d { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100lvh; pointer-events: none; z-index: 1; transition: opacity .2s linear; }
 .hero__grid, .story3d__text { position: relative; z-index: 2; }
 
 /* ---------- 3D-Scroll-Geschichte ---------- */
@@ -553,7 +553,7 @@ address { font-style: normal; font-size: 1.15rem; line-height: 1.7; margin-botto
     display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 8px;
     position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 60;
     padding: 8px; border-radius: 18px;
-    background: rgba(31, 42, 28, .92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: rgba(31, 42, 28, .97);   /* keine Unschärfe: auf Handys teuer, ruckelt beim Scrollen */
     box-shadow: 0 16px 40px -12px rgba(0,0,0,.55); border: 1px solid rgba(226,196,106,.18);
     transform: translateY(130%); transition: transform .45s var(--ease);
   }
@@ -582,4 +582,9 @@ address { font-style: normal; font-size: 1.15rem; line-height: 1.7; margin-botto
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }
+}
+
+/* Handys: keine Milchglas-Unschärfe hinter der Navigation (wird bei jedem 3D-Bild neu berechnet -> Ruckeln) */
+@media (max-width: 860px), (pointer: coarse) {
+  .nav.is-scrolled { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(31, 42, 28, .97); }
 }

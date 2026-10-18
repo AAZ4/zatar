@@ -250,8 +250,12 @@ async function init() {
   const lerp = (a, b, t) => a + (b - a) * t;
 
   let viewW = 1, viewH = 1, W = 1, H = 1;
+  // Größe aus der Zeichenfläche selbst (CSS: 100lvh = Höhe ohne Adressleiste). So ändert sie sich
+  // auf dem Handy nicht, wenn beim Scrollen die Adressleiste ein-/ausfährt -> kein Neuaufbau, kein Ruckeln
   function resize() {
-    W = window.innerWidth; H = window.innerHeight;
+    const w = canvas.clientWidth || window.innerWidth, h = canvas.clientHeight || window.innerHeight;
+    if (w === W && h === H) return;
+    W = w; H = h;
     renderer.setSize(W, H, false);
     camera.aspect = W / H;
     camera.updateProjectionMatrix();
