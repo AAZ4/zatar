@@ -36,10 +36,21 @@ function webglAvailable() {
    ====================================================================== */
 const R = 1.5;
 const rand = (a, b) => a + Math.random() * (b - a);
+// Form mit festem Startwert: jede Seite zeigt dieselbe Manakish, passend zu den vorab
+// gerechneten Texturen in images/hero/ (siehe bakeTextures unten)
+const srand = (() => {
+  let a = 20261018;
+  return (lo, hi) => {
+    a |= 0; a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return lo + (((t ^ (t >>> 14)) >>> 0) / 4294967296) * (hi - lo);
+  };
+})();
 
 // periodisches "Rauschen" entlang des Umfangs (Summe von Sinuswellen)
 function makeRing(amps) {
-  const waves = amps.map((a, k) => ({ a, k: k + 2, p: rand(0, Math.PI * 2) }));
+  const waves = amps.map((a, k) => ({ a, k: k + 2, p: srand(0, Math.PI * 2) }));
   return th => waves.reduce((s, w) => s + w.a * Math.sin(w.k * th + w.p), 0);
 }
 const edgeNoise = makeRing([0.035, 0.022, 0.016, 0.01, 0.008, 0.006, 0.004]);
@@ -51,12 +62,12 @@ const pasteT = th => 0.84 + pasteNoise(th);                                    /
 
 // Teigblasen
 const bubbles = Array.from({ length: 26 }, () => {
-  const th = rand(0, Math.PI * 2), t = Math.sqrt(Math.random()) * 0.95;
+  const th = srand(0, Math.PI * 2), t = Math.sqrt(srand(0, 1)) * 0.95;
   const onRim = t > 0.8;
   return {
     x: Math.cos(th) * t * R, z: Math.sin(th) * t * R,
-    s: onRim ? rand(0.06, 0.13) : rand(0.08, 0.2),
-    h: onRim ? rand(0.02, 0.05) : rand(0.008, 0.022)
+    s: onRim ? srand(0.06, 0.13) : srand(0.08, 0.2),
+    h: onRim ? srand(0.02, 0.05) : srand(0.008, 0.022)
   };
 });
 
@@ -106,7 +117,7 @@ function polarGeometry(rings, segs, tMaxFn, lift) {
   return g;
 }
 
-function init() {
+async function init() {
   const small = () => mqSmall.matches;
   const lowPower = small();
   if (window.zatarProgress) window.zatarProgress(0.88);
@@ -146,8 +157,12 @@ function init() {
 
   const quality = lowPower ? { rings: 46, segs: 110, tex: 1024 } : { rings: 70, segs: 180, tex: 1536 };
 
+  // Texturen: vorab gerechnete Bilder laden (spart auf Handys mehrere Sekunden Rechenzeit),
+  // nur falls das scheitert, wie früher im Browser malen
+  const baked = await loadBakedTextures(quality.tex).catch(() => null);
+
   /* ---------- Schicht 1: Teig ---------- */
-  const doughTex = makeDoughTexture(quality.tex);
+  const doughTex = baked ? baked.dough : makeDoughTexture(quality.tex);
   const doughGeo = polarGeometry(quality.rings, quality.segs, () => 1, 0);
   const doughMat = new THREE.MeshStandardMaterial({
     map: doughTex.color, bumpMap: doughTex.bump, bumpScale: 3, roughness: 0.82, transparent: true
@@ -161,7 +176,7 @@ function init() {
   dough.add(doughTop, doughBottom);
 
   /* ---------- Schicht 2: Za'atar-Paste ---------- */
-  const pasteTex = makePasteTexture(quality.tex);
+  const pasteTex = baked ? baked.paste : makePasteTexture(quality.tex);
   const pasteGeo = polarGeometry(quality.rings, quality.segs, th => Math.min(0.97, pasteT(th) + 0.08), 0.006);
   const toppingMat = new THREE.MeshStandardMaterial({
     map: pasteTex.color, bumpMap: pasteTex.bump, bumpScale: 2.5,
@@ -399,8 +414,27 @@ function init() {
   requestAnimationFrame(() => requestAnimationFrame(() => window.zatarLoaded && window.zatarLoaded()));
 }
 
+/* ---------- Vorab gerechnete Texturen (images/hero/, erzeugt aus den Funktionen unten) ---------- */
+async function loadBakedTextures(size) {
+  const base = new URL("../images/hero/", import.meta.url).href;
+  const loader = new THREE.TextureLoader();
+  const load = (name, srgb) => loader.loadAsync(base + name).then(t => {
+    if (srgb) { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; }
+    return t;
+  });
+  const [teig, teigRelief, paste, pasteRelief, glanz, maske] = await Promise.all([
+    load(`teig-${size}.webp`, true), load(`teig-relief-${size}.webp`),
+    load(`paste-${size}.webp`, true), load(`paste-${size}.webp`),
+    load(`paste-glanz-${size}.webp`), load(`paste-maske-${size}.png`)
+  ]);
+  return {
+    dough: { color: teig, bump: teigRelief },
+    paste: { color: paste, bump: pasteRelief, rough: glanz, alpha: maske }
+  };
+}
+
 /* ======================================================================
-   Texturen (prozedural gemalt – keine Bilddateien nötig)
+   Texturen (prozedural gemalt – Vorlage für images/hero/, Ersatz falls die Bilder fehlen)
    Textur-Koordinaten: u = 0.5 + x/(2.2R), v = 0.5 - z/(2.2R)
    ====================================================================== */
 function canvas2d(size) {
@@ -567,6 +601,9 @@ function makeShadowTexture() {
   g.fillRect(0, 0, 256, 256);
   return new THREE.CanvasTexture(c);
 }
+
+// Für das einmalige Vorab-Rechnen der Texturen (Werkzeug, nicht Teil der Seite)
+export { makeDoughTexture, makePasteTexture };
 
 // Start (am Ende, damit alle Form- und Texturfunktionen bereits definiert sind)
 if (hero && anchor && webglAvailable()) init();

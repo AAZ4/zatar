@@ -111,3 +111,6 @@ html { scroll-behavior: smooth; }
   .dish-row__price { font-size: 1rem; }
   .chip { padding: .5rem .95rem; font-size: .88rem; }
 }
+
+/* Platz reservieren, bis js/menu-page.js die Gerichte eingefügt hat (sonst springt der Bestell-Abschnitt nach unten) */
+.menu-page:empty { min-height: 160vh; }

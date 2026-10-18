@@ -52,9 +52,12 @@
   const order = [0, LAST];
   for (const step of [8, 4, 2, 1])                                   // grob -> fein über das ganze Video
     for (let i = 1; i < LAST; i += step) if (!order.includes(i)) order.push(i);
-  let next = 0, ready = false;
+  // Zuerst nur erstes und letztes Bild; den Rest erst, wenn jemand scrollt
+  // (spart Datenvolumen bei Besuchern, die nur kurz reinschauen)
+  let next = 0, ready = false, restAllowed = false;
   function loadNext() {
     if (next >= order.length) return;
+    if (next >= 2 && !restAllowed) return;
     const i = order[next++];
     const img = new Image();
     img.decoding = "async";
@@ -72,7 +75,15 @@
     resize();
     root.classList.add("kn-ready");
   }
-  for (let k = 0; k < 6; k++) loadNext();
+  for (let k = 0; k < 2; k++) loadNext();
+  function loadRest() {
+    if (restAllowed) return;
+    restAllowed = true;
+    for (let k = 0; k < 6; k++) loadNext();
+    loopSplit.preload = "auto"; loopSplit.load();   // (Ereignisse kommen erst nach dem Skriptende)
+    ["scroll", "wheel", "touchstart", "keydown"].forEach(ev => window.removeEventListener(ev, loadRest));
+  }
+  ["scroll", "wheel", "touchstart", "keydown"].forEach(ev => window.addEventListener(ev, loadRest, { passive: true }));
   setTimeout(showStage, 12000);
 
   function nearest(i) {
@@ -138,6 +149,7 @@
   }
   const loopStart = makeLoop("schleife-start");
   const loopSplit = makeLoop("schleife-aufteilung");
+  loopSplit.preload = "none";   // wird erst gebraucht, wenn man scrollt (siehe loadRest)
   // Bei der Aufteilung kommen nur Flammen/Herd aus dem Video – die Schichten bleiben Standbild
   // (im Clip drehen sie sich leicht). Maske: weiß = Video, schwarz = Standbild, weiche Kante.
   const splitMask = new Image();
