@@ -132,7 +132,7 @@ async function init() {
   document.body.prepend(canvas);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !lowPower, alpha: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1.6 : 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1.35 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;

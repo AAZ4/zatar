@@ -165,10 +165,14 @@
     // Adressleiste auf dem Handy ein-/ausfahren löst keine Neuberechnung aller Scroll-Effekte aus
     ScrollTrigger.config({ ignoreMobileResize: true });
 
-    // Weiches Scrollen nur mit Maus/Touchpad – Touch-Geräte scrollen nativ (flüssiger)
-    const touch = window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
-    if (window.Lenis && !touch) {
-      const lenis = new window.Lenis({ lerp: 0.09, smoothWheel: true });
+    // Weiches Scrollen, auch mit dem Finger (syncTouch): Das 3D-Fladenbrot liegt auf einer festen
+    // Ebene und folgt der Scroll-Position. Scrollt das Handy nativ, kommt die Position zu spät an
+    // und es ruckelt – mit syncTouch laufen Seite und 3D-Bild im selben Takt.
+    if (window.Lenis) {
+      const lenis = new window.Lenis({
+        lerp: 0.09, smoothWheel: true,
+        syncTouch: true, syncTouchLerp: 0.085, touchInertiaMultiplier: 30
+      });
       lenis.on("scroll", ScrollTrigger.update);
       gsap.ticker.add(time => lenis.raf(time * 1000));
       gsap.ticker.lagSmoothing(0);
