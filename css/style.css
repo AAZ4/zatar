@@ -217,7 +217,11 @@ html:not(.has-3d) .story3d__step { margin-bottom: 2.2rem; }
 .menu-teaser__item--wide { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; }
 
 /* Wort-für-Wort-Animation der Überschriften */
-.split .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+.split .w {
+  display: inline-block; overflow: hidden; vertical-align: top;
+  /* Luft für kursive Überhänge (rechts) und Umlaute/Akzente (oben) – negative Ränder halten das Layout gleich */
+  padding: .1em .18em .1em .06em; margin: -.1em -.18em -.1em -.06em;
+}
 .split .w > span { display: inline-block; will-change: transform; }
 
 /* Weiches Scrollen (Lenis) */
