@@ -10,6 +10,7 @@
   --sumac: #9b2d20;
   --gold: #c9a227;
   --gold-light: #e2c46a;
+  --gold-dark: #8a6d12;     /* Gold-Schrift auf hellem Grund (Kontrast ≥ 4,5:1) */
   --cream: #f7f1e5;
   --cream-dark: #efe5d1;
   --sand: #e9d6a8;
@@ -434,7 +435,7 @@ address { font-style: normal; font-size: 1.15rem; line-height: 1.7; margin-botto
 /* ---------- Footer ---------- */
 .footer { background: var(--olive-900); color: rgba(247,241,229,.7); padding: 70px 0 30px; font-size: .93rem; }
 .footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
-.footer h4 { color: var(--cream); font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; margin: 0 0 1rem; }
+.footer h3 { color: var(--cream); font-family: var(--font-body); font-weight: 700; line-height: 1.5; font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; margin: 0 0 1rem; }
 .footer a { display: block; text-decoration: none; margin-bottom: .5rem; }
 .footer a:hover { color: var(--gold-light); }
 .brand--footer { margin-bottom: 1rem; }

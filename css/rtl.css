@@ -14,7 +14,7 @@ h1, h2, h3 { line-height: 1.35; letter-spacing: 0 !important; }
 .hero h1, .page-hero h1 { line-height: 1.25; }
 
 /* Arabische Schrift verträgt keine Sperrung und keine Kursivschrift */
-.eyebrow, .brand__lat, .story3d__num, .tag, .signature__role, .footer h4,
+.eyebrow, .brand__lat, .story3d__num, .tag, .signature__role, .footer h3,
 .swipe-hint, .hero__badge small, .rating__stars, .review__stars { letter-spacing: 0; text-transform: none; }
 .eyebrow { font-size: .9rem; }
 em, .story__frame small, .signature__name, .page-hero__sub { font-style: normal; }

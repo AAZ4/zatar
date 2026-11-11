@@ -45,15 +45,15 @@ window.ZATAR_MENU = {
     ar: "فطاير",
     intro: "Gefüllte Teigtaschen und Pide – knusprig außen, saftig innen.",
     items: [
-      { name: "Sucuk", ar: "سجق و جبنة تركي", desc: "Teigtaschen mit Sucuk und Käse gefüllt", price: 2.5 },
+      { name: "Sucuk", ar: "سجق وجبنة تركي", desc: "Teigtaschen mit Sucuk und Käse gefüllt", price: 2.5 },
       { name: "Martadella", ar: "مارتديلا جبنة", desc: "Teigtaschen mit Hähnchenwurst gefüllt", price: 2.5 },
       { name: "Oliven", ar: "زيتون جبنة", desc: "Teigtaschen mit Oliven gefüllt – auf Wunsch ohne Käse", price: 2.5, veg: true, vegan: "wunsch" },
       { name: "Labne", ar: "لبنة", desc: "Teigtaschen mit Frischkäse gefüllt", price: 2.5, veg: true },
-      { name: "Labne mit Zatar", ar: "لبنة و زعتر", desc: "Teigtaschen mit Frischkäse und Zatar", price: 3.5, veg: true },
-      { name: "Labne mit Gemüse", ar: "لبنة و خضرة", desc: "Teigtaschen mit Frischkäse und Gemüse gefüllt", price: 3.5, veg: true },
-      { name: "Akkawi mit Oliven", ar: "عكاوي جبنة و زيتون", desc: "Pide mit nahöstlichem Salzlakenkäse und Oliven", price: 3.0, veg: true },
-      { name: "Akkawi mit Tomaten", ar: "عكاوي جبنة و بندورة", desc: "Pide mit nahöstlichem Salzlakenkäse und Tomaten", price: 3.0, veg: true },
-      { name: "Akkawi mit Spinat", ar: "عكاوي جبنة و سبانخ", desc: "Pide mit nahöstlichem Salzlakenkäse und Spinat", price: 3.0, veg: true },
+      { name: "Labne mit Zatar", ar: "لبنة وزعتر", desc: "Teigtaschen mit Frischkäse und Zatar", price: 3.5, veg: true },
+      { name: "Labne mit Gemüse", ar: "لبنة وخضرة", desc: "Teigtaschen mit Frischkäse und Gemüse gefüllt", price: 3.5, veg: true },
+      { name: "Akkawi mit Oliven", ar: "عكاوي جبنة وزيتون", desc: "Pide mit nahöstlichem Salzlakenkäse und Oliven", price: 3.0, veg: true },
+      { name: "Akkawi mit Tomaten", ar: "عكاوي جبنة وبندورة", desc: "Pide mit nahöstlichem Salzlakenkäse und Tomaten", price: 3.0, veg: true },
+      { name: "Akkawi mit Spinat", ar: "عكاوي جبنة وسبانخ", desc: "Pide mit nahöstlichem Salzlakenkäse und Spinat", price: 3.0, veg: true },
       { name: "Spinat", ar: "سبانخ", desc: "Teigtasche mit Spinat gefüllt", price: 2.5, veg: true, vegan: true },
       { name: "Spinat mit Käse", ar: "سبانخ جبنة", desc: "Teigtaschen mit Spinat und Käse gefüllt", price: 3.0, veg: true }
     ]

@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zatar – Arabische Bäckerei & Küche in Darmstadt</title>
   <meta name="description" content="Zatar in Darmstadt: frisch gebackene Manakish ab 2 €, Fatayer, Pizzen, Falafel, Hummus und Foul aus dem Steinofen. Rheinstraße 44–46, täglich ab 9:30 Uhr.">
+  <link rel="canonical" href="https://zatar-restaurant.de/">
+  <link rel="alternate" hreflang="de" href="https://zatar-restaurant.de/">
+  <link rel="alternate" hreflang="ar" href="https://zatar-restaurant.de/ar/">
+  <link rel="alternate" hreflang="x-default" href="https://zatar-restaurant.de/">
   <meta name="theme-color" content="#1f2a1c">
   <!-- Sprachversionen (vor Livegang auf absolute URLs mit eigener Domain umstellen) -->
-  <link rel="alternate" hreflang="de" href="./">
-  <link rel="alternate" hreflang="ar" href="ar/">
-  <link rel="alternate" hreflang="x-default" href="./">
   <script>
     /* Wer früher Arabisch gewählt hat, landet direkt auf der arabischen Startseite */
     try { if (localStorage.getItem("zatarLang") === "ar") location.replace("ar/" + location.hash); } catch (e) {}
@@ -20,9 +21,14 @@
   <!-- Open Graph (Vorschau beim Teilen in WhatsApp, Instagram, Facebook) -->
   <meta property="og:title" content="Zatar – Arabische Bäckerei & Küche in Darmstadt">
   <meta property="og:description" content="Frisch aus dem Ofen: Manakish, Fatayer & mehr. Rheinstraße 44–46, Darmstadt.">
-  <meta property="og:type" content="restaurant">
+  <meta property="og:type" content="website">
   <meta property="og:locale" content="de_DE">
-  <!-- <meta property="og:image" content="https://www.IHRE-DOMAIN.de/images/og.jpg"> -->
+  <meta property="og:url" content="https://zatar-restaurant.de/">
+  <meta property="og:image" content="https://zatar-restaurant.de/images/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Zatar – Arabische Bäckerei & Küche in Darmstadt">
+  <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/fonts.css">
@@ -53,6 +59,8 @@
     "@context": "https://schema.org",
     "@type": "Restaurant",
     "name": "Zatar – Arabische Küche & Patisserie",
+    "url": "https://zatar-restaurant.de/",
+    "image": "https://zatar-restaurant.de/images/og.jpg",
     "servesCuisine": ["Arabisch", "Levantinisch", "Bäckerei"],
     "priceRange": "€",
     "telephone": "+49 6151 9679790",
@@ -71,8 +79,8 @@
       "https://www.instagram.com/zatar.patisserie/",
       "https://www.facebook.com/p/%D8%B2%D8%B9%D8%AA%D8%B1-Zatar-61575074091990/"
     ],
-    "acceptsReservations": "False",
-    "hasMenu": "#speisekarte"
+    "acceptsReservations": false,
+    "hasMenu": "https://zatar-restaurant.de/speisekarte"
   }
   </script>
 
@@ -522,7 +530,7 @@
         <p>Arabische Bäckerei & Küche<br>Rheinstraße 44–46 · 64283 Darmstadt</p>
       </div>
       <div>
-        <h4>Navigation</h4>
+        <h3>Navigation</h3>
         <a href="speisekarte.html">Speisekarte</a>
         <a href="kunefe.html">Künefe</a>
         <a href="#bestellen">Bestellen &amp; Abholen</a>
@@ -532,7 +540,7 @@
         <a href="#besuch">Kontakt &amp; Anfahrt</a>
       </div>
       <div>
-        <h4>Rechtliches</h4>
+        <h3>Rechtliches</h3>
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html">Datenschutz</a>
       </div>

@@ -206,7 +206,8 @@
     });
 
     // Hero-Text
-    heroIntro.push(gsap.from(".hero .lead, .hero__actions, .hero__facts li, .hero .eyebrow", {
+    const heroBits = gsap.utils.toArray(".hero .lead, .hero__actions, .hero__facts li, .hero .eyebrow");
+    if (heroBits.length) heroIntro.push(gsap.from(heroBits, {   // nur Seiten mit Hero (sonst GSAP-Warnung)
       y: 30, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.08, delay: 0.45, paused: true
     }));
     if (document.querySelector(".hero__badge")) heroIntro.push(gsap.from(".hero__badge", {
