@@ -36,6 +36,34 @@
     return "";
   }
 
+  /* ---------- Strukturierte Daten: Speisekarte für Google & KI-Assistenten (aus js/menu.js) ---------- */
+  (function menuSchema() {
+    const diet = i => i.vegan === true ? ["https://schema.org/VeganDiet", "https://schema.org/VegetarianDiet"]
+      : i.veg ? ["https://schema.org/VegetarianDiet"] : undefined;
+    const schema = {
+      "@context": "https://schema.org", "@type": "Menu",
+      name: isAr ? "قائمة طعام زعتر" : "Speisekarte Zatar Darmstadt",
+      inLanguage: isAr ? "ar" : "de",
+      url: location.origin + location.pathname,
+      hasMenuSection: Object.keys(data).map(key => {
+        const cat = data[key];
+        return {
+          "@type": "MenuSection", name: isAr ? cat.titleAr || cat.ar : cat.title,
+          hasMenuItem: cat.items.map(i => ({
+            "@type": "MenuItem", name: isAr ? i.ar || i.name : i.name,
+            ...(i.desc && !isAr ? { description: i.desc } : {}),
+            ...(cat.noBadge ? {} : (diet(i) ? { suitableForDiet: diet(i) } : {})),
+            offers: { "@type": "Offer", price: i.price.toFixed(2), priceCurrency: "EUR" }
+          }))
+        };
+      })
+    };
+    const tag = document.createElement("script");
+    tag.type = "application/ld+json";
+    tag.textContent = JSON.stringify(schema);
+    document.head.appendChild(tag);
+  })();
+
   /* ---------- Rendern ---------- */
   const keys = Object.keys(data);
   page.innerHTML = keys.map(key => {

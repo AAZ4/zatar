@@ -71,3 +71,6 @@ bdi[dir="ltr"] { unicode-bidi: isolate; }
 
 /* Knöpfe: Pfeile zeigen in Leserichtung */
 .order__btn span, .menu-teaser__cta .btn { unicode-bidi: plaintext; }
+
+/* Häufige Fragen: arabische Schrift statt Fraunces */
+.faq__item summary { font-family: var(--font-body); font-weight: 600; }

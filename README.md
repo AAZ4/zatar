@@ -48,6 +48,17 @@ npx http-server -p 5500
 - [ ] **Domain**: `.de` bei INWX (Domaininhaber = Restaurant/Inhaber, Auto-Verlängerung an), Nameserver auf Cloudflare, Custom Domain im Worker eintragen. Bei Lieferando nach Übertragung von `zatar-darmstadt.de` fragen (läuft über takeaway.com), sonst `zatardarmstadt.de`.
 - [ ] Danach: **QR-Code für die Tüten** (Ziel: Startseite der eigenen Domain, SVG + PNG, Fehlerkorrektur H), `og:image` und `canonical` auf die neue Domain setzen, `noindex` entfernen.
 
+### SEO & GEO (Google und KI-Assistenten)
+- [x] robots.txt, sitemap.xml (mit DE/AR-Verweisen), llms.txt (Kurzfassung für KI-Assistenten)
+- [x] Titel/Beschreibungen mit Suchbegriffen (Manakish, Künefe, Darmstadt, vegan)
+- [x] FAQ-Abschnitt auf der Startseite (DE + AR) mit FAQPage-Daten; Restaurant-Daten auf DE + AR; Speisekarte als Menu-Daten (automatisch aus js/menu.js)
+- [ ] **Impressum-E-Mail** eintragen → danach `noindex` auf allen Seiten entfernen (Sperre der Testversion)
+- [ ] **Google Search Console** + **Bing Webmaster Tools** (Bing speist ChatGPT-Suche): Domain bestätigen (TXT-Eintrag in Cloudflare), Sitemap einreichen
+- [ ] **Google-Unternehmensprofil** (Inhaber): Website `https://zatar-restaurant.de`, Speisekarten-Link `/speisekarte`, Kategorien, Fotos, Öffnungszeiten prüfen
+- [ ] Gleiche Angaben (Name, Adresse, Telefon, Zeiten, Website) überall: Apple Business Connect, Bing Places, Wolt, Uber Eats, Instagram, Facebook, Tripadvisor
+- [ ] Lieferando-Seite `zatar-darmstadt.de` klären (konkurriert mit der eigenen Domain)
+- [ ] Offene Fakten vom Inhaber für FAQ: Halal? Kartenzahlung? Sitzplätze/Barrierefreiheit? Parken?
+
 ### Inhalt
 - [ ] **Fotos einfügen** (größter Effekt!): echte Bilder von Manakish, Fatayer, Laden, Inhaber in `images/` legen und die Platzhalter ersetzen (Hero, Signature-Karten, Geschichte).
 - [ ] **Geschichte** im Abschnitt „Unsere Geschichte“ mit dem Inhaber abstimmen (aktuell Entwurf).

@@ -1,0 +1,6 @@
+# Zatar Darmstadt – Suchmaschinen und KI-Assistenten sind willkommen.
+User-agent: *
+Allow: /
+Disallow: /druck/
+
+Sitemap: https://zatar-restaurant.de/sitemap.xml
