@@ -230,14 +230,14 @@
 
     const mm = gsap.matchMedia();
 
-    // Desktop: 3D-Karten klappen beim Scrollen nach vorne
+    // Desktop: Karten gleiten ruhig von unten herein, nacheinander
+    // (früher 3D-Aufklappen – wirkte durch die Perspektive kurz breit/verzerrt)
     mm.add("(min-width: 861px)", () => {
       [".feature", ".dish", ".review", ".spice"].forEach(sel => {
         gsap.utils.toArray(sel).forEach((card, i) => {
           gsap.from(card, {
-            y: 80, rotateX: -35, rotateY: i % 2 ? 8 : -8, opacity: 0, transformOrigin: "50% 100%",
-            transformPerspective: 900, duration: 1.2, ease: "power3.out", delay: (i % 4) * 0.08,
-            scrollTrigger: { trigger: card, start: "top 100%" }
+            y: 40, opacity: 0, duration: 0.8, ease: "power2.out", delay: (i % 4) * 0.08,
+            scrollTrigger: { trigger: card, start: "top 92%" }
           });
         });
       });
